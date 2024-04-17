@@ -16,6 +16,7 @@
     "is-fullwidth-code-point": "^3.0.0",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^2.7.0",
+    "pdfreader": "^3.0.2",
     "string-width": "^4.2.3",
     "strip-ansi": "^6.0.1",
     "tr46": "^0.0.3",
