@@ -1,5 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+// @ts-ignore
 import detenv from "dotenv";
+// @ts-ignore
 import readline from "readline"
 
 // Access your API key as an environment variable (see "Set up your API key" above)
