@@ -4,6 +4,9 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 
 
 
+/**
+ * @param {String} path
+ */
 async function file_juncker(path) {
     try {
 
