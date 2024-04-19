@@ -5,7 +5,7 @@ const app = express()
 
 const port = 5000
 
-//! pdf sample test list , Delete later
+//! pdf, chat and messages sample test list , Delete later
 const pdfs = [
     { id: 1, name: 'example1.pdf' },
     { id: 2, name: 'example2.pdf' },
@@ -18,8 +18,15 @@ const chats = [
     { id: 3, name: 'chat3' }
 ];
 
-app.use(express.json());
+const messages = [
+    { id: 1, name: 'messages1' },
+    { id: 2, name: 'messages2' },
+    { id: 3, name: 'messages3' }
+];
 
+
+
+app.use(express.json());
 // * start of `/api/pdfs`*/
 /*POST: Upload a PDF document*/
 // ? We may face some issues with this!
@@ -67,7 +74,7 @@ app.get("/api/chats", (req, res) => {
     
     if (!chats)
     {
-        res.status(404).send("PDFS not found");
+        res.status(404).send("CHATS not found");
     } else
     {
         res.send(chats);
@@ -90,17 +97,32 @@ app.delete("/api/chats/:id", (req, res) => {
 // *  Start of `/api/messages`*/
 /*GET: Get all messages for a chat*/
 app.get("/api/messages", (req, res) => {
-        res.sendFile(path.join(__dirname, 'pdf.txt'));
+    if (!messages)
+    {
+        res.status(404).send("Messages not found");
+    } else
+    {
+        res.send(chats);
+    }
+
+});
+
+/*POST: Send a message to a chat*/
+app.post("/api/messages", (req,res) => {
+    const newId = messages.length + 1;
+    const newMessage = Object.assign({ id: newId }, req.body);
+    messages.push(newMessage);
+    res.status(201).json({ message: "New chat has been created", chat: newMessage });
+    // test with "curl -X POST http://localhost:5000/api/messages -H "Content-Type: application/json" -d '{"name": "message4"}' -vvv"
 });
 
 
-
-// * 404 page
+// * Start of 404 page not found
 app.get('/*', (req, res) => {
-        res.sendFile(path.join(__dirname, '404.html'))
+    res.sendFile(path.join(__dirname, '404.html'))
 })
 
 
 app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
     });
