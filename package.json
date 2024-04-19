@@ -1,7 +1,6 @@
 {
   "name": "chatpdf",
   "version": "1.0.0",
-  "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.7.1",
     "ansi-regex": "^5.0.1",
