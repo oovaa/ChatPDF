@@ -1,9 +1,11 @@
 const express = require('express')
+const fileUpload = require('express-fileupload')
+const pdfParse = require('pdf-parse')
+const multer = require('multer')
+const upload = multer({ dest: 'app/uploadsPDF/' })
 const path = require('path');
-const app = express()
 
-
-const port = 5000
+const port = 3000
 
 //! pdf, chat and messages sample test list , Delete later
 const pdfs = [
@@ -25,14 +27,23 @@ const messages = [
 ];
 
 
-
+const app = express()
 app.use(express.json());
+app.use("/", express.static('public'));
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'))
+})
+
 // * start of `/api/pdfs`*/
 /*POST: Upload a PDF document*/
 // ? We may face some issues with this!
-app.post("/api/pdfs", (req, res) => {
+app.post('/stats', upload.single('uploaded_file'), function (req, res) {
     
-});
+    console.log(req.file, req.body)
+ });
+
+
 
 /*Get all PDF documents for a user*/
 app.get("/api/pdfs", (req, res) => {
