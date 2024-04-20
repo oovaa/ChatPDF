@@ -11,7 +11,7 @@ async function run() {
         })
     );
 
-    const resultOne = await vectorStore.similaritySearch("hello world", 1);
+    const resultOne = await vectorStore.similaritySearch("hi", 1);
     console.log(resultOne);
 }
 
