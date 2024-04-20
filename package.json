@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "dependencies": {
     "@google/generative-ai": "^0.7.1",
+    "@langchain/community": "^0.0.50",
+    "@langchain/google-genai": "^0.0.11",
+    "@langchain/openai": "^0.0.28",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
     "bun-types": "^1.0.36",
@@ -12,7 +15,11 @@
     "dotenv": "^16.4.5",
     "emoji-regex": "^8.0.0",
     "express": "^4.19.2",
+
     "express-fileupload": "^1.5.0",
+
+    "hnswlib-node": "^1.4.2",
+
     "is-fullwidth-code-point": "^3.0.0",
     "isomorphic-fetch": "^3.0.0",
     "multer": "^1.4.5-lts.1",
@@ -41,7 +48,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "keywords": [],
   "description": ""
 }

@@ -14,5 +14,5 @@ try {
     console.log(out);
 
 } catch (error) {
-    console.log("juncker problem ", error);
+    console.log("chuncker problem ", error);
 }
