@@ -25,6 +25,8 @@ async function file_juncker(path) {
     }
 }
 
+export { file_juncker };
+
 // uncomment to test
 
 // const re = await file_juncker("playing_around/scrimba.txt")
