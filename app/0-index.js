@@ -1,49 +1,50 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
 const pdfParse = require('pdf-parse')
-const multer = require('multer')
-const upload = multer({ dest: 'app/uploadsPDF/' })
 const path = require('path');
+
 const port = 3000
 
-// ******Start the app with "node app/index.js" Command********
+// ******Start the app with "node app/0-index.js" Command********
+
 //! pdf, chat and messages sample test list , Delete later
 const pdfs = [
     { id: 1, name: 'example1.pdf' },
     { id: 2, name: 'example2.pdf' },
     { id: 3, name: 'example3.pdf' }
 ];
-
 const chats = [
     { id: 1, name: 'chat1' },
     { id: 2, name: 'chat2' },
     { id: 3, name: 'chat3' }
 ];
-
 const messages = [
     { id: 1, name: 'messages1' },
     { id: 2, name: 'messages2' },
     { id: 3, name: 'messages3' }
 ];
 
-
 const app = express()
 app.use(express.json());
 app.use("/", express.static('public'));
+app.use(fileUpload());
 
 app.get('/index.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'))
+    res.sendFile(path.join(__dirname, 'public/0-index.html'))
 })
 
 // * start of `/api/pdfs`*/
 /*POST: Upload a PDF document*/
-app.post('/stats', upload.single('uploaded_file'), function (req, res) {
-    
-    console.log(req.file, req.body)
-    /*
-    * Open http://127.0.0.1:3000/index.html and test it
-    U should find a pdf File in /app/uploadsPDF/
-    */
+
+app.post('/pdfText', function (req, res) {
+    if (!req.files && !req.files.pdfFile){
+        res.status(400);
+        res.end();  
+    }
+    pdfParse(req.files.pdfFile).then(result => {
+        res.send(result.text)
+    })
+    // * Open http://127.0.0.1:3000/index.html and test it
  });
 
 

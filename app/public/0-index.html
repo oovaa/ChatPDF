@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<body>
+        <div id="getPdfFile">
+                <input type="file" id="inpFile">
+                <button type="button" id="btnUpload">Upload</button>
+                <br>
+                <textarea id="txtResult" cols="80" rows="20"></textarea>
+        </div>
+
+        <script>
+                const inpFile = document.getElementById("inpFile")
+                const btnUpload = document.getElementById("btnUpload")
+                const txtResult = document.getElementById("txtResult")
+
+                btnUpload.addEventListener("click", ()=>{
+                        const formData = new FormData();
+                        formData.append("pdfFile", inpFile.files[0]);
+
+                        fetch("/pdfText",{
+                                method: 'post',
+                                body: formData
+                        }).then(res => {
+                                return res.text();
+                        }).then(pdfText => {
+                                txtResult.value = pdfText;
+                        })
+
+
+                })
+        </script>
+</body>
+</html>
