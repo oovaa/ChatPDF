@@ -66,7 +66,7 @@ app.delete("/api/pdfs/:id", (req, res) => {
     pdfs.splice(index, 1);
 
     res.send(pdfs);
-    // test with "curl -X DELETE http://localhost:5000/api/pdfs/2"
+    // test with "curl -X DELETE http://localhost:3000/api/pdfs/2"
 });
 
 // *  Start of `/api/chats`
@@ -77,7 +77,7 @@ app.post("/api/chats", (req,res) => {
     const newChat = Object.assign({ id: newId }, req.body);
     chats.push(newChat);
     res.status(201).json({ message: "New chat has been created", chat: newChat });
-    // test with "curl -X POST http://localhost:5000/api/chats -H "Content-Type: application/json" -d '{"name": "chat4"}' -vvv"
+    // test with "curl -X POST http://localhost:3000/api/chats -H "Content-Type: application/json" -d '{"name": "chat4"}' -vvv"
 
 })
 /*GET: Get all chats for a user*/
@@ -100,7 +100,7 @@ app.delete("/api/chats/:id", (req, res) => {
     pdfs.splice(index, 1);
 
     res.send(pdfs);
-    // test with "curl -X DELETE http://localhost:5000/api/chats/2"
+    // test with "curl -X DELETE http://localhost:3000/api/chats/2"
 });
 
 
@@ -124,7 +124,7 @@ app.post("/api/messages", (req,res) => {
     const newMessage = Object.assign({ id: newId }, req.body);
     messages.push(newMessage);
     res.status(201).json({ message: "New chat has been created", chat: newMessage });
-    // test with "curl -X POST http://localhost:5000/api/messages -H "Content-Type: application/json" -d '{"name": "message4"}' -vvv"
+    // test with "curl -X POST http://localhost:3000/api/messages -H "Content-Type: application/json" -d '{"name": "message4"}' -vvv"
 });
 
 
