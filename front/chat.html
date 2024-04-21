@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPDF - Chat Page</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+    <style>
+        /* Style for file upload box */
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #111111;
+            border-radius: 10px;
+            padding: 190px;
+            padding-bottom: 190px;
+            margin-bottom: 2px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .file-upload:hover {
+            border-color: #16067c;
+        }
+        .typing-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0px solid #111010;
+        }
+        .typing-input {
+            flex-grow: 1;
+            border: 2px solid #0e0e0f;
+            border-radius: 5px;
+            padding-top: 12px;
+            margin-right: 0px;
+            text-align: left
+        }
+
+        .send-button {
+            padding: 6px 15px;
+            background-color: #333333;
+            color: white;
+            border: none;
+            border-radius: 0px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .send-button:hover {
+            background-color: #45a060;
+        }
+    </style>
+</head>
+<body class="bg-indigo-100">
+
+<!-- Navbar -->
+<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+    <div class="container mx-10 flex items-center justify-between max-w-screen-lg">
+
+        <!-- Navigation links -->
+        <div class="flex space-x-8">
+            <a href="landing.html" class="hover:underline">Home</a>
+            <a href="demo.html" class="hover:underline">Demo</a>
+            <a href="help.html" class="hover:underline">Support</a>
+            <a href="team.html" class="hover:underline">About Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Chat Container -->
+<div class="container mx-auto my-0 px-60 py-8">
+    <!-- Chat Content Here -->
+    <h1 class="text-m font-bold mb-2"> Ask away🔥</h1>
+
+    <!-- File Upload Box -->
+    <div class="file-upload mb-auto bg-white">
+        <label for="file-upload-input" class="text-sm text-gray-500 font-bold cursor-pointer">Click or drag files here to upload</label>
+        <input type="file" id="file-upload-input" class="hidden">
+    </div>
+
+    <!-- Typing Bar -->
+    <div class="typing-bar">
+        <input type="text" class="typing-input flex-grow text-sm" placeholder="Ask a question...">
+        <button class="send-button text-sm">Send</button>
+    </div>
+</div>
+
+<!-- Background shapes -->
+<div class="cwysf cs1uv cojlt c9v7h cvhgl cr8aa cetkn cag0k" aria-hidden="true">
+        <div class="c5bik c9b4s c0oy8 cmix3 cj04y ckrsz cje3v csstg cevtx cv8gl cyy6y cr8aa c98s8 c3yb8"></div>
+        <div class="cfwzm chupg c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cyy6y cr8aa cjgsx cnbs3 c3yb8"></div>
+        <div class="csla3 chupg c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cyy6y cr8aa c110f c9hsq cggi5"></div>
+        <div class="cs09d czbwe cd03c c9b4s c0oy8 cmix3 cj04y ckrsz csstg cevtx cv8gl cc2fz cyy6y cr8aa c8zmq cwoae"></div>
+        <div class="cpxaw crjok c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cpsm9 cgtcx cc1h8 cr8aa c2svq"></div>
+        <div class="c55mv cpvgd c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cc2fz cyy6y cr8aa cubdc cggi5"></div>
+</div>
+
+<footer class="text-black text-xs py-5 border-t border-black font-semibold mt-5">
+    <div class="container mx-auto my-0 text-center">
+        <p>&copy; 2024 ChatPDF. All rights reserved.</p>
+        <p>Contact: contact@chatpdf.com</p>
+    </div>
+</footer>
+
+</body>
+</html>
