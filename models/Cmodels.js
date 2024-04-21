@@ -1,19 +1,39 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { config } from 'dotenv';
-import { ChatCohere } from "@langchain/cohere";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-config()
-
+import { ChatCohere, Cohere } from '@langchain/cohere';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+config();
 
 function Cgoogle(parms = {}) {
-    return new ChatGoogleGenerativeAI(parms);
+  return new ChatGoogleGenerativeAI(parms);
 }
+// const model = Cgoogle();
+// let res = await model.invoke('can i use command R in langchain?');
+// console.log(res.content);
 
 function Ccohere(parms = {}) {
-    return new ChatCohere(parms);
-
+  return new ChatCohere(parms);
 }
+// const model = Ccohere();
+// let res = await model.invoke('can i use command R in langchain?');
+// console.log(res.content);
 
+function Mcohere(param = {}) {
+  return new Cohere(param);
+}
+// const model = Mcohere();
+// let res = await model.invoke('can i use command R in langchain?');
+// console.log(res);
+
+function Mgoogle() {
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  return genAI.getGenerativeModel({ model: 'gemini-pro' });
+}
+// const model = Mcohere();
+// let res = await model.invoke('can i use command R in langchain?');
+// console.log(res);
+
+export { Cgoogle, Ccohere, Mcohere, Mgoogle };
 
 // const model = new ChatCohere({
 //     apiKey: process.env.COHERE_API_KEY, // Default
