@@ -14,6 +14,9 @@ const vectorStore = await HNSWLib.fromDocuments(docs, new GoogleGenerativeAIEmbe
     model: "embedding-001"
 }));
 
+// const re = await vectorStore.similaritySearch("CSS is greate", 4)
+// console.log(re);
 
-const directory = "playing_around/db";
-await vectorStore.save(directory);
+// store in a db
+// const directory = "playing_around/db";
+// await vectorStore.save(directory);

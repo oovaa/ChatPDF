@@ -28,7 +28,7 @@ async function run() {
 
     async function ask_respond() {
         rl.question("You: ", async (msg) => {
-            if (msg.toLowerCase === "exit")
+            if (msg.toLowerCase() === "exit")
                 rl.close()
             else {
                 const result = await chat.sendMessage(msg)

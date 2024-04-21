@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
-import { loadQAStuffChain, RetrievalQAChain } from "langchain/chains";
 
 const embed = new GoogleGenerativeAIEmbeddings();
 
@@ -12,11 +11,9 @@ const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 console.log(db); // Check if the database loaded successfully
 
-// Assuming loadQAStuffChain doesn't require additional dependencies
-const chain = new RetrievalQAChain({
-    combineDocumentsChain: loadQAStuffChain(model),
-    retriever: db.asRetriever(),
-    returnSourceDocuments: true, // Adjust as needed
-});
+const directory = "playing_around/db";
 
-// Now you can use the `chain` object for your Q&A functionality
+const loadedVectorStore = await HNSWLib.load(directory, new GoogleGenerativeAIEmbeddings());
+
+const result = await loadedVectorStore.similaritySearch("hello world", 1);
+console.log(result);
