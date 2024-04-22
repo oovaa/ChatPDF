@@ -11,30 +11,54 @@
         /* Style for buttons */
         .btn {
             padding: 12px 30px;
-            font-size: 12px;
+            font-size: 14px;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-bottom: 45px;
+            
         }
         .btn-primary {
             background-color: #333333;
             color: white;
             border: none;
             font-weight: bold;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);;
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25);
         }
         .btn-secondary {
-            background-color: #c0b7f4;
+            background-color: #b4afaf;
             color: black;
             border: none;
             margin-left: 12px;
             font-weight: bold;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25);
         }
         .btn:hover {
             filter: brightness(90%);
         }
+        .bg-land {
+            position: relative;
+            background-image: url('images/Landing-pg-2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+}
+        /* Add a pseudo-element */
+        .bg-land::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background color with 50% opacity */
+            z-index: 2; /* Ensure it's above the background image */
+}
     </style>
 </head>
 <body class="bg-indigo-100">
@@ -54,7 +78,7 @@
 </nav>
 
 <!-- Landing Page Content -->
-<div class="container mx-0 px-2 py-24 flex flex-col items-center my-auto justify-center">
+<div class="container mx-0 px-2 py-32 flex flex-col items-center my-auto justify-center">
     <!-- Logo -->
     <img src="images/logo.png" alt="ChatPDF Logo" width="150">
     
@@ -66,11 +90,19 @@
     <!-- Buttons -->
     <div class="flex ">
         <a href="chat.html" class="btn btn-primary">Get Started</a>
-        <a href="support.html" class="btn btn-secondary">Learn More</a>
+        <a href="help.html" class="btn btn-secondary">Learn More</a>
     </div>
 </div>
 
-<!-- Background shapes-->
+<div class="bg-land">
+    <h1 class="text-5xl text-center font-bold text-white mb-8 z-50">Enjoy with ChatPDF</h1>
+    <p class="text-xl text-center font-semibold text-white mb-8 z-50"> Your AI companion for managing and interacting with PDF documents.</p>
+</div>
+
+<div>
+</div>
+
+<!-- Background shapes
 <div class="cwysf cs1uv cojlt c9v7h cvhgl cr8aa cetkn cag0k" aria-hidden="true">
         <div class="c5bik c9b4s c0oy8 cmix3 cj04y ckrsz cje3v csstg cevtx cv8gl cyy6y cr8aa c98s8 c3yb8"></div>
         <div class="cfwzm chupg c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cyy6y cr8aa cjgsx cnbs3 c3yb8"></div>
@@ -78,7 +110,7 @@
         <div class="cs09d czbwe cd03c c9b4s c0oy8 cmix3 cj04y ckrsz csstg cevtx cv8gl cc2fz cyy6y cr8aa c8zmq cwoae"></div>
         <div class="cpxaw crjok c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cpsm9 cgtcx cc1h8 cr8aa c2svq"></div>
         <div class="c55mv cpvgd c9b4s c0oy8 cmix3 cj04y ckrsz csstg c8m5q cevtx cv8gl cc2fz cyy6y cr8aa cubdc cggi5"></div>
-</div>
+</div-->
 
 <footer class="text-black text-xs py-5 border-t border-black font-semibold mt-5">
     <div class="container mx-auto my-0 text-center">
