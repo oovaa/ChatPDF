@@ -2,7 +2,7 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 
 async function load_pdf(path) {
-  const loader = new PDFLoader('./models/Python.pdf', {
+  const loader = new PDFLoader(path , {
     parsedItemSeparator: ''
   });
 
@@ -11,7 +11,7 @@ async function load_pdf(path) {
 }
 
 async function load_text(path) {
-  const Tloader = new TextLoader('./playing_around/story.txt');
+  const Tloader = new TextLoader(path);
 
   const Tdocs = await Tloader.load();
 
