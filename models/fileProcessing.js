@@ -17,3 +17,5 @@ async function load_text(path) {
 
   return Tdocs;
 }
+
+export { load_pdf, load_text };
