@@ -1,8 +1,13 @@
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 
+/**
+ * Loads a PDF document from the specified path.
+ * @param {string} path - The path to the PDF file.
+ * @returns {Promise<Object>} - A promise that resolves to the loaded PDF document.
+ */
 async function load_pdf(path) {
-  const loader = new PDFLoader(path , {
+  const loader = new PDFLoader(path, {
     parsedItemSeparator: ''
   });
 
@@ -10,6 +15,11 @@ async function load_pdf(path) {
   return docs;
 }
 
+/**
+ * Loads text from the specified path.
+ * @param {string} path - The path to the file.
+ * @returns {Promise<object>} - A promise that resolves to the loaded text.
+ */
 async function load_text(path) {
   const Tloader = new TextLoader(path);
 
