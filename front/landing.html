@@ -62,25 +62,26 @@
         /* Style for image container */
         .image-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center; /* Center-align the boxes */
             margin-bottom: 45px;
             padding: 20px;
+        }
+        .image-container div {
+            border-radius: 20px; /* Set border radius to 20px */
+            overflow: hidden; /* Ensure rounded corners are applied */
+            margin: 10px; /* Add spacing between boxes */
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25); /* Add shadow effect */
         }
         .image-container img {
             width: 500px;
             height: 200px;
-            margin-bottom: 20px;
-            padding: 20px;
-            margin-left: 100px;
-            margin-right: 100px;
+            object-fit: cover; /* Ensure images fill their containers */
         }
         /* Style for image description */
         .image-description {
             text-align: left;
             margin-bottom: 45px;
             padding: 20px;
-            margin-left: 0px;
         }
     </style>
 </head>
