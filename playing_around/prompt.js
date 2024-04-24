@@ -4,7 +4,7 @@ import { Cgoogle, Chat_google } from '../models/Cmodels';
 const llm = Chat_google();
 
 const tweet_template =
-  'given a question generatea a stand alone question: {question}';
+  'given a question generate a stand alone question: {question} standalone question:';
 
 const tweet = PromptTemplate.fromTemplate(tweet_template);
 
