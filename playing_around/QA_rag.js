@@ -1,52 +1,35 @@
-import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
-import { ECohereEmbeddings } from '../models/Emodels';
-import { load_text } from '../tools/fileProcessing';
-import { doc_chuncker } from '../tools/chuncker';
-import { Hvectore, Mvectore, H_load_vectore } from '../tools/storage';
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
-import { pull } from 'langchain/hub';
+import { createInterface } from 'readline';
+import { Chat_google } from '../models/Cmodels';
+import { HumanMessage, AIMessage } from '@langchain/core/messages';
 
-// let doc = await load_text('./playing_around/scrimba.txt');
-
-// console.log(doc);
-
-// let chunked = await doc_chuncker(doc);
-
-// console.log(chunked);
-
-// const vectorStore = await Hvectore(chunked, ECohereEmbeddings);
-
-const vectorStore = await H_load_vectore(
-  './playing_around/db',
-  ECohereEmbeddings
-);
-
-// console.log(vectorStore);
-// vectorStore.save('./playing_around/db');
-
-const retriever = vectorStore.asRetriever({ k: 6, searchType: 'similarity' });
-
-let semilar_docs = await retriever.invoke('javascript');
-
-// console.log(semilar_docs);
-
-const sdArray = semilar_docs.map((x) => x['pageContent']);
-
-// console.log(sdArray);
-// const retrievedDocs = await retriever.invoke(
-//   'when are we going to learn javascript'
-// );
-
-// console.log(retrievedDocs);
-
-const llm = new ChatGoogleGenerativeAI({ model: 'gemini-pro' });
-
-const prompt = await pull('rlm/rag-prompt');
-
-// console.log(prompt);
-
-const exampleMessages = await prompt.invoke({
-  context: sdArray,
-  question: 'tell me about {thing} in the syllabus' // it is not answering
+const rl = createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
-// 🫠
+
+const chatHistory = []; // Array to store chat history
+
+async function run() {
+  const llm = Chat_google();
+
+  function ask() {
+    rl.question('You: ', async (msg) => {
+      if (msg.toLocaleLowerCase() === 'exit') {
+        rl.close();
+      } else {
+        const result = await llm.invoke([['human', msg]]);
+        const aiResponse = result.content;
+
+        console.log('AI:', aiResponse);
+
+        chatHistory.push({ user: msg, ai: aiResponse }); // Store user and AI responses in chat history
+
+        ask(); // Ask the next question
+      }
+    });
+  }
+
+  ask();
+}
+
+run();
