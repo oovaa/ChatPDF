@@ -22,9 +22,9 @@ function getPdfLoader() {
 }
 
 const docSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1000, // Prompts using the Gemini API can exceed max 20MB in size. 
-    chunkOverlap: 20, 
-    separators: ["/n/n","."] 
+    chunkSize: 700, // Prompts using the Gemini API can exceed max 20MB in size. 700 is better
+    chunkOverlap: 0, // overlap is bad 
+    separators: ["/n/n","."] // are those nessecery?
 });
 
 
@@ -47,14 +47,16 @@ async function embedDocuments(docs) {
         const embeddedDoc = await embeddings.embedQuery(doc.pageContent);
         embeddedDocs.push(embeddedDoc);
     }
-    return embeddedDocs;
+    return embeddedDocs; // great function i liked that
 }
 
 
 /*load + split PDF*/
-const loadedDoc = await getPdfLoader().load();
+const loadedDoc = await getPdfLoader().load(); // brilliant ✅
 const docs = await docSplitter.splitDocuments(loadedDoc);
 
 /*embedding*/
 const embeddedDocs = await embedDocuments(docs);
 console.log(embeddedDocs)
+
+// the code is clean, readable, and self discriptive good work hassan keep going ✅✅✅✅✅✅
