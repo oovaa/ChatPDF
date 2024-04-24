@@ -2,6 +2,7 @@ import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { config } from 'dotenv';
 import { ChatCohere, Cohere } from '@langchain/cohere';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 config();
 
 function Cgoogle(parms = {}) {
@@ -29,11 +30,26 @@ function Mgoogle() {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
   return genAI.getGenerativeModel({ model: 'gemini-pro' });
 }
+
+function Chat_google() {
+  const model = new ChatGoogleGenerativeAI({
+    model: 'gemini-pro',
+    maxOutputTokens: 2048,
+    safetySettings: [
+      {
+        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE
+      
+      }
+    ],
+  });
+  return model;
+}
 // const model = Mcohere();
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res);
 
-export { Cgoogle, Ccohere, Mcohere, Mgoogle };
+export { Cgoogle, Ccohere, Mcohere, Mgoogle, Chat_google };
 
 // const model = new ChatCohere({
 //     apiKey: process.env.COHERE_API_KEY, // Default
