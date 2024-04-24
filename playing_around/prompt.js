@@ -1,13 +1,17 @@
 import { PromptTemplate } from '@langchain/core/prompts';
-import { Cgoogle } from '../models/Cmodels';
+import { Cgoogle, Chat_google } from '../models/Cmodels';
 
-const model = Cgoogle({});
-const promptTemplate = PromptTemplate.fromTemplate(
-  'Tell me a fact about {topic}'
-);
+const llm = Chat_google();
 
-const chain = promptTemplate.pipe(model);
+const tweet_template =
+  'generate a promotinal tweet for a product, from this product discription: {productDesc}';
 
-const result = await chain.invoke({ topic: 'palestine' });
+const tweet = PromptTemplate.fromTemplate(tweet_template);
 
-console.log(result.content);
+const tweet_chain = tweet.pipe(llm);
+
+const response = await tweet_chain.invoke({
+  productDesc: 'dell laptop'
+});
+
+console.log(response.content);
