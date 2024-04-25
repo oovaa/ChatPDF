@@ -1,20 +1,25 @@
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { Chat_google } from '../models/Cmodels';
+import { StringOutputParser } from 'langchain/schema/output_parser';
+import { retrevire } from './retriver';
 
-import { promises as fs } from 'fs';
-import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
-import { CohereEmbeddings } from '@langchain/cohere';
+const llm = Chat_google();
 
-try {
-  const data = await fs.readFile('./playing_around/scrimba.txt', 'utf8');
-  const splitter = new RecursiveCharacterTextSplitter({
-    chunkOverlap: 0,
-    chunkSize: 700
-  });
-  const out = await splitter.createDocuments([data]);
+const tweet_template =
+  'given a question generate a stand alone question: {question} standalone question:';
 
-  const vectorstore = await HNSWLib.fromDocuments(out, new CohereEmbeddings());
-  // vectorstore.docstore._docs.forEach((x) => console.log(x.pageContent)); print docs
+const tweet_prompt = PromptTemplate.fromTemplate(tweet_template);
 
-} catch (err) {
-  console.error(err);
-}
+const chain = tweet_prompt
+  .pipe(llm)
+  // @ts-ignore
+  .pipe(new StringOutputParser())
+  .pipe(retrevire);
+
+console.log(chain);
+
+const response = await chain.invoke({
+  question: "I'm a complete beginner adn really nervous. Is scrimba for me?"
+});
+
+console.log(response);

@@ -1,18 +1,26 @@
 import { PromptTemplate } from '@langchain/core/prompts';
-import { Cgoogle, Chat_google } from '../models/Cmodels';
+import { Chat_google } from '../models/Cmodels';
+import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
+import { ECohereEmbeddings } from '../models/Emodels';
+import { StringOutputParser } from 'langchain/schema/output_parser';
+import { retrevire } from './retriver';
 
 const llm = Chat_google();
 
 const tweet_template =
   'given a question generate a stand alone question: {question} standalone question:';
 
-const tweet = PromptTemplate.fromTemplate(tweet_template);
+const tweet_prompt = PromptTemplate.fromTemplate(tweet_template);
 
-const tweet_chain = tweet.pipe(llm);
+const chain = tweet_prompt
+  .pipe(llm)
+  // @ts-ignore
+  .pipe(new StringOutputParser())
+  .pipe(retrevire);
 
-const response = await tweet_chain.invoke({
+const response = await chain.invoke({
   question:
-    'If you were to think about European capitals, which city would come to mind when considering the country known for its Eiffel Tower and fine wine?'
+    'what are the technical requirements for running Scrimba? I only have a very old lapty which is not that pwoerful'
 });
 
-console.log(response.content);
+console.log(response);
