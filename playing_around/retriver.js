@@ -8,4 +8,8 @@ const VectorStore = await HNSWLib.load(
 
 const retrevire = VectorStore.asRetriever();
 
-export { retrevire };
+function combine(docs) {
+  return docs.map((doc) => doc.pageContent).join('\n\n');
+}
+
+export { retrevire, combine };
