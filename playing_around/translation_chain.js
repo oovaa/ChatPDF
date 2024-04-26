@@ -1,7 +1,10 @@
 import { StringOutputParser } from 'langchain/schema/output_parser';
 import { Chat_google } from '../models/Cmodels';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { RunnableSequence } from 'langchain/schema/runnable';
+import {
+  RunnableSequence,
+  RunnablePassthrough
+} from 'langchain/schema/runnable';
 const llm = Chat_google();
 
 const punctuation_template = `Given a sentence, add punctuation where needed.
@@ -49,14 +52,24 @@ const grammer_chain = RunnableSequence.from([
 ]);
 // @ts-ignore
 const chain = RunnableSequence.from([
-  { sentence: punctuation_chain },
-  grammer_chain,
+  {
+    sentence: punctuation_chain,
+    original_input: new RunnablePassthrough()
+  },
+  {
+    sentence: grammer_chain,
+    language: ({ original_input }) => original_input.language
+  },
   translation_chain
 ]);
 
 const response = await chain.invoke({
-  sentence: 'i dont liked mondays',
+  sentence: 'i cant run when im full',
   language: 'arabic'
 });
 
 console.log(response);
+
+// output
+// لا أحب الإثنين.
+// لا أقوى على الجري وأنا ممتلئ
