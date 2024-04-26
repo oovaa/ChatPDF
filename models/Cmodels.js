@@ -5,6 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 config();
 
+
 function Cgoogle(parms = {}) {
   return new ChatGoogleGenerativeAI(parms);
 }
@@ -42,6 +43,7 @@ function Chat_google() {
       
       }
     ],
+    apiKey: process.env.GEMINI_API_KEY
   });
   return model;
 }

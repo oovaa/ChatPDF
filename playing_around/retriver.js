@@ -1,5 +1,5 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
-import { ECohereEmbeddings } from '../models/Emodels';
+import { ECohereEmbeddings } from '../models/Emodels.js';
 
 const VectorStore = await HNSWLib.load(
   './playing_around/db',

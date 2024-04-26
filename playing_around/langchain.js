@@ -1,11 +1,11 @@
 import {
   RunnableSequence,
   RunnablePassthrough
-} from 'langchain/schema/runnable';
+} from '@langchain/core/runnables';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { Chat_google } from '../models/Cmodels';
-import { StringOutputParser } from 'langchain/schema/output_parser';
-import { combine, retrevire } from './retriver';
+import { Chat_google } from '../models/Cmodels.js';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { combine, retrevire } from './retriver.js';
 import { createInterface } from 'readline';
 
 const llm = Chat_google();
