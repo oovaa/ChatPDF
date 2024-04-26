@@ -6,6 +6,7 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { Chat_google } from '../models/Cmodels';
 import { StringOutputParser } from 'langchain/schema/output_parser';
 import { combine, retrevire } from './retriver';
+import { createInterface } from 'readline';
 
 const llm = Chat_google();
 
@@ -56,14 +57,27 @@ const chain = RunnableSequence.from([
   answer_chain
 ]);
 
-// .pipe(llm)
-// // @ts-ignore
-// .pipe(new StringOutputParser())
-// .pipe(retrevire)
-// .pipe(combine);
+// const response = await chain.invoke({
+//   question: 'what im i going to learn ? will it be useful?'
+// });
 
-const response = await chain.invoke({
-  question: 'i have a very old laptop will scrimba work for me?'
+// console.log(response);
+export const rl = createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
 
-console.log(response);
+async function ask() {
+  rl.question('You: ', async (msg) => {
+    if (msg.toLocaleLowerCase() === 'exit') rl.close();
+    else {
+      const response = await chain.invoke({
+        question: msg
+      });
+      console.log('\x1b[32m%s\x1b[0m', response); // Print response in green
+      ask();
+    }
+  });
+}
+
+ask();
