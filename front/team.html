@@ -59,20 +59,34 @@
             padding: 5px;
             box-shadow: 0 0px 6px 6px rgba(0, 0, 0, 0.151);
             font-weight: bold;
-            width: 30%;}
-        }
+            width: 30%;
+}
 
         .read-more a {
-            color: #333333;
+            color: #ffffff;
             font-size: 0.8rem;
             text-decoration:none;
-            
             margin-right: auto; /* Push the button to the left */
             margin-top: auto;
+}
+
+
+        /* Background image */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 15%;
         }
     </style>
 </head>
 <body class="bg-indigo-100">
+
+<!-- Background image -->
+<img src="images/Landing-pg-2.jpg" class="bg-image" alt="Background Image">
 
 <!-- Navbar -->
 <nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
@@ -80,7 +94,6 @@
         <!-- Navigation links -->
         <div class="flex space-x-8">
             <a href="landing.html" class="hover:underline">Home</a>
-            <a href="demo.html" class="hover:underline">Demo</a>
             <a href="help.html" class="hover:underline">Support</a>
             <a href="team.html" class="hover:underline">About Us</a>
         </div>

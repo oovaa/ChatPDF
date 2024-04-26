@@ -63,14 +63,15 @@
         .image-container {
             display: flex;
             justify-content: center; /* Center-align the boxes */
-            margin-bottom: 45px;
+            margin-bottom: 20px;
             padding: 20px;
         }
         .image-container div {
             border-radius: 20px; /* Set border radius to 20px */
             overflow: hidden; /* Ensure rounded corners are applied */
             margin: 10px; /* Add spacing between boxes */
-            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25); /* Add shadow effect */
+            z-index: 10; /* Ensure boxes are above the background */
+            box-shadow: 2px -5px 50px 20px rgba(0, 0, 0, 0.325); /* Add shadow effect */
         }
         .image-container img {
             width: 500px;
@@ -94,7 +95,6 @@
         <!-- Navigation links -->
         <div class="flex space-x-8">
             <a href="landing.html" class="hover:underline">Home</a>
-            <a href="demo.html" class="hover:underline">Demo</a>
             <a href="help.html" class="hover:underline">Support</a>
             <a href="team.html" class="hover:underline">About Us</a>
         </div>
@@ -109,11 +109,11 @@
 
     <!-- Description -->
     <h1 class="text-5xl text-center font-bold text-gray-800 mb-8">ChatPDF</h1>
-    <p class="text-xl text-center font-bold text-gray-800 mb-8"> Your AI companion for managing and interacting with PDF documents.</p>
+    <p class="text-xl text-center font-bold text-gray-500 mb-8"> Your AI companion for managing and interacting with PDF documents.</p>
 
     <!-- Buttons -->
     <div class="flex ">
-        <a href="chat.html" class="btn btn-primary">Get Started</a>
+        <a href="chat2.html" class="btn btn-primary">Get Started</a>
         <a href="help.html" class="btn btn-secondary">Learn More</a>
     </div>
 </div>
@@ -129,7 +129,7 @@
     <div>
         <img src="images/square1.jpg" alt="Square 1">
         <div class="image-description">
-            <h2 class="font-bold">Future 1</h2>
+            <h2 class="font-bold">Step 1</h2>
             <p>Description of Future 1</p>
         </div>
     </div>
@@ -137,7 +137,7 @@
     <div>
         <img src="images/rectangle1.jpg" alt="Rectangle 1">
         <div class="image-description">
-            <h2 class="font-bold">Future 2</h2>
+            <h2 class="font-bold">Step 2</h2>
             <p>Description of Future 2</p>
         </div>
     </div>
@@ -147,7 +147,7 @@
     <div>
         <img src="images/rectangle1.jpg" alt="Rectangle 2">
         <div class="image-description">
-            <h2 class="font-bold">Future 3</h2>
+            <h2 class="font-bold">Step 3</h2>
             <p>Description of Future 3</p>
         </div>
     </div>
@@ -155,7 +155,7 @@
     <div>
         <img src="images/square1.jpg" alt="Square 2">
         <div class="image-description">
-            <h2 class="font-bold">Future 4</h2>
+            <h2 class="font-bold">Step 4</h2>
             <p>Description of Future 4</p>
         </div>
     </div>
