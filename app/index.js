@@ -5,6 +5,7 @@ import { dirname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { load_pdf } from '../tools/fileProcessing.js';
+import {doc_chuncker } from '../tools/chuncker.js'
 
 
 const port = 3000;
@@ -35,15 +36,18 @@ const storage = multer.diskStorage({
         cb(null, fileName);
     }
 });
-const upload = multer({ storage: storage });
 
+const upload = multer({ storage: storage });
 app.post('/upload', upload.single('file'), async (req, res) => {
     try {
         
         const fileName = req.file.filename;
         const filePath = `${req.file.destination}/${fileName}`;
 
-        const docs = await load_pdf(filePath);
+        const doc = await load_pdf(filePath);
+        const chunk = await doc_chuncker(doc);
+        
+        res.send(chunk);
     } catch (error) {
         console.error('Error occurred while processing file:', error);
         res.status(500).send('Internal server error');
