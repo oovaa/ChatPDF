@@ -1,5 +1,5 @@
 import { createInterface } from 'readline';
-import { chain } from './chain';
+import { chain } from './chain.js';
 
 export const rl = createInterface({
   input: process.stdin,
@@ -25,6 +25,6 @@ async function ask() {
   });
 }
 
-// ask();
+ask();
 
 export { ask };
