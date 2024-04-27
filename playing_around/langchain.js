@@ -7,24 +7,31 @@ import { Chat_google } from '../models/Cmodels.js';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { combine, retrevire } from './retriver.js';
 import { createInterface } from 'readline';
+import { formatConv } from './conv_history.js';
 
 const llm = Chat_google();
 
-const stand_alone_template =
-  'given a question generate a stand alone question: {question} standalone question:';
+const stand_alone_template = `Given a question, generate a stand-alone. Use conversation history (if any) to improve it.
+  Question: {question}
+  Conversation History: {conv_history}
+  Stand-alone Question:
+  `;
 
-const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context.
-If the answer isn't in context, please make up an answer that makes sense and mention that it's not from the context.
-Please avoid making up an answer. Always speak as if you were chatting with a friend.
-
-Context: {context}
-Question: {question}
-Answer:
-`;
+const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context and the conversation history.
+  If the answer isn't in context, try to find the answer in the conversation history. If it's not available, please make up an answer that makes sense and mention that it's not from the context.
+  Always speak as if you were chatting with a friend.
+  
+  Context: {context}
+  Question: {question}
+  conv_history: {conv_history}
+  Answer:
+  `;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
 
 const ans_prompt = PromptTemplate.fromTemplate(ans_template);
+
+const conv_history = [];
 
 const stand_alone_chain = RunnableSequence.from([
   // @ts-ignore
@@ -50,10 +57,15 @@ const answer_chain = RunnableSequence.from([
 
 // @ts-ignore
 const chain = RunnableSequence.from([
-  { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
+  {
+    stand_alone: stand_alone_chain,
+    original_input: new RunnablePassthrough()
+  },
+
   {
     context: retrevire_chain,
-    question: ({ original_input }) => original_input.question
+    question: ({ original_input }) => original_input.question,
+    conv_history: ({ original_input }) => original_input.conv_history
   },
   answer_chain
 ]);
@@ -73,9 +85,12 @@ async function ask() {
     if (msg.toLocaleLowerCase() === 'exit') rl.close();
     else {
       const response = await chain.invoke({
-        question: msg
+        question: msg,
+        conv_history: formatConv(conv_history)
       });
       console.log('\x1b[32m%s\x1b[0m', response); // Print response in green
+      conv_history.push(msg);
+      conv_history.push(response);
       ask();
     }
   });
