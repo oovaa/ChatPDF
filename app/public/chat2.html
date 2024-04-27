@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPDF - Chat Page</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Style for file upload box */
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #969696;
+            margin-top: -10px;
+            border-radius: 8px;
+            padding: 200px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            box-shadow: 0px 0px 10px 10px rgba(50, 50, 50, 0.255); /* Add shadow */
+
+        }
+        .file-upload:hover {
+            border-color: #333333;
+        }
+        .typing-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: -170px; /* Add margin-bottom to reduce space */
+            box-shadow: 0px 10px 10px 0px rgba(50, 50, 50, 0.255); /* Add shadow */
+
+        }
+        .typing-input {
+            flex-grow: 1;
+            border: 1px solid #9b9a9a;
+            border-radius: 10px;
+            padding: 6px;
+            margin-right: 8px;
+        }
+        .send-button {
+            padding: 0px;
+            background-color: #333333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .send-button:hover {
+            transform: translateY(-3px); /* Move the button up slightly on hover */
+        }
+        .send-button img {
+            width: 30px; /* Adjust the width of the image */
+            height: 30px; /* Maintain aspect ratio */
+        }
+        /* CSS style for bg */
+        .bg-indigo-100::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg, transparent, #1e0135);
+            background-size: 5em 5em;
+            background-color: #35035be3;
+            opacity: 4%;
+            z-index: -1; /* Ensure the background is behind everything */
+        }
+    
+/* Background image */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 10%;
+        }
+
+        .footer {
+            margin-top: 10px; /* Add margin-top to create space before the footer */
+        }
+    </style>
+</head>
+<body class="bg-indigo-100">
+
+<!-- Background image -->
+<img src="images/Landing-pg-2.jpg" class="bg-image" alt="Background Image">
+
+<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+    <div class="container mx-10 flex items-center justify-between max-w-screen-lg">
+
+        <!-- Navigation links -->
+        <div class="flex space-x-8">
+            <a href="landing.html" class="hover:underline">Home</a>
+            <a href="help.html" class="hover:underline">Support</a>
+            <a href="team.html" class="hover:underline">About Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Chat Container -->
+<div class="container mx-auto px-40 py-48">
+    <!-- Chat Content Here -->
+    <h1 class="text-xl font-bold mb-5 -mt-40">Ask away🔥</h1>
+    <!-- File Upload Box -->
+    <div class="file-upload mb-2" id="file-drop-area">
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="file-upload-input" class="text-gray-500 text-m font-semibold cursor-pointer">Drag files here to upload</label>
+            <input type="file" id="file-upload-input" name="file">
+            
+        </form>
+
+    </div>
+    <!-- Typing Bar -->
+    <div class="typing-bar">
+        <input type="text" class="typing-input flex-grow" placeholder="Type your message...">
+        <button class="send-button width-50">
+            <!-- Image instead of arrow SVG -->
+
+            <img src="images/up-arrow.png" alt="Send">
+        </button>
+    </div>
+</div>
+
+<script>
+    // Get the file drop area
+    const fileDropArea = document.getElementById('file-drop-area');
+
+    // Prevent default behavior for dragover and drop events
+    ['dragover', 'drop'].forEach(eventName => {
+        fileDropArea.addEventListener(eventName, e => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+
+    // Handle file drop
+    fileDropArea.addEventListener('drop', e => {
+        const files = e.dataTransfer.files;
+        // Handle dropped files here
+        console.log('Files dropped:', files);
+    }, false);
+
+
+    // Handle the pdf file here
+    const fileInput = document.getElementById('file-upload-input');
+    fileInput.addEventListener('change', async (e) => {
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    //send it to the express
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log('File uploaded successfully');
+        } else {
+            console.error('Failed to upload file');
+        }
+    } catch (error) {
+        console.error('Error occurred while uploading file:', error);
+    }
+    });
+</script>
+
+<footer class="text-black text-xs py-5 border-t border-black font-semibold mt-6">
+    <div class="container mx-auto my-0 text-center">
+        <p>&copy; 2024 ChatPDF. All rights reserved.</p>
+        <p>Contact: contact@chatpdf.com</p>
+    </div>
+</footer>
+
+</body>
+</html>

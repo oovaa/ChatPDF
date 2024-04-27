@@ -1,142 +1,56 @@
-const express = require('express')
-const fileUpload = require('express-fileupload')
-const pdfParse = require('pdf-parse')
-const multer = require('multer')
-const upload = multer({ dest: 'app/uploadsPDF/' })
-const path = require('path');
-const port = 3000
-
-// ******Start the app with "node app/index.js" Command********
-//! pdf, chat and messages sample test list , Delete later
-const pdfs = [
-    { id: 1, name: 'example1.pdf' },
-    { id: 2, name: 'example2.pdf' },
-    { id: 3, name: 'example3.pdf' }
-];
-
-const chats = [
-    { id: 1, name: 'chat1' },
-    { id: 2, name: 'chat2' },
-    { id: 3, name: 'chat3' }
-];
-
-const messages = [
-    { id: 1, name: 'messages1' },
-    { id: 2, name: 'messages2' },
-    { id: 3, name: 'messages3' }
-];
+import express from 'express';
+import multer from 'multer';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
+import { load_pdf } from '../tools/fileProcessing.js';
 
 
-const app = express()
-app.use(express.json());
-app.use("/", express.static('public'));
+const port = 3000;
+const app = express();
 
-app.get('/index.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'))
-})
-
-// * start of `/api/pdfs`*/
-/*POST: Upload a PDF document*/
-app.post('/stats', upload.single('uploaded_file'), function (req, res) {
-    
-    console.log(req.file, req.body)
-    /*
-    * Open http://127.0.0.1:3000/index.html and test it
-    U should find a pdf File in /app/uploadsPDF/
-    */
- });
+/*
+This route sets up an Express.js server to serve static
+files from a directory named "public" located in the same
+directory as the script.
+*/
+app.use(express.static(new URL('public', import.meta.url).pathname));
 
 
 
-/*Get all PDF documents for a user*/
-app.get("/api/pdfs", (req, res) => {
-    
-    if (!pdfs)
-    {
-        res.status(404).send("PDFS not found");
-    } else
-    {
-        res.send(pdfs);
+
+
+/* Multer disk storage configuration to
+create uniqe file name and save it into './app/PDFfiles */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const destinationPath = dirname(fileURLToPath(import.meta.url)) + '/PDFfiles';
+        cb(null, destinationPath); 
+    },
+    filename: (req, file, cb) => {
+        const uniqueFileName = uuidv4(); // Generate a unique file name
+        const fileExtension = file.originalname.split('.').pop(); // Get the file extension
+        const fileName = `${uniqueFileName}.${fileExtension}`; // Combine unique name and extension
+        cb(null, fileName);
     }
-    
 });
+const upload = multer({ storage: storage });
 
-/*DELETE: Delete a PDF document*/
-app.delete("/api/pdfs/:id", (req, res) => {
-    const id = req.params.id * 1;
-    const pdfToDelete = pdfs.find(el => el.id === id);
-    const index = pdfs.indexOf(pdfToDelete);
-    pdfs.splice(index, 1);
+app.post('/upload', upload.single('file'), async (req, res) => {
+    try {
+        
+        const fileName = req.file.filename;
+        const filePath = `${req.file.destination}/${fileName}`;
 
-    res.send(pdfs);
-    // test with "curl -X DELETE http://localhost:3000/api/pdfs/2"
-});
-
-// *  Start of `/api/chats`
-
-/*POST: Create a new chat*/
-app.post("/api/chats", (req,res) => {
-    const newId = chats.length + 1;
-    const newChat = Object.assign({ id: newId }, req.body);
-    chats.push(newChat);
-    res.status(201).json({ message: "New chat has been created", chat: newChat });
-    // test with "curl -X POST http://localhost:3000/api/chats -H "Content-Type: application/json" -d '{"name": "chat4"}' -vvv"
-
-})
-/*GET: Get all chats for a user*/
-app.get("/api/chats", (req, res) => {
-    
-    if (!chats)
-    {
-        res.status(404).send("CHATS not found");
-    } else
-    {
-        res.send(chats);
+        const docs = await load_pdf(filePath);
+    } catch (error) {
+        console.error('Error occurred while processing file:', error);
+        res.status(500).send('Internal server error');
     }
-    
 });
-/*DELETE: Delete a chat*/
-app.delete("/api/chats/:id", (req, res) => {
-    const id = req.params.id * 1;
-    const chatToDelete = chats.find(el => el.id === id);
-    const index = chats.indexOf(chatToDelete);
-    pdfs.splice(index, 1);
-
-    res.send(pdfs);
-    // test with "curl -X DELETE http://localhost:3000/api/chats/2"
-});
-
-
-
-// *  Start of `/api/messages`*/
-/*GET: Get all messages for a chat*/
-app.get("/api/messages", (req, res) => {
-    if (!messages)
-    {
-        res.status(404).send("Messages not found");
-    } else
-    {
-        res.send(chats);
-    }
-
-});
-
-/*POST: Send a message to a chat*/
-app.post("/api/messages", (req,res) => {
-    const newId = messages.length + 1;
-    const newMessage = Object.assign({ id: newId }, req.body);
-    messages.push(newMessage);
-    res.status(201).json({ message: "New chat has been created", chat: newMessage });
-    // test with "curl -X POST http://localhost:3000/api/messages -H "Content-Type: application/json" -d '{"name": "message4"}' -vvv"
-});
-
-
-// * Start of 404 page not found
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '404.html'))
-})
 
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    });
+});

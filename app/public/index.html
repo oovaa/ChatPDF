@@ -1,17 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=100vh, initial-scale=1">
+    <title>ChatPDF - Landing Page</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
+    <style>
+        /* Style for buttons */
+        .btn {
+            padding: 12px 30px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 45px;
+        }
+        .btn-primary {
+            background-color: #333333;
+            color: white;
+            border: none;
+            font-weight: bold;
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25);
+        }
+        .btn-secondary {
+            background-color: #ebebeb;
+            color: black;
+            border: none;
+            margin-left: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.25);
+        }
+        .btn:hover {
+            filter: brightness(90%);
+        }
+        .bg-land {
+            position: relative;
+            background-image: url('images/Landing-pg-2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 45px;
+        }
+        /* Add a pseudo-element */
+        .bg-land::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Background color with 50% opacity */
+            z-index: 2; /* Ensure it's above the background image */
+        }
+        /* Style for image container */
+        .image-container {
+            display: flex;
+            justify-content: center; /* Center-align the boxes */
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .image-container div {
+            border-radius: 20px; /* Set border radius to 20px */
+            overflow: hidden; /* Ensure rounded corners are applied */
+            margin: 10px; /* Add spacing between boxes */
+            z-index: 10; /* Ensure boxes are above the background */
+            box-shadow: 2px -5px 50px 20px rgba(0, 0, 0, 0.325); /* Add shadow effect */
+        }
+        .image-container img {
+            width: 500px;
+            height: 200px;
+            object-fit: cover; /* Ensure images fill their containers */
+        }
+        /* Style for image description */
+        .image-description {
+            text-align: left;
+            margin-bottom: 45px;
+            padding: 20px;
+        }
+    </style>
 </head>
-<body>
-        <form action="/stats" enctype="application/pdf" method="post">
-                <div class="form-group">
-                  <input type="file" name="uploaded_file">
-                  <input type="submit" value="Upload!">            
-                </div>
-              </form>
-        
+<body class="bg-indigo-100">
+
+
+<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+    <div class="container mx-10 flex items-center justify-between max-w-screen-lg">
+
+        <!-- Navigation links -->
+        <div class="flex space-x-8">
+            <a href="landing.html" class="hover:underline">Home</a>
+            <a href="help.html" class="hover:underline">Support</a>
+            <a href="team.html" class="hover:underline">About Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Landing Page Content -->
+<div class="container mx-0 px-2 py-32 flex flex-col items-center my-auto justify-center">
+    <!-- Logo -->
+    <img src="images/logo.png" alt="ChatPDF Logo" width="150">
+    
+
+    <!-- Description -->
+    <h1 class="text-5xl text-center font-bold text-gray-800 mb-8">ChatPDF</h1>
+    <p class="text-xl text-center font-bold text-gray-500 mb-8"> Your AI companion for managing and interacting with PDF documents.</p>
+
+    <!-- Buttons -->
+    <div class="flex ">
+        <a href="chat2.html" class="btn btn-primary">Get Started</a>
+        <a href="help.html" class="btn btn-secondary">Learn More</a>
+    </div>
+</div>
+
+<div class="bg-land">
+    <h1 class="text-5xl text-center font-bold text-white mb-8 z-50">Enjoy with ChatPDF</h1>
+    <p class="text-xl text-center font-semibold text-white mb-8 z-50"> Your AI companion for managing and interacting with PDF documents.</p>
+</div>
+
+<!-- Image and Description Containers -->
+<div class="image-container">
+    <!-- Square 1 -->
+    <div>
+        <img src="images/square1.jpg" alt="Square 1">
+        <div class="image-description">
+            <h2 class="font-bold">Step 1</h2>
+            <p>Description of Future 1</p>
+        </div>
+    </div>
+    <!-- Rectangle 1 -->
+    <div>
+        <img src="images/rectangle1.jpg" alt="Rectangle 1">
+        <div class="image-description">
+            <h2 class="font-bold">Step 2</h2>
+            <p>Description of Future 2</p>
+        </div>
+    </div>
+</div>
+<div class="image-container">
+    <!-- Rectangle 2 -->
+    <div>
+        <img src="images/rectangle1.jpg" alt="Rectangle 2">
+        <div class="image-description">
+            <h2 class="font-bold">Step 3</h2>
+            <p>Description of Future 3</p>
+        </div>
+    </div>
+    <!-- Square 2 -->
+    <div>
+        <img src="images/square1.jpg" alt="Square 2">
+        <div class="image-description">
+            <h2 class="font-bold">Step 4</h2>
+            <p>Description of Future 4</p>
+        </div>
+    </div>
+</div>
+
+<footer class="text-black text-xs py-5 border-t border-black font-semibold mt-5">
+    <div class="container mx-auto my-0 text-center">
+        <p>&copy; 2024 ChatPDF. All rights reserved.</p>
+        <p>Contact: contact@chatpdf.com</p>
+    </div>
+</footer>
+
 </body>
 </html>
