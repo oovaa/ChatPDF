@@ -14,12 +14,13 @@ const stand_alone_template =
   'given a question generate a stand alone question: {question} standalone question:';
 
 const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context.
-   If you don't know the answer, say 'I'm sorry, I don't know the answer to that' and direct the question to email help@scrimba.com.
-    Please avoid making up an answer. Always speak as if you were chatting with a friend.
-    context: {context}
-    question: {question}
-    answer:
-    `;
+If the answer isn't in context, please make up an answer that makes sense and mention that it's not from the context.
+Please avoid making up an answer. Always speak as if you were chatting with a friend.
+
+Context: {context}
+Question: {question}
+Answer:
+`;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
 
