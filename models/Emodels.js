@@ -6,12 +6,7 @@ function Egoogleembedding(params = {}) {
   return new GoogleGenerativeAIEmbeddings(params);
 }
 
-function ECohereEmbeddings() {
-  return new CohereEmbeddings({
-    apiKey: process.env.COHERE_API_KEY, // In Node.js defaults to process.env.COHERE_API_KEY
-    batchSize: 48 // Default value if omitted is 48. Max value is 96
-  });
-}
+
 
 async function Gembed_Query(str) {
   const embeddings = new GoogleGenerativeAIEmbeddings({
@@ -22,10 +17,19 @@ async function Gembed_Query(str) {
   return await embeddings.embedQuery(str);
 }
 
+
+function ECohereEmbeddings() {
+  return new CohereEmbeddings({
+    apiKey: process.env.COHERE_API_KEY, // In Node.js defaults to process.env.COHERE_API_KEY
+    batchSize: 48 // Default value if omitted is 48. Max value is 96
+  });
+}
+
 async function Cembed_Query(str) {
   const embeddings = new CohereEmbeddings();
   return await embeddings.embedQuery(str);
 }
+
 
 // console.log((await Cembed_Query('omar')).length); // 1024
 // console.log((await Gembed_Query('omar')).length); // 768
