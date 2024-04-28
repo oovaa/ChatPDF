@@ -48,13 +48,16 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         const doc = await load_pdf(filePath);
         const chuncks = await doc_chuncker(doc);
 
-        // embeding and save the output into "app/db"
+        // embedding and save the output into "app/db"
         const vectorStore = await Hvectore(chuncks,ECohereEmbeddings )
         await vectorStore.save(dirname(fileURLToPath(import.meta.url)) + '/db');
 
         //Load the DB
         const load_vectore = await H_load_vectore(dirname(fileURLToPath(import.meta.url)) + '/db',ECohereEmbeddings)
-        console.log(await load_vectore)    
+        const retrevire = load_vectore.asRetriever();
+        
+        console.log(await retrevire)
+
     
     } catch (error) {
         console.error('Error occurred while processing file:', error);
