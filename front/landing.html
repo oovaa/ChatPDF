@@ -6,7 +6,7 @@
     <title>ChatPDF - Landing Page</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="styles/style.css" rel="stylesheet">
+    <link href="styles/dark.css" rel="stylesheet">
     <style>
         /* Style for buttons */
         .btn {
@@ -90,15 +90,20 @@
 
 
 <nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
-    <div class="container mx-10 flex items-center justify-between max-w-screen-lg">
-
-        <!-- Navigation links -->
-        <div class="flex space-x-8">
-            <a href="landing.html" class="hover:underline">Home</a>
-            <a href="help.html" class="hover:underline">Support</a>
-            <a href="team.html" class="hover:underline">About Us</a>
-        </div>
-    </div>
+ <div class="container mx-10 flex items-center justify-between max-w-screen-lg relative">
+  <div class="flex space-x-8">
+   <!-- Navigation links -->
+   <a href="landing.html" class="hover:underline">Home</a>
+   <a href="help.html" class="hover:underline">Support</a>
+   <a href="team.html" class="hover:underline">About Us</a>
+  </div>
+  <div class="absolute right-0">
+   <!-- Dark Mode Toggle Button -->
+   <button id="darkModeToggle" class="space-x-10 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
+    <img src="images/sun.png" alt="Sun Image" class="h-5 w-5 ">
+   </button>
+  </div>
+ </div>
 </nav>
 
 <!-- Landing Page Content -->
@@ -160,6 +165,8 @@
         </div>
     </div>
 </div>
+
+<script src="dark.js"></script>
 
 <footer class="text-black text-xs py-5 border-t border-black font-semibold mt-5">
     <div class="container mx-auto my-0 text-center">
