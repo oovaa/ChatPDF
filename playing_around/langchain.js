@@ -11,11 +11,10 @@ import { formatConv } from './conv_history.js';
 
 const llm = Chat_google();
 
-const stand_alone_template = `Given a question, generate a stand-alone. Use conversation history (if any) to improve it.
-  Question: {question}
-  Conversation History: {conv_history}
-  Stand-alone Question:
-  `;
+const stand_alone_template = `Given some conversation history (if any) and a question, convert the question to a standalone question. 
+conversation history: {conv_history}
+question: {question} 
+standalone question:`;
 
 const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context and the conversation history.
   If the answer isn't in context, try to find the answer in the conversation history. If it's not available, please make up an answer that makes sense and mention that it's not from the context.
@@ -61,6 +60,7 @@ const chain = RunnableSequence.from([
     stand_alone: stand_alone_chain,
     original_input: new RunnablePassthrough()
   },
+  (prevResult) => console.log(prevResult),
 
   {
     context: retrevire_chain,
