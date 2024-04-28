@@ -19,12 +19,11 @@ standalone question:`;
 const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context and the conversation history.
   If the answer isn't in context, try to find the answer in the conversation history. If it's not available, please make up an answer that makes sense and mention that it's not from the context.
   Always speak as if you were chatting with a friend.
-  
-  Context: {context}
-  Question: {question}
-  conv_history: {conv_history}
-  Answer:
-  `;
+
+  context: {context}
+  conversation history: {conv_history}
+  question: {question}
+  answer: `;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
 
@@ -58,10 +57,9 @@ const answer_chain = RunnableSequence.from([
 const chain = RunnableSequence.from([
   {
     stand_alone: stand_alone_chain,
-    original_input: new RunnablePassthrough()
+    original_input: new RunnablePassthrough(),
+    conv_history: new RunnablePassthrough()
   },
-  (prevResult) => console.log(prevResult),
-
   {
     context: retrevire_chain,
     question: ({ original_input }) => original_input.question,
