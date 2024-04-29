@@ -9,7 +9,7 @@ import { doc_chuncker } from '../tools/chuncker.js'
 import { ECohereEmbeddings, Cembed_Query } from '../models/Emodels.js'
 import { Hvectore , H_load_vectore} from '../tools/storage.js'
 import { retrevire, combine } from '../tools/retriver.js';
-import { ask } from '../tools/chat.js'
+import { ask } from '../tools/chat_cli.js'
 
 
 const port = 3000;
