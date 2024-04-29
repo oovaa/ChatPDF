@@ -8,6 +8,8 @@ import { load_pdf } from '../tools/fileProcessing.js';
 import { doc_chuncker } from '../tools/chuncker.js'
 import { ECohereEmbeddings, Cembed_Query } from '../models/Emodels.js'
 import { Hvectore , H_load_vectore} from '../tools/storage.js'
+import { retrevire, combine } from '../tools/retriver.js';
+import { ask } from '../tools/chat.js'
 
 
 const port = 3000;
@@ -54,11 +56,10 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
         //Load the DB
         const load_vectore = await H_load_vectore(dirname(fileURLToPath(import.meta.url)) + '/db',ECohereEmbeddings)
-        const retrevire = load_vectore.asRetriever();
+        await retrevire;
         
-        console.log(await retrevire)
-
-    
+        combine(chuncks)
+        ask()
     } catch (error) {
         console.error('Error occurred while processing file:', error);
         res.status(500).send('Internal server error');

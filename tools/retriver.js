@@ -6,7 +6,7 @@ import { ECohereEmbeddings } from '../models/Emodels.js';
  * @type {HNSWLib}
  */
 const VectorStore = await HNSWLib.load(
-  './playing_around/db',
+  './app/db',
   ECohereEmbeddings()
 );
 

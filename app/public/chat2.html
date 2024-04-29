@@ -80,7 +80,8 @@
         }
 
         .footer {
-            margin-top: 10px; /* Add margin-top to create space before the footer */
+            margin-top: auto; /* Add margin-top to create space before the footer */
+
         }
     </style>
 </head>
@@ -102,7 +103,7 @@
 </nav>
 
 <!-- Chat Container -->
-<div class="container mx-auto px-40 py-48">
+<div class="container mx-auto px-40 py-48" id ="container">
     <!-- Chat Content Here -->
     <h1 class="text-xl font-bold mb-5 -mt-40">Ask away🔥</h1>
     <!-- File Upload Box -->
@@ -110,13 +111,12 @@
         <form id="uploadForm" enctype="multipart/form-data">
             <label for="file-upload-input" class="text-gray-500 text-m font-semibold cursor-pointer">Drag files here to upload</label>
             <input type="file" id="file-upload-input" name="file">
-            
         </form>
 
     </div>
     <!-- Typing Bar -->
     <div class="typing-bar">
-        <input type="text" class="typing-input flex-grow" placeholder="Type your message...">
+        <input type="text" id="inpUser"class="typing-input flex-grow" placeholder="Type your message...">
         <button class="send-button width-50">
             <!-- Image instead of arrow SVG -->
 
@@ -126,6 +126,7 @@
 </div>
 
 <script>
+    
     // Get the file drop area
     const fileDropArea = document.getElementById('file-drop-area');
 
@@ -147,10 +148,39 @@
 
     // Handle the pdf file here
     const fileInput = document.getElementById('file-upload-input');
-    fileInput.addEventListener('change', async (e) => {
+    const fileUploadDiv = document.getElementById('file-drop-area'); 
+    const containerDiv = document.getElementById('container');
+const messagesDiv = document.createElement('div');
+messagesDiv.classList.add('messages');
+containerDiv.appendChild(messagesDiv); // Append the messages div to the container div
+
+fileInput.addEventListener('change', async (e) => {
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
-    //send it to the express
+
+    // Hide the file-upload div
+    fileUploadDiv.style.display = 'none';
+
+    // Insert the messages div after the h1 element inside the container div
+    const h1Element = containerDiv.querySelector('h1');
+    if (h1Element) {
+        h1Element.insertAdjacentElement('afterend', messagesDiv);
+    } else {
+        console.error('h1 element not found.');
+    }
+    const inputField = document.getElementById('inpUser');
+    const sendButton = document.querySelector('.send-button');
+
+    sendButton.addEventListener('click', () => {
+        const message = inputField.value; // Get the value of the input field
+        const messageElement = document.createElement('div'); // Create a new div for the message
+        messageElement.textContent = message; // Set the text content of the message div
+        messagesDiv.appendChild(messageElement); // Append the message div to the messages container
+        inputField.value = ''; // Clear the input field after sending the message
+    });
+
+    
+    // Send it to the express
     try {
         const response = await fetch('/upload', {
             method: 'POST',
@@ -165,7 +195,10 @@
     } catch (error) {
         console.error('Error occurred while uploading file:', error);
     }
-    });
+});
+
+// Listen for input in the message input field
+
 </script>
 
 <footer class="text-black text-xs py-5 border-t border-black font-semibold mt-6">
