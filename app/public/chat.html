@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        .message {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+        }
+        .message.sent {
+            background-color: #DCF8C6;
+            text-align: right;
+        }
+        .message.received {
+            background-color: #EAEAEA;
+            text-align: left;
+        }
+        .input-container {
+            padding: 10px;
+            background-color: #fff;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <!-- Chat messages will be appended here -->
+            </div>
+            <div class="input-container">
+                <input type="text" id="message-input" placeholder="Type your message...">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    
+        <script>
+            const messageInput = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatMessages = document.getElementById('chat-messages');
+    
+            sendBtn.addEventListener('click', sendMessage);
+    
+            function sendMessage() {
+    const messageText = messageInput.value.trim();
+    if (messageText === '') return;
+
+    // Append the message to the chat area
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', 'sent');
+    messageDiv.textContent = messageText;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    messageInput.value = ''; // Clear input field
+
+    // Send the message to the server
+    fetch('/send-message', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: messageText })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to send message');
+        }
+        return response.json();
+    })
+    .then(data => {
+        appendReceivedMessage(data.data);
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+    });
+}
+
+// Function to append received message to the chat area
+function appendReceivedMessage(messageText) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', 'received'); // Add a class to distinguish received messages
+    messageDiv.textContent = messageText;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+        </script>
+    </body>
+    </html>

@@ -109,22 +109,16 @@
 </nav>
 
 <!-- Chat Container -->
-<div class="container mx-auto px-40 py-48">
+<div class="container mx-auto px-40 py-48" id ="container">
     <!-- Chat Content Here -->
     <h1 class="text-xl font-bold mb-5 -mt-40">Ask away🔥</h1>
     <!-- File Upload Box -->
     <div class="file-upload mb-2" id="file-drop-area">
-        <label for="file-upload-input" class=" text-gray-500 text-m font-semibold cursor-pointer">Drag files here to upload</label>
-        <input type="file" id="file-upload-input" class="hidden">
-    </div>
-    <!-- Typing Bar -->
-    <div class="typing-bar">
-        <input type="text" class="typing-input flex-grow" placeholder="Type your message...">
-        <button class="send-button width-50">
-            <!-- Image instead of arrow SVG -->
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="file-upload-input" class="text-gray-500 text-m font-semibold cursor-pointer">Drag files here to upload</label>
+            <input type="file" id="file-upload-input" name="file">
+        </form>
 
-            <img src="images/up-arrow.png" alt="Send">
-        </button>
     </div>
 </div>
 
@@ -147,7 +141,35 @@
         console.log('Files dropped:', files);
     }, false);
 </script>
+<script>
+    const fileInput = document.getElementById('file-upload-input');
 
+fileInput.addEventListener('change', async (e) => {
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+
+    // Hide the file-upload div
+    
+
+    
+    // Send it to the express
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log('File uploaded successfully');
+            window.location.href = '/chat123.html';
+        } else {
+            console.error('Failed to upload file');
+        }
+    } catch (error) {
+        console.error('Error occurred while uploading file:', error);
+    }
+});
+</script>
 <script src="dark.js"></script>
 
 <footer class="text-black text-xs py-5 border-t border-black font-semibold mt-6">

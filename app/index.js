@@ -9,18 +9,34 @@ import { doc_chuncker } from '../tools/chuncker.js'
 import { ECohereEmbeddings, Cembed_Query } from '../models/Emodels.js'
 import { Hvectore , H_load_vectore} from '../tools/storage.js'
 import { retrevire, combine } from '../tools/retriver.js';
-import { ask } from '../tools/chat_cli.js'
+import { ask } from '../tools/ask.js'
+import bodyParser from 'body-parser';
 
 
 const port = 3000;
 const app = express();
+
 
 /*
 This route sets up an Express.js server to serve static
 files from a directory named "public" - app/public
 */
 app.use(express.static(new URL('public', import.meta.url).pathname));
+app.use(bodyParser.json());
 
+
+app.post('/send-message', async (req, res) => {
+    const message = req.body.message;
+    try {
+        const response = await ask(message);
+
+        
+
+        res.json({ status: 'success', data: response }); // Send back a JSON response
+    } catch (error) {
+        res.status(500)
+    }
+});
 
 
 
@@ -41,25 +57,27 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('file'), async (req, res) => {
+app.post('/chat', upload.single('file'), async (req, res) => {
     try {
         
         const fileName = req.file.filename;
         const filePath = `${req.file.destination}/${fileName}`;
-
+        
         const doc = await load_pdf(filePath);
         const chuncks = await doc_chuncker(doc);
 
         // embedding and save the output into "app/db"
         const vectorStore = await Hvectore(chuncks,ECohereEmbeddings )
-        await vectorStore.save(dirname(fileURLToPath(import.meta.url)) + '/db');
+        await vectorStore.save(dirname(fileURLToPath(import.meta.url)) + '../dbs/db');
 
         //Load the DB
         const load_vectore = await H_load_vectore(dirname(fileURLToPath(import.meta.url)) + '/db',ECohereEmbeddings)
         await retrevire;
         
         combine(chuncks)
-        ask()
+        res.send('ok');
+        
+        
     } catch (error) {
         console.error('Error occurred while processing file:', error);
         res.status(500).send('Internal server error');
