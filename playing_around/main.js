@@ -5,11 +5,11 @@ import { extname } from 'path';
 import { load_pdf, load_text } from '../tools/fileProcessing';
 import { Hvectore } from '../tools/storage';
 import { ECohereEmbeddings, Egoogleembedding } from '../models/Emodels';
-import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { doc_chuncker } from '../tools/chuncker';
+import { ask } from '../tools/ask';
 
 const file_path = process.argv[2];
-const semilarity = process.argv[3];
+const question = process.argv[3];
 
 if (!file_path || !existsSync(file_path)) {
   console.error(
@@ -35,8 +35,12 @@ const vecstore = await Hvectore(chunked, ECohereEmbeddings);
 const retrevire = vecstore.asRetriever();
 
 // console.log(retrevire);
-// console.log(semilarity);
+// console.log(question);
 
-const sems = await retrevire.getRelevantDocuments(semilarity);
+const sems = await retrevire.getRelevantDocuments(question);
 
-console.log(sems);
+// console.log(sems);
+
+const ans = await ask(question);
+
+console.log(ans);
