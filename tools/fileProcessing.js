@@ -1,7 +1,6 @@
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 
-
 /**
  * Loads a PDF document from the specified path.
  * @param {string} path - The path to the PDF file.
