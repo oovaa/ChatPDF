@@ -1,7 +1,6 @@
 // get the path and validate it
 
 import { existsSync } from 'fs';
-import { extname } from 'path';
 import { load_pdf, load_text } from '../tools/fileProcessing';
 import { Hvectore } from '../tools/storage';
 import { ECohereEmbeddings, Egoogleembedding } from '../models/Emodels';
@@ -20,11 +19,11 @@ if (!file_path || !existsSync(file_path)) {
 
 let doc;
 
-const ext = extname(file_path);
+const ext = file_path.slice(-3);
 // console.log(ext);
 
-if (ext === '.txt') doc = await load_text(file_path);
-else if (ext === '.pdf') doc = await load_pdf(file_path);
+if (ext === 'txt') doc = await load_text(file_path);
+else if (ext === 'pdf') doc = await load_pdf(file_path);
 
 // console.log(doc);
 
