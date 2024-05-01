@@ -5,10 +5,7 @@ import { ECohereEmbeddings } from '../models/Emodels.js';
  * Represents a vector store.
  * @type {HNSWLib}
  */
-const VectorStore = await HNSWLib.load(
-  './app/db',
-  ECohereEmbeddings()
-);
+const VectorStore = await HNSWLib.load('./dbs/db', ECohereEmbeddings());
 
 /**
  * The retriever object used for retrieving data from the VectorStore.

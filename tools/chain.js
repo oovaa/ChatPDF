@@ -14,7 +14,7 @@ const llm = Chat_google();
  * @type {string}
  */
 const stand_alone_template =
-    'given a question generate a stand alone question: {question} standalone question:';
+  'given a question generate a stand alone question: {question} standalone question:';
 
 /**
  * Template for generating an answer based on the provided context and question.
@@ -27,14 +27,14 @@ const stand_alone_template =
 // Answer:
 // `;
 
-const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context.
-    If the answer isn't in context, please make up an answer that makes sense and mention that it's not from the context.
-    Please avoid making up an answer. Always speak as if you were chatting with a friend.You can chit chat with the friend.
-    
-    Context: {context}
-    Question: {question}
-    Answer:
-    `;
+const ans_template = `You are ChatPdf, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
+If the answer isn't in the context, please make up an answer that makes sense and mention that it's not from the context.
+ Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.
+
+Context: {context}
+Question: {question}
+Answer:
+`;
 
 /**
  * Prompt template for generating a stand-alone question.
@@ -53,10 +53,10 @@ const ans_prompt = PromptTemplate.fromTemplate(ans_template);
  * @type {RunnableSequence}
  */
 const stand_alone_chain = RunnableSequence.from([
-    // @ts-ignore
-    stand_alone_prompt,
-    llm,
-    new StringOutputParser()
+  // @ts-ignore
+  stand_alone_prompt,
+  llm,
+  new StringOutputParser()
 ]);
 
 /**
@@ -64,9 +64,9 @@ const stand_alone_chain = RunnableSequence.from([
  * @type {RunnableSequence}
  */
 const retrevire_chain = RunnableSequence.from([
-    (prevResult) => prevResult.stand_alone,
-    retrevire,
-    combine
+  (prevResult) => prevResult.stand_alone,
+  retrevire,
+  combine
 ]);
 
 /**
@@ -74,10 +74,10 @@ const retrevire_chain = RunnableSequence.from([
  * @type {RunnableSequence}
  */
 const answer_chain = RunnableSequence.from([
-    // @ts-ignore
-    ans_prompt,
-    llm,
-    new StringOutputParser()
+  // @ts-ignore
+  ans_prompt,
+  llm,
+  new StringOutputParser()
 ]);
 
 /**
@@ -85,12 +85,12 @@ const answer_chain = RunnableSequence.from([
  * @type {RunnableSequence}
  */
 const chain = RunnableSequence.from([
-    { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
-    {
-        context: retrevire_chain,
-        question: ({ original_input }) => original_input.question
-    },
-    answer_chain
+  { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
+  {
+    context: retrevire_chain,
+    question: ({ original_input }) => original_input.question
+  },
+  answer_chain
 ]);
 
 export { chain };
