@@ -9,6 +9,9 @@ import { combine, retrevire } from './retriver.js';
 import { createInterface } from 'readline';
 import { formatConv } from './conv_history.js';
 
+const EXIT_COMMAND = 'exit';
+const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
+
 const llm = Chat_google();
 
 const stand_alone_template = `Given some conversation history (if any) and a question, convert the question to a standalone question. 
@@ -17,7 +20,7 @@ question: {question}
 standalone question:`;
 
 const ans_template = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the provided context and the conversation history.
-  If the answer isn't in context, try to find the answer in the conversation history. If it's not available, please make up an answer that makes sense and mention that it's not from the context.
+ try to find the answer in the conversation history. If it's not available, please make up an answer that makes sense and mention that it's not from the context.
   Always speak as if you were chatting with a friend.
 
   context: {context}
@@ -26,19 +29,30 @@ const ans_template = `You are a helpful and enthusiastic support bot who can ans
   answer: `;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
-
 const ans_prompt = PromptTemplate.fromTemplate(ans_template);
 
-const conv_history = [];
+class ConversationHistory {
+  constructor() {
+    this.history = [];
+  }
+
+  add(message) {
+    this.history.push(message);
+  }
+
+  format() {
+    return formatConv(this.history);
+  }
+}
+
+const conv_history = new ConversationHistory();
 
 const stand_alone_chain = RunnableSequence.from([
-  // @ts-ignore
   stand_alone_prompt,
   llm,
   new StringOutputParser()
 ]);
 
-// @ts-ignore
 const retrevire_chain = RunnableSequence.from([
   (prevResult) => prevResult.stand_alone,
   retrevire,
@@ -47,13 +61,11 @@ const retrevire_chain = RunnableSequence.from([
 ]);
 
 const answer_chain = RunnableSequence.from([
-  // @ts-ignore
   ans_prompt,
   llm,
   new StringOutputParser()
 ]);
 
-// @ts-ignore
 const chain = RunnableSequence.from([
   {
     stand_alone: stand_alone_chain,
@@ -68,30 +80,27 @@ const chain = RunnableSequence.from([
   answer_chain
 ]);
 
-// const response = await chain.invoke({
-//   question: 'what im i going to learn ? will it be useful?'
-// });
-
-// console.log(response);
 export const rl = createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
 async function ask() {
-  rl.question('You: ', async (msg) => {
-    if (msg.toLocaleLowerCase() === 'exit') rl.close();
-    else {
-      const response = await chain.invoke({
-        question: msg,
-        conv_history: formatConv(conv_history)
-      });
-      console.log('\x1b[32m%s\x1b[0m', response); // Print response in green
-      conv_history.push(msg);
-      conv_history.push(response);
-      ask();
-    }
-  });
+  const question = await new Promise((resolve) =>
+    rl.question('You: ', resolve)
+  );
+  if (question.toLocaleLowerCase() === EXIT_COMMAND) {
+    rl.close();
+  } else {
+    const response = await chain.invoke({
+      question,
+      conv_history: conv_history.format()
+    });
+    console.log(RESPONSE_COLOR, response);
+    conv_history.add(question);
+    conv_history.add(response);
+    ask();
+  }
 }
 
 ask();
