@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,7 @@
         .container {
             display: flex;
             justify-content: space-between;
-            align-items:center;
+            align-items: center;
         }
 
         .content {
@@ -38,7 +39,7 @@
             margin-top: 20px;
             padding: 5px 10px;
             background-color: #dfdfdf;
-            color: #333333; 
+            color: #333333;
             text-decoration: none;
             border-radius: 5px;
             font-weight: 700;
@@ -49,60 +50,66 @@
 
         .btn:hover {
             background-color: #1a1a1a;
-            color:  white;
+            color: white;
         }
 
         /* Added style for the footer */
         footer {
-            margin-top: 50px; /* Adjust the margin as needed */
+            margin-top: 50px;
+            /* Adjust the margin as needed */
         }
     </style>
 </head>
+
 <body class="bg-indigo-100">
 
-<!-- Navbar -->
-<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
- <div class="container mx-10 flex items-center justify-between absolite max-w-screen-xl">
-  <div class="flex space-x-8">
-   <!-- Navigation links -->
-   <a href="landing.html" class="hover:underline">Home</a>
-   <a href="help.html" class="hover:underline">Support</a>
-   <a href="team.html" class="hover:underline">About Us</a>
-  </div>
-  <div class="absolute right-0">
-   <!-- Dark Mode Toggle Button -->
-   <button id="darkModeToggle" class="mr-5 space-x-5 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
-    <img src="images/sun.png" alt="Sun Image" class="h-5 w-5 ">
-   </button>
-  </div>
- </div>
-</nav>
-
-<!-- Support Container -->
-<div class="container mx-auto px-4 py-8">
-    <!-- Support Content Here -->
-    <div class="container">
-        <!-- Left Side -->
-        <div class="content">
-            <h1 class="text-5xl font-bold mb-4">Technical Support</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum justo a enim convallis, nec faucibus sem efficitur. Sed ac sapien volutpat, porta quam vitae, aliquam nulla. Ut euismod, purus id sodales fermentum, arcu tortor varius turpis, eget congue velit libero id nulla.</p>
-            <a href="landing.html" class="btn">Learn more</a>
+    <!-- Navbar -->
+    <nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+        <div class="container mx-10 flex items-center justify-between absolite max-w-screen-xl">
+            <div class="flex space-x-8">
+                <!-- Navigation links -->
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="help.html" class="hover:underline">Support</a>
+                <a href="team.html" class="hover:underline">About Us</a>
+            </div>
+            <div class="absolute right-0">
+                <!-- Dark Mode Toggle Button -->
+                <button id="darkModeToggle"
+                    class="mr-5 space-x-5 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
+                    <img src="images/sun.png" alt="Sun Image" class="h-5 w-5 ">
+                </button>
+            </div>
         </div>
-        <!-- Right Side -->
-        <div class="image-container">
-            <img src="images/3dsetup.jpg" alt="Support Image">
+    </nav>
+
+    <!-- Support Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Support Content Here -->
+        <div class="container">
+            <!-- Left Side -->
+            <div class="content">
+                <h1 class="text-5xl font-bold mb-4">Technical Support</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum justo a enim convallis,
+                    nec faucibus sem efficitur. Sed ac sapien volutpat, porta quam vitae, aliquam nulla. Ut euismod,
+                    purus id sodales fermentum, arcu tortor varius turpis, eget congue velit libero id nulla.</p>
+                <a href="index.html" class="btn">Learn more</a>
+            </div>
+            <!-- Right Side -->
+            <div class="image-container">
+                <img src="images/3dsetup.jpg" alt="Support Image">
+            </div>
         </div>
     </div>
-</div>
 
-<script src="dark.js"></script>
+    <script src="dark.js"></script>
 
-<footer class="text-black text-xs py-4 border-t border-black font-semibold mt-4">
-    <div class="footer mx-auto my-0 text-center">
-        <p>&copy; 2024 ChatPDF. All rights reserved.</p>
-        <p>Contact: contact@chatpdf.com</p>
-    </div>
-</footer>
+    <footer class="text-black text-xs py-4 border-t border-black font-semibold mt-4">
+        <div class="footer mx-auto my-0 text-center">
+            <p>&copy; 2024 ChatPDF. All rights reserved.</p>
+            <p>Contact: contact@chatpdf.com</p>
+        </div>
+    </footer>
 
 </body>
+
 </html>
