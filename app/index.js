@@ -85,5 +85,6 @@ app.post('/chat', upload.single('file'), async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}
+access it with the link http://localhost:3000/index.html`);
 });
