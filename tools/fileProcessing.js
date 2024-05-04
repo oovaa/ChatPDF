@@ -1,5 +1,6 @@
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
+import { promises as fs } from 'fs';
 
 /**
  * Loads a PDF document from the specified path.
@@ -28,4 +29,13 @@ async function load_text(path) {
   return Tdocs;
 }
 
-export { load_pdf, load_text };
+async function deleteFile(filePath) {
+  try {
+      await fs.unlink(filePath);
+  } catch (err) {
+      console.error("Error deleting file:", err);
+  }
+}
+
+
+export { load_pdf, load_text, deleteFile };
