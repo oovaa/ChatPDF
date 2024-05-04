@@ -159,7 +159,7 @@
         appendReceivedMessage(data.data);
     })
     .catch(error => {
-        console.error('Error sending message:', error);
+        res.status(500).json({ status: 'error', message: 'An error occurred' });
     });
 }
 
