@@ -77,7 +77,7 @@ app.post('/chat', upload.single('file'), async (req, res) => {
         await deleteFile(filePath)
 
         //Load the DB
-        const load_vectore = await H_load_vectore(dirname(fileURLToPath(import.meta.url)) + '/db',ECohereEmbeddings)
+        const load_vectore = await H_load_vectore(targetDir,ECohereEmbeddings)
         await retrevire;
         
         combine(chuncks)
