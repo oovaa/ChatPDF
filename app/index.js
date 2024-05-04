@@ -1,10 +1,10 @@
 import express from 'express';
 import multer from 'multer';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname , join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
-import { load_pdf } from '../tools/fileProcessing.js';
+import { load_pdf, deleteFile } from '../tools/fileProcessing.js';
 import { doc_chuncker } from '../tools/chuncker.js'
 import { ECohereEmbeddings, Cembed_Query } from '../models/Emodels.js'
 import { Hvectore , H_load_vectore} from '../tools/storage.js'
@@ -68,7 +68,12 @@ app.post('/chat', upload.single('file'), async (req, res) => {
 
         // embedding and save the output into "app/db"
         const vectorStore = await Hvectore(chuncks,ECohereEmbeddings )
-        await vectorStore.save(dirname(fileURLToPath(import.meta.url)) + '../dbs/db');
+        const currentDir = dirname(fileURLToPath(import.meta.url));
+        const targetDir = join(dirname(dirname(currentDir)), 'ChatPDF', 'dbs', 'db');
+        await vectorStore.save(targetDir + '/dbs/db');
+
+        //delete the file
+        await deleteFile(filePath)
 
         //Load the DB
         const load_vectore = await H_load_vectore(dirname(fileURLToPath(import.meta.url)) + '/db',ECohereEmbeddings)
