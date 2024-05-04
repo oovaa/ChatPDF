@@ -69,7 +69,8 @@ app.post('/chat', upload.single('file'), async (req, res) => {
         const vectorStore = await Hvectore(chuncks,ECohereEmbeddings )
         const currentDir = dirname(fileURLToPath(import.meta.url));
         const targetDir = join(dirname(dirname(currentDir)), 'ChatPDF', 'dbs', 'db');
-        await vectorStore.save(targetDir + '/dbs/db');
+
+        await vectorStore.save(targetDir);
 
         //delete the file
         await deleteFile(filePath)
