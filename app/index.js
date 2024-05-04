@@ -3,13 +3,12 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { load_pdf } from '../tools/fileProcessing.js';
-import { doc_chuncker } from '../tools/chuncker.js'
-import { ECohereEmbeddings, Cembed_Query } from '../models/Emodels.js'
-import { Hvectore , H_load_vectore} from '../tools/storage.js'
+import { doc_chuncker } from '../tools/chuncker.js';
+import { ECohereEmbeddings } from '../models/Emodels.js';
+import { Hvectore, H_load_vectore } from '../tools/storage.js';
 import { retrevire, combine } from '../tools/retriver.js';
-import { ask } from '../tools/ask.js'
+import { ask } from '../tools/ask.js';
 import bodyParser from 'body-parser';
 
 
