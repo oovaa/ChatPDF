@@ -10,6 +10,7 @@ import { Hvectore, H_load_vectore } from '../tools/storage.js';
 import { retrevire, combine } from '../tools/retriver.js';
 import { ask } from '../tools/ask.js';
 import bodyParser from 'body-parser';
+import { appendFileSync } from 'fs';
 
 const port = 3000;
 const app = express();
@@ -25,9 +26,12 @@ app.post('/send-message', async (req, res) => {
   const message = req.body.message;
   try {
     const response = await ask(message);
-    console.log(response.content)
+    console.log(response.content);
     res.json({ status: 'success', data: response.content }); // Send back a JSON response
   } catch (error) {
+    let currentDate = new Date().toISOString();
+    let error_message = `${currentDate} - an error accured when sending message: ${error}`;
+    appendFileSync('error.log', error_message + '\n');
     res.status(500);
   }
 });
@@ -51,7 +55,6 @@ const upload = multer({ storage: storage });
 
 app.post('/chat', upload.single('file'), async (req, res) => {
   try {
-    
     const fileName = req.file.filename;
     const filePath = `${req.file.destination}/${fileName}`;
 
@@ -80,7 +83,11 @@ app.post('/chat', upload.single('file'), async (req, res) => {
     combine(chuncks);
     res.send('ok');
   } catch (error) {
-    console.error('Error occurred while processing file:', error);
+    const currentDate = new Date().toISOString();
+    const errorMessage = `Error occurred while processing file: ${error}`;
+    const logMessage = `${currentDate} - ${errorMessage}`;
+    // Write the error message to a log file
+    appendFileSync('error.log', logMessage + '\n');
     res.status(500).send('Internal server error');
   }
 });
