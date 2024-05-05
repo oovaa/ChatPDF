@@ -8,6 +8,7 @@
     "@langchain/cohere": "^0.0.7",
     "@langchain/community": "^0.0.50",
     "@langchain/google-genai": "^0.0.11",
+    "@types/express": "^4.17.21",
     "@types/jquery": "^3.5.29",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
