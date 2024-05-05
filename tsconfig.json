@@ -5,6 +5,7 @@
         "checkJs": true,
         "noEmit": true,
         "strict": false,
+        "allowSyntheticDefaultImports":true,
         "target": "esnext",
         "moduleResolution": "node"
     },

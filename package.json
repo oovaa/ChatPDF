@@ -44,7 +44,8 @@
   },
   "scripts": {
     "test": "test",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "dev": "nodemon app/index.js"
   },
   "repository": {
     "type": "git",
