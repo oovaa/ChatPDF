@@ -26,7 +26,6 @@ app.post('/send-message', async (req, res) => {
   const message = req.body.message;
   try {
     const response = await ask(message);
-    console.log(response.content);
     res.json({ status: 'success', data: response.content }); // Send back a JSON response
   } catch (error) {
     let currentDate = new Date().toISOString();
