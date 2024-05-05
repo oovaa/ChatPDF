@@ -6,6 +6,12 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { Chat_google } from '../models/Cmodels.js';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { combine, retrevire } from './retriver.js';
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
+import { RunnableWithMessageHistory } from "@langchain/core/runnables";
+import { ChatMessageHistory } from "langchain/stores/message/in_memory";
 
 const llm = Chat_google();
 
@@ -21,12 +27,6 @@ const stand_alone_template =
  * @type {string}
  */
 
-// const ans_template = `Hey there! I'm your friendly chat-PDF companion, here to help summarize conversations. Just pop in a bit of context and a question, and I'll do my best to provide a helpful response.
-// Context: {context}
-// Question: {question}
-// Answer:
-// `;
-
 const ans_template = `You are ChatPdf, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
 If the answer isn't in the context, please make up an answer that makes sense and mention that it's not from the context.
  Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.
@@ -35,6 +35,7 @@ Context: {context}
 Question: {question}
 Answer:
 `;
+
 
 /**
  * Prompt template for generating a stand-alone question.
@@ -93,4 +94,36 @@ const chain = RunnableSequence.from([
   answer_chain
 ]);
 
-export { chain };
+/* chat history */
+
+/**
+ * Runnable with message history prompt for generating prompts based on previous chat messages.
+ * This prompt includes a system message introducing the chatbot's purpose and instructions for interaction,
+ * a placeholder for historical chat messages, and a placeholder for user input.
+ */
+
+const runnableWithMessageHistoryPrompt = ChatPromptTemplate.fromMessages([
+  [
+    "system",
+    `You are ChatPdf,deisgned by Hassan, Omar and Esraa, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
+    If the answer isn't in the context, please make up an answer that makes sense and mention that its not from the context.
+     Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.`,
+  ],
+  new MessagesPlaceholder("chat_history"),
+  ["human", "{input}"],
+]);
+
+// Creating a new chain by piping a runnable with message history prompt into a language model runnable.
+const chain2 = runnableWithMessageHistoryPrompt.pipe(llm);
+
+// Instantiating a new chat message history object for the chain.
+const demoEphemeralChatMessageHistoryForChain = new ChatMessageHistory();
+
+// Creating a new runnable with message history, incorporating the chain with message history prompt and chat message history.
+const chainWithMessageHistory = new RunnableWithMessageHistory({
+  runnable: chain2,
+  getMessageHistory: (_sessionId) => demoEphemeralChatMessageHistoryForChain,
+  inputMessagesKey: "input",
+  historyMessagesKey: "chat_history",
+});
+export { chain, chainWithMessageHistory };

@@ -135,17 +135,17 @@
                 }
             });
     
-            function sendMessage() {
-    const messageText = messageInput.value.trim();
-    if (messageText === '') return;
+    function sendMessage() {
+        const messageText = messageInput.value.trim();
+        if (messageText === '') return;
 
-    // Append the message to the chat area
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', 'sent');
-    messageDiv.textContent = messageText;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    messageInput.value = ''; // Clear input field
+        // Append the message to the chat area
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'sent');
+        messageDiv.textContent = messageText;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        messageInput.value = ''; // Clear input field
 
     // Send the message to the server
     fetch('/send-message', {

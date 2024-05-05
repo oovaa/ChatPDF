@@ -25,8 +25,8 @@ app.post('/send-message', async (req, res) => {
   const message = req.body.message;
   try {
     const response = await ask(message);
-
-    res.json({ status: 'success', data: response }); // Send back a JSON response
+    console.log(response.content)
+    res.json({ status: 'success', data: response.content }); // Send back a JSON response
   } catch (error) {
     res.status(500);
   }
@@ -51,6 +51,7 @@ const upload = multer({ storage: storage });
 
 app.post('/chat', upload.single('file'), async (req, res) => {
   try {
+    
     const fileName = req.file.filename;
     const filePath = `${req.file.destination}/${fileName}`;
 
