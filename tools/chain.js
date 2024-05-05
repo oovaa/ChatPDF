@@ -8,10 +8,10 @@ import { StringOutputParser } from '@langchain/core/output_parsers';
 import { combine, retrevire } from './retriver.js';
 import {
   ChatPromptTemplate,
-  MessagesPlaceholder,
-} from "@langchain/core/prompts";
-import { RunnableWithMessageHistory } from "@langchain/core/runnables";
-import { ChatMessageHistory } from "langchain/stores/message/in_memory";
+  MessagesPlaceholder
+} from '@langchain/core/prompts';
+import { RunnableWithMessageHistory } from '@langchain/core/runnables';
+import { ChatMessageHistory } from 'langchain/stores/message/in_memory';
 
 const llm = Chat_google();
 
@@ -35,7 +35,6 @@ Context: {context}
 Question: {question}
 Answer:
 `;
-
 
 /**
  * Prompt template for generating a stand-alone question.
@@ -104,13 +103,13 @@ const chain = RunnableSequence.from([
 
 const runnableWithMessageHistoryPrompt = ChatPromptTemplate.fromMessages([
   [
-    "system",
+    'system',
     `You are ChatPdf,deisgned by Hassan, Omar and Esraa, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
     If the answer isn't in the context, please make up an answer that makes sense and mention that its not from the context.
-     Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.`,
+     Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.`
   ],
-  new MessagesPlaceholder("chat_history"),
-  ["human", "{input}"],
+  new MessagesPlaceholder('chat_history'),
+  ['human', '{input}']
 ]);
 
 // Creating a new chain by piping a runnable with message history prompt into a language model runnable.
@@ -123,7 +122,7 @@ const demoEphemeralChatMessageHistoryForChain = new ChatMessageHistory();
 const chainWithMessageHistory = new RunnableWithMessageHistory({
   runnable: chain2,
   getMessageHistory: (_sessionId) => demoEphemeralChatMessageHistoryForChain,
-  inputMessagesKey: "input",
-  historyMessagesKey: "chat_history",
+  inputMessagesKey: 'input',
+  historyMessagesKey: 'chat_history'
 });
 export { chain, chainWithMessageHistory };
