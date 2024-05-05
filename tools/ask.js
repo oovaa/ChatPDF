@@ -17,7 +17,7 @@ async function ask(msg) {
     return response;
   } catch (error) {
     console.error('Error occurred while asking question:', error);
-    throw error; // re-throw the error so it can be caught and handled by the calling code
+    // throw error; // re-throw the error so it can be caught and handled by the calling code
   }
 }
 
