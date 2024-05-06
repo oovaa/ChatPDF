@@ -3,7 +3,7 @@ import {
   RunnablePassthrough
 } from '@langchain/core/runnables';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { Chat_google } from '../models/Cmodels.js';
+import { CcommandRP, Chat_google } from '../models/Cmodels.js';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { combine, retrevire } from './retriver.js';
 import {
@@ -13,7 +13,7 @@ import {
 import { RunnableWithMessageHistory } from '@langchain/core/runnables';
 import { ChatMessageHistory } from 'langchain/stores/message/in_memory';
 
-const llm = Chat_google();
+const llm = CcommandRP();
 
 /**
  * Template for generating a stand-alone question.

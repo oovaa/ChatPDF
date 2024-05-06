@@ -25,6 +25,6 @@ async function chat_loop() {
   });
 }
 
-// chat_loop();
+chat_loop();
 
 export { chat_loop, rl };
