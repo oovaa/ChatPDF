@@ -3,7 +3,7 @@ import multer from 'multer';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
-import { load_pdf, deleteFile } from '../tools/fileProcessing.js';
+import { deleteFile, load_pdf } from '../tools/fileProcessing.js';
 import { doc_chuncker } from '../tools/chuncker.js';
 import { ECohereEmbeddings } from '../models/Emodels.js';
 import { Hvectore, H_load_vectore } from '../tools/storage.js';

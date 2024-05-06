@@ -3,3 +3,9 @@ Status code: 400
 Body: {
   "message": "invalid request: valid input_type must be provided with the provided model"
 }
+2024-05-06T13:27:56.660Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:42:26.329Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:43:56.816Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:44:41.578Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:45:47.876Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T14:01:53.904Z - an error accured when sending message: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent: fetch failed
