@@ -5,7 +5,7 @@ import {
 import { PromptTemplate } from '@langchain/core/prompts';
 import { Chat_google } from '../models/Cmodels.js';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { combine, retrevire } from './retriver.js';
+import { combine, retriever } from './retriver.js';
 import {
   ChatPromptTemplate,
   MessagesPlaceholder
@@ -27,9 +27,8 @@ const stand_alone_template =
  * @type {string}
  */
 
-const ans_template = `You are ChatPdf, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
-If the answer isn't in the context, please make up an answer that makes sense and mention that it's not from the context.
- Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.
+const ans_template = `Answer the user's questions based on the below context with details. 
+If the context doesn't contain any relevant information to the question, don't make something up and just say "I don't know":
 
 Context: {context}
 Question: {question}
@@ -65,7 +64,7 @@ const stand_alone_chain = RunnableSequence.from([
  */
 const retrevire_chain = RunnableSequence.from([
   (prevResult) => prevResult.stand_alone,
-  retrevire,
+  retriever,
   combine
 ]);
 

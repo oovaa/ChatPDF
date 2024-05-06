@@ -1,4 +1,6 @@
-import { chainWithMessageHistory } from './chain.js';
+import { chain, chainWithMessageHistory  } from './chain.js';
+import { retriever } from './retriver.js';
+import { HumanMessage, AIMessage } from "@langchain/core/messages";
 
 /**
  * Asks a question and waits for a response.
@@ -8,12 +10,24 @@ import { chainWithMessageHistory } from './chain.js';
  */
 async function ask(msg) {
   try {
-    const response = await chainWithMessageHistory.invoke(
-      {
-        input: msg
-      },
-      { configurable: { sessionId: 'unused' } }
-    );
+
+    const response = await chain.invoke({
+      question: msg
+    });
+
+    if (response == "I don't know")
+    {
+      const response = await chainWithMessageHistory.invoke(
+        {
+          input: msg
+        },
+        { configurable: { sessionId: 'unused' } }
+      );
+      console.log("Ai make up answer");
+      return response.content;
+    }
+    console.log("From the content");
+    
     return response;
   } catch (error) {
     console.error('Error occurred while asking question:', error);

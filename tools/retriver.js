@@ -11,7 +11,7 @@ const VectorStore = await HNSWLib.load('./dbs/db', ECohereEmbeddings());
  * The retriever object used for retrieving data from the VectorStore.
  * @type {any}
  */
-const retrevire = VectorStore.asRetriever();
+const retriever = VectorStore.asRetriever(4);
 
 /**
  * Combines the page content of multiple documents into a single string.
@@ -23,4 +23,4 @@ function combine(docs) {
   return docs.map((doc) => doc.pageContent).join('\n\n');
 }
 
-export { retrevire, combine };
+export { retriever, combine };
