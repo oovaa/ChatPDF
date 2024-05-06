@@ -43,18 +43,18 @@ async function ret_reive(db_dir, embfunc) {
   return vecstore.asRetriever();
 }
 
-/**
- * Delete a file if it exists.
- * @param {string} path - The path to the file.
- */
-function delete_file(path) {
-  if (existsSync(path)) {
-    unlinkSync(path);
-  } else {
-    console.error('File does not exist.');
-  }
-  console.log('deleted');
-}
+// /**
+//  * Delete a file if it exists.
+//  * @param {string} path - The path to the file.
+//  */
+// function delete_file(path) {
+//   if (existsSync(path)) {
+//     unlinkSync(path);
+//   } else {
+//     console.error('File does not exist.');
+//   }
+//   console.log('deleted');
+// }
 
 /**
  * Load, store, retrieve, and delete a document.
@@ -74,4 +74,4 @@ const ret = await lsrd('./exper/story.txt', './dbs/db', ECohereEmbeddings);
 
 console.log(await ret.getRelevantDocuments('raining'));
 
-export { load, store, ret_reive, delete_file };
+export { load, store, ret_reive };
