@@ -25,3 +25,5 @@ console.log(re);
 // store in a db
 // const directory = './dbs/Gembed';
 // await vectorStore.save(directory);
+
+// the rule is working
