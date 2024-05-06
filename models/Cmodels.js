@@ -5,7 +5,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 config();
 
-
 function Cgoogle(parms = {}) {
   return new ChatGoogleGenerativeAI(parms);
 }
@@ -19,6 +18,11 @@ function Ccohere(parms = {}) {
 // const model = Ccohere();
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res.content);
+
+function CcommandRP(parms = {}) {
+  const model = new ChatCohere({ model: 'command-r-plus' });
+  return model;
+}
 
 function Mcohere(param = {}) {
   return new Cohere(param);
@@ -40,7 +44,6 @@ function Chat_google() {
       {
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
         threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE
-      
       }
     ],
     apiKey: process.env.GEMINI_API_KEY
@@ -51,7 +54,7 @@ function Chat_google() {
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res);
 
-export { Cgoogle, Ccohere, Mcohere, Mgoogle, Chat_google };
+export { Cgoogle, Ccohere, Mcohere, Mgoogle, Chat_google, CcommandRP };
 
 // const model = new ChatCohere({
 //     apiKey: process.env.COHERE_API_KEY, // Default
