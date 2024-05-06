@@ -1,0 +1,5 @@
+2024-05-06T09:14:18.280Z - Error occurred while processing file: Error: BadRequestError
+Status code: 400
+Body: {
+  "message": "invalid request: valid input_type must be provided with the provided model"
+}

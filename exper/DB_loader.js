@@ -1,19 +1,17 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
-
-const embed = new GoogleGenerativeAIEmbeddings();
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
+import { ECohereEmbeddings } from '../models/Emodels';
 
 // Assuming the database is pre-loaded (or handle loading asynchronously)
-const db = await HNSWLib.load("playing_around/db", embed);
+const db = await HNSWLib.load('dbs/db', ECohereEmbeddings());
 
 const model = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-console.log(db); // Check if the database loaded successfully
+// console.log(db); // Check if the database loaded successfully
 
-const directory = "playing_around/db";
+const directory = 'dbs/db';
 
-const loadedVectorStore = await HNSWLib.load(directory, new GoogleGenerativeAIEmbeddings());
+const loadedVectorStore = await HNSWLib.load(directory, ECohereEmbeddings());
 
-const result = await loadedVectorStore.similaritySearch("hello world", 1);
+const result = await loadedVectorStore.similaritySearch('Css is great', 4);
 console.log(result);
