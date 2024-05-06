@@ -70,11 +70,7 @@ async function lsrd(path, db_dir, embfunc) {
   return ret_riever;
 }
 
-const ret = await lsrd(
-  './playing_around/story.txt',
-  './dbs/db',
-  ECohereEmbeddings
-);
+const ret = await lsrd('./exper/story.txt', './dbs/db', ECohereEmbeddings);
 
 console.log(await ret.getRelevantDocuments('raining'));
 

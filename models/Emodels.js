@@ -6,8 +6,6 @@ function Egoogleembedding(params = {}) {
   return new GoogleGenerativeAIEmbeddings(params);
 }
 
-
-
 async function Gembed_Query(str) {
   const embeddings = new GoogleGenerativeAIEmbeddings({
     model: 'embedding-001', // 768 dimensions
@@ -16,7 +14,6 @@ async function Gembed_Query(str) {
   });
   return await embeddings.embedQuery(str);
 }
-
 
 function ECohereEmbeddings() {
   return new CohereEmbeddings({
@@ -29,7 +26,6 @@ async function Cembed_Query(str) {
   const embeddings = new CohereEmbeddings();
   return await embeddings.embedQuery(str);
 }
-
 
 // console.log((await Cembed_Query('omar')).length); // 1024
 // console.log((await Gembed_Query('omar')).length); // 768
