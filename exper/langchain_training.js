@@ -4,8 +4,8 @@ import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { createInterface } from 'readline';
 
-const path = './playing_around/scrimba.txt';
-const directory = 'playing_around/db';
+const path = './exper/scrimba.txt';
+const directory = 'exper/db';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
