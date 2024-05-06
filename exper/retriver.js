@@ -1,10 +1,7 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { ECohereEmbeddings } from '../models/Emodels.js';
 
-const VectorStore = await HNSWLib.load(
-  './playing_around/db',
-  ECohereEmbeddings()
-);
+const VectorStore = await HNSWLib.load('./exper/db', ECohereEmbeddings());
 
 const retrevire = VectorStore.asRetriever();
 
