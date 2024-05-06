@@ -27,3 +27,4 @@ console.log(re);
 // await vectorStore.save(directory);
 
 // the rule is working
+
