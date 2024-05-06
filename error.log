@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2024-05-06T00:46:46.607Z - an error accured when sending message: Error: Missing value for input variable `chat_history`
 2024-05-06T00:47:28.793Z - an error accured when sending message: Error: Missing value for input variable `chat_history`
 2024-05-06T01:25:39.111Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'startsWith')
@@ -118,3 +119,16 @@
 2024-05-06T13:34:41.512Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
 2024-05-06T13:35:53.716Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
 2024-05-06T14:02:48.107Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
+=======
+2024-05-06T09:14:18.280Z - Error occurred while processing file: Error: BadRequestError
+Status code: 400
+Body: {
+  "message": "invalid request: valid input_type must be provided with the provided model"
+}
+2024-05-06T13:27:56.660Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:42:26.329Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:43:56.816Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:44:41.578Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T13:45:47.876Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
+2024-05-06T14:01:53.904Z - an error accured when sending message: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent: fetch failed
+>>>>>>> origin

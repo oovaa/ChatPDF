@@ -1,22 +1,30 @@
-import { HNSWLib } from "@langchain/community/vectorstores/hnswlib";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
-import { file_chuncker } from "../tools/chuncker";
-
+import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
+import { file_chuncker } from '../tools/chuncker';
+import { Egoogleembedding } from '../models/Emodels';
 
 // Create docs with a loader
-const path = "./playing_around/scrimba.txt";
+const path = './exper/scrimba.txt';
 
-const docs = await file_chuncker(path)
-
+const docs = await file_chuncker(path);
 
 // Load the docs into the vector store
-const vectorStore = await HNSWLib.fromDocuments(docs, new GoogleGenerativeAIEmbeddings({
-    model: "embedding-001"
-}));
+const vectorStore = await HNSWLib.fromDocuments(
+  docs,
+  Egoogleembedding({ model: 'embedding-001' })
+);
 
-// const re = await vectorStore.similaritySearch("CSS is greate", 4)
-// console.log(re);
+console.log('vectorized');
+
+console.log(vectorStore);
+
+console.log('searching');
+const re = await vectorStore.similaritySearch('CSS is greate', 4);
+
+console.log(re);
 
 // store in a db
-// const directory = "playing_around/db";
+// const directory = './dbs/Gembed';
 // await vectorStore.save(directory);
+
+// the rule is working
+
