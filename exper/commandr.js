@@ -1,32 +1,35 @@
-import { ChatCohere } from '@langchain/cohere';
 import { PromptTemplate } from 'langchain/prompts';
 import { StringOutputParser } from 'langchain/schema/output_parser';
-import { RunnableSequence } from 'langchain/schema/runnable';
+import {
+  RunnablePassthrough,
+  RunnableSequence
+} from 'langchain/schema/runnable';
 import { createInterface } from 'readline';
 import { formatConv } from './conv_history';
+import { CcommandRP } from '../models/Cmodels';
 
 const EXIT_COMMAND = 'exit';
 const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
 
-const llm = new ChatCohere({ model: 'command-r-plus' });
+const llm = CcommandRP;
 
-const grammer_template = `Given a question, fix the grammar problems if any.
-question: {question}
-fixed question: 
+const grammer_template = `gevien a sentence, fix any grammar problems in your sentense.
+Question: {question}
+Fixed question: 
 `;
 
 const grammer_prompt = PromptTemplate.fromTemplate(grammer_template);
 
-const stand_alone_template = `Given a question, convert the question to a standalone question. 
-question: {question} 
-standalone question:`;
+const stand_alone_template = `if it is a question let's convert your question to a standalone question. 
+Question: {question} 
+Standalone question:`;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
 
-const answer_template = `Given a question, provide an answer from the history if available, or generate a new answer.
+const answer_template = `provide an respose from the history if available, or generate a new respose be very friendly.
 Question: {question}
 History: {history}
-Answer:
+respose:
 `;
 const answer_prompt = PromptTemplate.fromTemplate(answer_template);
 
@@ -65,9 +68,13 @@ export const rl = createInterface({
 // ]);
 
 const chain = RunnableSequence.from([
-  { question: grammer_chain },
-  stand_alone_chain
+  { question: grammer_chain, original: new RunnablePassthrough() },
+  {
+    question: stand_alone_chain,
+    history: ({ original }) => original.history
+  },
   // (prevResult) => console.log(prevResult),
+  answer_chain
 ]);
 const history = [];
 
@@ -78,7 +85,7 @@ async function ask() {
   if (question.toLocaleLowerCase() === EXIT_COMMAND) {
     rl.close();
   } else {
-    const response = await answer_chain.invoke({
+    const response = await chain.invoke({
       question: question,
       // @ts-ignore
       history: formatConv(history)
