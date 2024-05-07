@@ -11,7 +11,7 @@ const VectorStore = await HNSWLib.load('./dbs/db', ECohereEmbeddings());
  * The retriever object used for retrieving data from the VectorStore.
  * @type {any}
  */
-const retriever = VectorStore.asRetriever(4);
+const retriever = VectorStore.asRetriever();
 
 /**
  * Combines the page content of multiple documents into a single string.
