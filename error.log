@@ -1,3 +1,125 @@
+<<<<<<< HEAD
+2024-05-06T00:46:46.607Z - an error accured when sending message: Error: Missing value for input variable `chat_history`
+2024-05-06T00:47:28.793Z - an error accured when sending message: Error: Missing value for input variable `chat_history`
+2024-05-06T01:25:39.111Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'startsWith')
+2024-05-06T01:35:57.985Z - an error accured when sending message: TypeError: retriever.search is not a function
+2024-05-06T01:52:45.379Z - an error accured when sending message: TypeError: retriever.retrieve is not a function
+2024-05-06T02:02:56.583Z - an error accured when sending message: Error: Missing value for input variable `content`
+2024-05-06T02:05:34.017Z - an error accured when sending message: InputFormatError: Error: Field "content" in prompt uses a MessagesPlaceholder, which expects an array of BaseMessages as an input value. Received: [
+  {
+    "pageContent": "9\nFile Naming\nTypical file extensions.",
+    "metadata": {
+      "source": "/home/hassan/Desktop/ALX/ChatPDF/app/PDFfiles/3f49cf81-f31d-461c-8f1d-3c2db5051462.pdf",
+      "pdf": {
+        "version": "1.10.100",
+        "info": {
+          "PDFFormatVersion": "1.4",
+          "IsAcroFormPresent": false,
+          "IsXFAPresent": false,
+          "Producer": "PDFTron built-in office converter, V9.2.3-936729edb0\n",
+          "CreationDate": "D:20221102203008Z",
+          "ModDate": "D:20221102203008Z"
+        },
+        "metadata": null,
+        "totalPages": 101
+      },
+      "loc": {
+        "pageNumber": 9,
+        "lines": {
+          "from": 1,
+          "to": 3
+        }
+      }
+    }
+  },
+  {
+    "pageContent": "81\nShared Files (1)\nFile system containing a shared file",
+    "metadata": {
+      "source": "/home/hassan/Desktop/ALX/ChatPDF/app/PDFfiles/3f49cf81-f31d-461c-8f1d-3c2db5051462.pdf",
+      "pdf": {
+        "version": "1.10.100",
+        "info": {
+          "PDFFormatVersion": "1.4",
+          "IsAcroFormPresent": false,
+          "IsXFAPresent": false,
+          "Producer": "PDFTron built-in office converter, V9.2.3-936729edb0\n",
+          "CreationDate": "D:20221102203008Z",
+          "ModDate": "D:20221102203008Z"
+        },
+        "metadata": null,
+        "totalPages": 101
+      },
+      "loc": {
+        "pageNumber": 81,
+        "lines": {
+          "from": 1,
+          "to": 3
+        }
+      }
+    }
+  },
+  {
+    "pageContent": "15\nFile Types\n(a) An executable file",
+    "metadata": {
+      "source": "/home/hassan/Desktop/ALX/ChatPDF/app/PDFfiles/3f49cf81-f31d-461c-8f1d-3c2db5051462.pdf",
+      "pdf": {
+        "version": "1.10.100",
+        "info": {
+          "PDFFormatVersion": "1.4",
+          "IsAcroFormPresent": false,
+          "IsXFAPresent": false,
+          "Producer": "PDFTron built-in office converter, V9.2.3-936729edb0\n",
+          "CreationDate": "D:20221102203008Z",
+          "ModDate": "D:20221102203008Z"
+        },
+        "metadata": null,
+        "totalPages": 101
+      },
+      "loc": {
+        "pageNumber": 15,
+        "lines": {
+          "from": 1,
+          "to": 3
+        }
+      }
+    }
+  },
+  {
+    "pageContent": "•Files are managed by OS , how they are \nstructured, named, accessed, used, protected, \nimplemented.\n•That part of the operating system dealing with \nfiles is known as the file system\n•In the following pages we will look at files \nfrom the user’s point of view, that is, how they \nare used and what properties they have.\n4",
+    "metadata": {
+      "source": "/home/hassan/Desktop/ALX/ChatPDF/app/PDFfiles/3f49cf81-f31d-461c-8f1d-3c2db5051462.pdf",
+      "pdf": {
+        "version": "1.10.100",
+        "info": {
+          "PDFFormatVersion": "1.4",
+          "IsAcroFormPresent": false,
+          "IsXFAPresent": false,
+          "Producer": "PDFTron built-in office converter, V9.2.3-936729edb0\n",
+          "CreationDate": "D:20221102203008Z",
+          "ModDate": "D:20221102203008Z"
+        },
+        "metadata": null,
+        "totalPages": 101
+      },
+      "loc": {
+        "pageNumber": 4,
+        "lines": {
+          "from": 1,
+          "to": 9
+        }
+      }
+    }
+  }
+]
+2024-05-06T09:28:43.274Z - an error accured when sending message: InputFormatError: Error: Field "messages" in prompt uses a MessagesPlaceholder, which expects an array of BaseMessages as an input value. Received: [
+  "what is a pdf"
+]
+2024-05-06T13:15:48.231Z - an error accured when sending message: Error: (f-string) Missing value for input question
+2024-05-06T13:31:09.532Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
+2024-05-06T13:34:41.512Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
+2024-05-06T13:35:53.716Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
+2024-05-06T14:02:48.107Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'content')
+=======
 2024-05-06T09:14:18.280Z - Error occurred while processing file: Error: BadRequestError
 Status code: 400
 Body: {
@@ -9,3 +131,4 @@ Body: {
 2024-05-06T13:44:41.578Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
 2024-05-06T13:45:47.876Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
 2024-05-06T14:01:53.904Z - an error accured when sending message: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent: fetch failed
+>>>>>>> origin

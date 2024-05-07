@@ -7,7 +7,7 @@ import { deleteFile, load_pdf } from '../tools/fileProcessing.js';
 import { doc_chuncker } from '../tools/chuncker.js';
 import { ECohereEmbeddings } from '../models/Emodels.js';
 import { Hvectore, H_load_vectore } from '../tools/storage.js';
-import { retrevire, combine } from '../tools/retriver.js';
+import { retriever, combine } from '../tools/retriver.js';
 import { ask } from '../tools/ask.js';
 import bodyParser from 'body-parser';
 import { appendFileSync } from 'fs';
@@ -26,7 +26,8 @@ app.post('/send-message', async (req, res) => {
   const message = req.body.message;
   try {
     const response = await ask(message);
-    res.json({ status: 'success', data: response.content }); // Send back a JSON response
+    console.log(await response)
+    res.json({ status: 'success', data: response}); // Send back a JSON response
   } catch (error) {
     let currentDate = new Date().toISOString();
     let error_message = `${currentDate} - an error accured when sending message: ${error}`;
@@ -77,9 +78,9 @@ app.post('/chat', upload.single('file'), async (req, res) => {
 
     //Load the DB
     const load_vectore = await H_load_vectore(targetDir, ECohereEmbeddings);
-    await retrevire;
-
+    await retriever;
     combine(chuncks);
+
     res.send('ok');
   } catch (error) {
     const currentDate = new Date().toISOString();
@@ -91,7 +92,11 @@ app.post('/chat', upload.single('file'), async (req, res) => {
   }
 });
 
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}
 access it with the link http://localhost:3000/index.html`);
 });
+
+
