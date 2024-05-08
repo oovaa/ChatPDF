@@ -1,6 +1,7 @@
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { Document } from 'langchain/document';
+import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 
 /**
  * This function takes a file path as input, loads the file, and splits it into chunks.
@@ -10,7 +11,18 @@ import { Document } from 'langchain/document';
  */
 async function file_chuncker(path) {
   try {
-    const loader = new TextLoader(path);
+    let loader;
+    const fileExtension = path.slice(-3);
+    switch (fileExtension) {
+      case 'txt':
+      loader = new TextLoader(path);
+      break;
+      case 'pdf':
+      loader = new PDFLoader(path);
+      break;
+      default:
+      throw new Error('unsupported file format');
+    }
     const file = await loader.load();
 
     const splitter = new RecursiveCharacterTextSplitter({
