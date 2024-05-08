@@ -13,24 +13,26 @@ const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
 
 const llm = CcommandRP;
 
-const grammer_template = `gevien a sentence, fix any grammar problems in your sentense.
-Question: {question}
-Fixed question: 
+const grammer_template = `Given a sentence, correct any grammar issues present. If the sentence is already correct, simply pass it as is.
+Original Sentence: {question}
+Corrected Sentence: 
 `;
 
 const grammer_prompt = PromptTemplate.fromTemplate(grammer_template);
 
-const stand_alone_template = `if it is a question let's convert your question to a standalone question. 
-Question: {question} 
-Standalone question:`;
+const stand_alone_template = `Given a sentence, if it is a question, transform it into a standalone question. If not, it will be passed as is.
+Original Sentence: {question}
+Standalone Question: 
+`;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
 
-const answer_template = `provide an respose from the history if available, or generate a new respose be very friendly.
+const answer_template = `i am ChatPdf, a tool developed by Omar Hassan and Israa. i  have the ability to recall the conversation history and provide friendly responses. If a suitable response is available in the history, use it. Otherwise, generate a new response. Always maintain a friendly tone.
 Question: {question}
 History: {history}
-respose:
+Response: 
 `;
+
 const answer_prompt = PromptTemplate.fromTemplate(answer_template);
 
 // @ts-ignore
@@ -38,14 +40,16 @@ const grammer_chain = RunnableSequence.from([
   grammer_prompt,
   llm,
   new StringOutputParser()
-  // (prevResult) => console.log(prevResult),
 ]);
 
 // @ts-ignore
 const stand_alone_chain = RunnableSequence.from([
+  // (prevResult) => console.log(prevResult),
+
   stand_alone_prompt,
   llm,
   new StringOutputParser()
+  // (prevResult) => console.log(prevResult),
 ]);
 
 // @ts-ignore
@@ -53,6 +57,7 @@ const answer_chain = RunnableSequence.from([
   answer_prompt,
   llm,
   new StringOutputParser()
+  // (prevResult) => console.log(prevResult),
 ]);
 
 export const rl = createInterface({
@@ -68,12 +73,17 @@ export const rl = createInterface({
 // ]);
 
 const chain = RunnableSequence.from([
-  { question: grammer_chain, original: new RunnablePassthrough() },
+  // { question: grammer_chain, original: new RunnablePassthrough() },
+  {
+    question: (prevResult) => prevResult.question,
+    original_input: new RunnablePassthrough()
+  },
   {
     question: stand_alone_chain,
-    history: ({ original }) => original.history
+    history: ({ original_input }) => original_input.history
   },
   // (prevResult) => console.log(prevResult),
+
   answer_chain
 ]);
 const history = [];
