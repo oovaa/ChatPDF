@@ -23,7 +23,7 @@ Original Sentence: {question}
 Standalone Question: 
 `;
 
-const answer_template = `You are a helpful and enthusiastic support bot who can answer a given question based on the conversation history. Try to find the answer in the history if possible. If you really don't know the answer, say "I'm sorry, I don't know the answer to that." Don't try to make up an answer. Always speak as if you were chatting to a friend.
+const answer_template = `You are a helpful and enthusiastic support bot who can answer a given question based on the conversation history. Try to find the answer in the history if possible. If you really don't know the answer, attempt to provide a sensible response based on the information available. If all else fails, say "I'm sorry, I don't have enough information to provide a definitive answer." Always speak as if you were chatting to a friend.
 Conversation History: {history}
 Question: {question}
 Answer: 
