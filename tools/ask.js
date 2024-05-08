@@ -13,7 +13,7 @@ async function ask(msg) {
       question: msg
     });
 
-    if (response.inclode("I don't know"))
+    if (response.includes("I don't know"))
     {
       const response = await chainWithMessageHistory.invoke(
         {
@@ -25,7 +25,6 @@ async function ask(msg) {
       return response.content;
     }
     console.log("From the content");
-    
     return response;
   } catch (error) {
     console.error('Error occurred while asking question:', error);

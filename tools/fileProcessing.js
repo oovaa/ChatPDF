@@ -7,14 +7,15 @@ import { promises as fs } from 'fs';
  * @param {string} path - The path to the PDF file.
  * @returns {Promise<Object>} - A promise that resolves to the loaded PDF document.
  */
-async function load_pdf(path) {
-  const loader = new PDFLoader(path, {
-    parsedItemSeparator: ''
-  });
-  const docs = await loader.load();
-  
-  return docs;
-}
+  async function load_pdf(path) {
+    const loader = new PDFLoader(path, {
+      parsedItemSeparator: '',
+      splitPages: false
+    });
+    const docs = await loader.load();
+    
+    return docs;
+  }
 
 /**
  * Loads text from the specified path.
