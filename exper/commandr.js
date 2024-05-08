@@ -18,21 +18,19 @@ Original Sentence: {question}
 Corrected Sentence: 
 `;
 
-const grammer_prompt = PromptTemplate.fromTemplate(grammer_template);
-
-const stand_alone_template = `Given a sentence, if it is a question, transform it into a standalone question. If not, it will be passed as is.
+const stand_alone_template = `Given a sentence, if it is a question, it will be transformed into a standalone question. If not, it will be passed as is.
 Original Sentence: {question}
 Standalone Question: 
 `;
 
-const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
-
-const answer_template = `i am ChatPdf, a tool developed by Omar Hassan and Israa. i  have the ability to recall the conversation history and provide friendly responses. If a suitable response is available in the history, use it. Otherwise, generate a new response. Always maintain a friendly tone.
+const answer_template = `You are a helpful and enthusiastic support bot who can answer a given question based on the conversation history. Try to find the answer in the history if possible. If you really don't know the answer, say "I'm sorry, I don't know the answer to that." Don't try to make up an answer. Always speak as if you were chatting to a friend.
+Conversation History: {history}
 Question: {question}
-History: {history}
-Response: 
+Answer: 
 `;
 
+const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
+const grammer_prompt = PromptTemplate.fromTemplate(grammer_template);
 const answer_prompt = PromptTemplate.fromTemplate(answer_template);
 
 // @ts-ignore
