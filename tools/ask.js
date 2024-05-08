@@ -1,6 +1,4 @@
 import { chain, chainWithMessageHistory  } from './chain.js';
-import { retriever } from './retriver.js';
-import { HumanMessage, AIMessage } from "@langchain/core/messages";
 
 /**
  * Asks a question and waits for a response.

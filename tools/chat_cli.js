@@ -1,5 +1,5 @@
 import { createInterface } from 'readline';
-import { chain } from './chain.js';
+import {  chainWithMessageHistory } from './chain.js';
 
 const rl = createInterface({
   input: process.stdin,
@@ -16,10 +16,13 @@ async function chat_loop() {
   rl.question('You: ', async (msg) => {
     if (msg.toLocaleLowerCase() === 'exit') rl.close();
     else {
-      const response = await chain.invoke({
-        question: msg
-      });
-      console.log('\x1b[32m%s\x1b[0m', response); // Print response in green
+      const response = await chainWithMessageHistory.invoke(
+        {
+          input: msg
+        },
+        { configurable: { sessionId: 'unused' } }
+      );
+      console.log('\x1b[32m%s\x1b[0m', response.content); // Print response in green
       chat_loop();
     }
   });
