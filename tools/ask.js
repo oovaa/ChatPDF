@@ -13,7 +13,7 @@ async function ask(msg) {
       question: msg
     });
 
-    if (response == "I don't know")
+    if (response.inclode("I don't know"))
     {
       const response = await chainWithMessageHistory.invoke(
         {
