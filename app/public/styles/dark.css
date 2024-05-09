@@ -14,7 +14,7 @@
 }
 
 .dark .content {
-    background-color: #333333; /* Adjust content background color */
+    background-color: #333333 !important; /* Adjust content background color */
 }
 
 .dark .name {
@@ -149,7 +149,11 @@
 
 /*General*/
 .dark nav {
-    border-color: #ffffff; /* Adjust navbar background color */
+    background-color: #333333; /* Adjust navbar background color */
+}
+
+.dark nav a {
+    color: #ffffff; /* Adjust navigation link color */
 }
 
 .dark footer {
