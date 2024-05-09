@@ -129,3 +129,7 @@ Body: {
 2024-05-06T13:44:41.578Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
 2024-05-06T13:45:47.876Z - Error occurred while processing file: ReferenceError: deleteFile is not defined
 2024-05-06T14:01:53.904Z - an error accured when sending message: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent: fetch failed
+2024-05-08T22:03:40.078Z - an error accured when sending message: Error: Query vector must have the same length as the number of dimensions (768)
+2024-05-08T22:04:25.103Z - an error accured when sending message: Error: Query vector must have the same length as the number of dimensions (768)
+2024-05-08T22:04:53.663Z - an error accured when sending message: TypeError: response.inclode is not a function
+2024-05-08T22:06:56.295Z - an error accured when sending message: TypeError: response.inclodes is not a function

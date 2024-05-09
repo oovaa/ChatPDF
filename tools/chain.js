@@ -27,7 +27,7 @@ const stand_alone_template =
  * @type {string}
  */
 
-const ans_template = `Answer the user's questions based on the below context with details. 
+const ans_template = `Answer the user's questions based on the below context with details, please the answer makes sense. 
 If the context doesn't contain any relevant information to the question, don't make something up and just say "I don't know":
 
 Context: {context}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatPDF - Support</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles/dark.css" rel="stylesheet">
+    <style>
+        nav a {
+            color: #333333;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items:center;
+        }
+
+        .content {
+            width: 50%;
+            padding: 0 20px;
+            text-wrap: wrap;
+        }
+
+        .image-container {
+            width: 55%;
+            height: auto;
+            padding: 0 0px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            margin: 0px;
+        }
+        ol {
+            margin-top: 10px; /* Add margin to the top of the list */
+            margin-bottom: 20px; /* Add margin to the bottom of the list */
+}
+
+        ol li {
+            margin-bottom: 20px; /* Add margin between list items */
+}
+
+        .btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 5px 10px;
+            background-color: #EBEBEB;
+            color: #333333; 
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 700;
+            width: 15%;
+            font-size: 14px;
+            box-shadow: 0 2px 40px 10px rgb(0 0 0 / 0.15);
+        }
+
+        .btn:hover {
+            background-color: #1a1a1a;
+            color: #cac6c6;
+        }
+
+        /* Added style for the footer */
+        footer {
+            margin-top: 50px; /* Adjust the margin as needed */
+        }
+        .custom-container {
+    
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+  }
+    </style>
+</head>
+<body class="bg-indigo-100">
+
+<!-- Navbar -->
+<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+ <div class="container mx-10 flex items-center justify-between absolite max-w-screen-xl">
+  <div class="flex space-x-8">
+   <!-- Navigation links -->
+   <a href="index.html" class="hover:underline">Home</a>
+   <a href="help.html" class="hover:underline">Support</a>
+   <a href="upload.html" class="hover:underline">Upload</a>
+   <a href="team.html" class="hover:underline">Our team</a>
+   <a href="team.html" class="hover:underline">About Us</a>
+  </div>
+  <div class="absolute right-0">
+   <!-- Dark Mode Toggle Button -->
+   <button id="darkModeToggle" class="mr-5 space-x-5 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
+    <img src="images/sun.png" alt="Sun Image" class="flix h-5 w-5 ">
+   </button>
+  </div>
+ </div>
+</nav>
+
+<!-- Support Container -->
+    <!-- Support Content Here -->
+    <div class="custom-container">
+        <!-- Left Side -->
+        <div class="image-container flex-grow">
+                <img src="images/Ai.png" alt="Support Image" class="">
+        </div>
+        
+        <!-- Right Side -->
+        <div class="content">
+                <h1 class="text-5xl font-bold mb-4">Our story</h1>
+                <ol>
+                    <li>The inspiration behind our project, a chat PDF AI companion for managing and interacting with PDF documents, stemmed from a recognition of the challenges many individuals face when dealing with digital documents. We observed that conventional methods of organizing and navigating PDFs often lack efficiency and user-friendliness.</li>
+                    
+                    <li>Our team was motivated by the desire to streamline this process by integrating artificial intelligence into the equation. Inspired by the convenience and intuitiveness of chatbots, we envisioned a solution that would allow users to interact with their PDF documents in a conversational manner, similar to how they would engage with a helpful assistant.</li>
+
+                
+                    <li>our goal is to empower individuals to effortlessly navigate, search, annotate, and collaborate on PDF documents, revolutionizing the way they interact with digital content. Through innovative technology and a user-centric approach, we aspire to make PDF management more accessible, efficient, and enjoyable for everyone.</li>
+                </ol>
+                <a href="https://github.com/oovaa/ChatPDF" class="btn">Github</a>
+        </div>
+    </div>
+    
+
+
+<script src="dark.js"></script>
+
+
+</body>
+</html>

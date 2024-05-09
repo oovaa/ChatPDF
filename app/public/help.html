@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="styles/dark.css" rel="stylesheet">
     <style>
+        nav a {
+            color: #333333;
+        }
         .container {
             display: flex;
             justify-content: space-between;
@@ -22,14 +25,16 @@
 
         .image-container {
             width: 55%;
-            height: auto;
+            overflow: hidden;
             padding: 0 0px;
         }
 
         .image-container img {
             width: 100%;
-            height: auto;
+            height: 850px;
             margin: 0px;
+            
+            object-fit: cover;
         }
         ol {
             margin-top: 10px; /* Add margin to the top of the list */
@@ -88,7 +93,8 @@
    <a href="index.html" class="hover:underline">Home</a>
    <a href="help.html" class="hover:underline">Support</a>
    <a href="upload.html" class="hover:underline">Upload</a>
-   <a href="team.html" class="hover:underline">About Us</a>
+   <a href="team.html" class="hover:underline">Our team</a>
+   <a href="about.html" class="hover:underline">About Us</a>
   </div>
   <div class="absolute right-0">
    <!-- Dark Mode Toggle Button -->
@@ -121,7 +127,7 @@
         </div>
         <!-- Right Side -->
         <div class="image-container flex-grow">
-            <img src="images/3dsetup.jpg" alt="Support Image" class="">
+            <img src="images/help.png" alt="Support Image" class="">
         </div>
     </div>
     
