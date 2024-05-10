@@ -15,11 +15,13 @@ import { appendFileSync } from 'fs';
 const port = 3000;
 const app = express();
 
+
 /*
 This route sets up an Express.js server to serve static
 files from a directory named "public" - app/public
 */
-app.use(express.static(new URL('public', import.meta.url).pathname));
+const publicPath = join(dirname(fileURLToPath(import.meta.url)), 'public');
+app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
 
@@ -129,9 +131,10 @@ app.post('/chat', upload.single('file'), async (req, res) => {
 
 
 /*404 page route */
-  app.get('*', (req, res) => {
-    res.sendFile(new URL('public/404.html', import.meta.url).pathname)
-  })
+app.get('*', (req, res) => {
+  
+  res.sendFile(publicPath + '/404.html');
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}
