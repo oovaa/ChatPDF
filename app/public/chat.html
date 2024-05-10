@@ -156,38 +156,38 @@
                 }
             });
     
-            function sendMessage() {
-    const messageText = messageInput.value.trim();
-    if (messageText === '') return;
+    function sendMessage() {
+        const messageText = messageInput.value.trim();
+        if (messageText === '') return;
 
-    // Append the message to the chat area
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', 'sent');
-    messageDiv.textContent = messageText;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    messageInput.value = ''; // Clear input field
+        // Append the message to the chat area
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'sent');
+        messageDiv.textContent = messageText;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        messageInput.value = ''; // Clear input field
 
-    // Send the message to the server
-    fetch('/send-message', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: messageText })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to send message');
-        }
-        return response.json();
-    })
-    .then(data => {
-        appendReceivedMessage(data.data);
-    })
-    .catch(error => {
-        res.status(500).json({ status: 'error', message: 'An error occurred' });
-    });
+        // Send the message to the server
+        fetch('/send-message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: messageText })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+            return response.json();
+        })
+        .then(data => {
+            appendReceivedMessage(data.data);
+        })
+        .catch(error => {
+            res.status(500).json({ status: 'error', message: 'An error occurred' });
+        });
 }
 
 // Function to append received message to the chat area
