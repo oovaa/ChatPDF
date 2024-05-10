@@ -1,6 +1,8 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 
+
+
 /**
  * Creates a vector store from the given documents using the specified embedding function.
  * @param {Array} doc - The documents to create the vector store from.
