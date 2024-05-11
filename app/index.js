@@ -62,9 +62,8 @@ app.post('/send-message', async (req, res) => {
  * @returns {Promise<void>} - A promise indicating the completion of the handling process.
  */
 async function processPDF(filePath){
-  const doc = await load_pdf(filePath);
+    const doc = await load_pdf(filePath);
     const chuncks = await doc_chuncker(doc);
-
     // embedding and save the output into "app/db"
     const vectorStore = await Hvectore(chuncks, ECohereEmbeddings);
     const currentDir = dirname(fileURLToPath(import.meta.url));
@@ -82,7 +81,7 @@ async function processPDF(filePath){
 
     //Load the DB
     const load_vectore = await H_load_vectore(targetDir, ECohereEmbeddings);
-    await retriever;
+    await retriever();
     combine(chuncks);
 }
 /* Multer disk storage configuration to

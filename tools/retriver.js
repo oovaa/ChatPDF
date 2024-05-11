@@ -3,15 +3,24 @@ import { ECohereEmbeddings } from '../models/Emodels.js';
 
 /**
  * Represents a vector store.
- * @type {HNSWLib}
+ * @type {}
  */
+async function VectorStore () {
 const VectorStore = await HNSWLib.load('./dbs/db', ECohereEmbeddings());
+return VectorStore;
+}
 
 /**
  * The retriever object used for retrieving data from the VectorStore.
  * @type {any}
  */
-const retriever = VectorStore.asRetriever();
+async function retriever1 () {
+const vstore = await VectorStore()
+const retriever = await vstore.asRetriever();
+return retriever
+}
+
+const retriever = await retriever1
 
 /**
  * Combines the page content of multiple documents into a single string.
