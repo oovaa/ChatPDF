@@ -14,13 +14,12 @@ return VectorStore;
  * The retriever object used for retrieving data from the VectorStore.
  * @type {any}
  */
-async function retriever1 () {
-const vstore = await VectorStore()
-const retriever = await vstore.asRetriever();
-return retriever
+async function retriever() {
+  const vstore = await VectorStore()
+  const retriever = await vstore.asRetriever();
+  return retriever
 }
 
-const retriever = await retriever1
 
 /**
  * Combines the page content of multiple documents into a single string.

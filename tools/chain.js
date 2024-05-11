@@ -64,7 +64,7 @@ const stand_alone_chain = RunnableSequence.from([
  */
 const retrevire_chain = RunnableSequence.from([
   (prevResult) => prevResult.stand_alone,
-  retriever,
+  await retriever(),
   combine
 ]);
 
