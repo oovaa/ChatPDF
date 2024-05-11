@@ -15,3 +15,4 @@ function formatConv(messages) {
     .join('\n');
 }
 
+export { formatConv };
