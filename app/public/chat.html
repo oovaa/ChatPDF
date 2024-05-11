@@ -186,7 +186,7 @@
             appendReceivedMessage(data.data);
         })
         .catch(error => {
-            res.status(500).json({ status: 'error', message: 'An error occurred' });
+            response.status(500).json({ status: 'error', message: 'An error occurred' });
         });
 }
 
