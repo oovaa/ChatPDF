@@ -7,38 +7,33 @@ import {
 import { createInterface } from 'readline';
 import { formatConv } from './conv_history';
 import { CcommandRP } from '../models/Cmodels';
+import { retriever } from '../tools/retriver';
+import { combine } from './retriver';
 
 const EXIT_COMMAND = 'exit';
 const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
 
 const llm = CcommandRP;
 
-const grammer_template = `Given a sentence, correct any grammar issues present. If the sentence is already correct, simply pass it as is.
-Original Sentence: {question}
-Corrected Sentence: 
-`;
+const stand_alone_template = `
+Given some conversation history (if any) and a question, convert the question to a standalone question. 
 
-const stand_alone_template = `Given a sentence, if it is a question, it will be transformed into a standalone question. If not, it will be passed as is.
-Original Sentence: {question}
+Conversation History: {history}
+Original Question: {question}
 Standalone Question: 
 `;
 
-const answer_template = `You are a helpful and enthusiastic support bot who can answer a given question based on the conversation history. Try to find the answer in the history if possible. If you really don't know the answer, attempt to provide a sensible response based on the information available. If all else fails, say "I'm sorry, I don't have enough information to provide a definitive answer." Always speak as if you were chatting to a friend.
-Conversation History: {history}
+const answer_template = `
+You are ChatPDF, a supportive and enthusiastic bot. Your role is to answer questions using the context. If the answer is not in the context, find it in the conversation history when possible. If the answer isn't in the history, make up a sensible response. Always maintain a friendly tone.
+
 Question: {question}
+Context: {context}
+Conversation History: {history}
 Answer: 
 `;
 
 const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
-const grammer_prompt = PromptTemplate.fromTemplate(grammer_template);
 const answer_prompt = PromptTemplate.fromTemplate(answer_template);
-
-// @ts-ignore
-const grammer_chain = RunnableSequence.from([
-  grammer_prompt,
-  llm,
-  new StringOutputParser()
-]);
 
 // @ts-ignore
 const stand_alone_chain = RunnableSequence.from([
@@ -48,6 +43,12 @@ const stand_alone_chain = RunnableSequence.from([
   llm,
   new StringOutputParser()
   // (prevResult) => console.log(prevResult),
+]);
+
+const retrieverChain = RunnableSequence.from([
+  (prevResult) => prevResult.standalone_question,
+  retriever,
+  combine
 ]);
 
 // @ts-ignore
@@ -71,17 +72,17 @@ export const rl = createInterface({
 // ]);
 
 const chain = RunnableSequence.from([
-  // { question: grammer_chain, original: new RunnablePassthrough() },
   {
     question: (prevResult) => prevResult.question,
-    original_input: new RunnablePassthrough()
+    history: (prevResult) => prevResult.history,
+    standalone_question: stand_alone_chain
   },
   {
-    question: stand_alone_chain,
-    history: ({ original_input }) => original_input.history
+    question: (prevResult) => prevResult.question,
+    context: retrieverChain,
+    history: (prevResult) => prevResult.history
   },
   // (prevResult) => console.log(prevResult),
-
   answer_chain
 ]);
 const history = [];
