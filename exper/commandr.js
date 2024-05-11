@@ -1,14 +1,10 @@
-import { PromptTemplate } from 'langchain/prompts';
-import { StringOutputParser } from 'langchain/schema/output_parser';
-import {
-  RunnablePassthrough,
-  RunnableSequence
-} from 'langchain/schema/runnable';
+import { PromptTemplate } from '@langchain/core/prompts';
+import { StringOutputParser } from '@langchain/core/output_parsers';
+import { RunnableSequence } from '@langchain/core/runnables';
 import { createInterface } from 'readline';
-import { formatConv } from './conv_history';
-import { CcommandRP } from '../models/Cmodels';
-import { retriever } from '../tools/retriver';
-import { combine } from './retriver';
+import { formatConv } from '../tools/format.js';
+import { CcommandRP } from '../models/Cmodels.js';
+import { retriever, combine } from '../tools/retriver.js';
 
 const EXIT_COMMAND = 'exit';
 const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
@@ -71,7 +67,7 @@ export const rl = createInterface({
 //   new StringOutputParser()
 // ]);
 
-const chain = RunnableSequence.from([
+const CRchain = RunnableSequence.from([
   {
     question: (prevResult) => prevResult.question,
     history: (prevResult) => prevResult.history,
@@ -85,25 +81,31 @@ const chain = RunnableSequence.from([
   // (prevResult) => console.log(prevResult),
   answer_chain
 ]);
-const history = [];
 
-async function ask() {
-  const question = await new Promise((resolve) =>
-    rl.question('You: ', resolve)
-  );
-  if (question.toLocaleLowerCase() === EXIT_COMMAND) {
-    rl.close();
-  } else {
-    const response = await chain.invoke({
-      question: question,
-      // @ts-ignore
-      history: formatConv(history)
-    });
-    history.push(question);
-    history.push(response);
-    console.log(RESPONSE_COLOR, response);
-    ask();
+async function run() {
+  const history = [];
+
+  async function ask() {
+    const question = await new Promise((resolve) =>
+      rl.question('You: ', resolve)
+    );
+    if (question.toLocaleLowerCase() === EXIT_COMMAND) {
+      rl.close();
+    } else {
+      const response = await CRchain.invoke({
+        question: question,
+        // @ts-ignore
+        history: formatConv(history)
+      });
+      history.push(question);
+      history.push(response);
+      console.log(RESPONSE_COLOR, response);
+      ask();
+    }
   }
-}
 
-ask();
+  ask();
+}
+// run();
+
+export { CRchain };
