@@ -10,10 +10,8 @@ import { promises as fs } from 'fs';
   async function load_pdf(path) {
     const loader = new PDFLoader(path, {
       parsedItemSeparator: '',
-      splitPages: false
     });
     const docs = await loader.load();
-    
     return docs;
   }
 

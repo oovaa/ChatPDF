@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,24 @@
         nav a {
             color: #333333;
         }
+
         .team-member {
-            width: 300px; /* Set box width to 300px */
-            height: 555px; /* Set box height to 400px */
-            margin: 0 0.3cm; /* Adjust as needed */
-            border: 2px solid #333333; /* Add border */
-            border-radius: 12px; /* Add border radius */
-            padding: 1px; /* Add padding */
-            box-shadow: 0 0px 6px 6px rgba(0, 0, 0, 0.151);
+            width: 300px;
+            /* Set box width to 300px */
+            height: 555px;
+            /* Set box height to 400px */
+            margin: 0 0.3cm;
+            /* Adjust as needed */
+            border: 1px solid #bebebe;
+            /* Add border */
+            border-radius: 12px;
+            /* Add border radius */
+            padding: 1px;
+            /* Add padding */
+            box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.151);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .team-member .content {
@@ -28,6 +37,7 @@
             padding: 12px;
             background-color: white;
             border-radius: 0 0 10px 10px;
+
         }
 
         /* Adjust as needed */
@@ -35,6 +45,7 @@
             width: 100%;
             height: 250px;
             border-radius: 10px 10px 0 0;
+            object-fit: cover;
         }
 
         .name {
@@ -47,7 +58,7 @@
 
         .description {
             color: #888888;
-            font-size:small;
+            font-size: small;
             line-height: 1.5;
             margin-bottom: 1.5rem;
         }
@@ -64,15 +75,16 @@
             box-shadow: 0 0px 6px 6px rgba(0, 0, 0, 0.151);
             font-weight: bold;
             width: 30%;
-}
+        }
 
         .read-more a {
             color: #ffffff;
             font-size: 0.8rem;
-            text-decoration:none;
-            margin-right: auto; /* Push the button to the left */
+            text-decoration: none;
+            margin-right: auto;
+            /* Push the button to the left */
             margin-top: auto;
-}
+        }
 
         /* Background image */
         .bg-image {
@@ -86,94 +98,98 @@
         }
     </style>
 </head>
+
 <body class="bg-indigo-100">
 
-<!-- Background image -->
-<img src="images/Landing-pg-2.jpg" class="bg-image" alt="Background Image">
+    <!-- Background image -->
+    <img src="images/Landing-pg-2.jpg" class="bg-image" alt="Background Image">
 
-<!-- Navbar -->
-<nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
- <div class="container mx-10 flex items-center justify-between absolite max-w-screen-xl">
-  <div class="flex space-x-8">
-   <!-- Navigation links -->
-   <a href="index.html" class="hover:underline">Home</a>
-   <a href="help.html" class="hover:underline">Support</a>
-   <a href="upload.html" class="hover:underline">Upload</a>
-   <a href="team.html" class="hover:underline">Our team</a>
-   <a href="about.html" class="hover:underline">About Us</a>
-  </div>
-  <div class="absolute right-0">
-   <!-- Dark Mode Toggle Button -->
-   <button id="darkModeToggle" class="mr-5 space-x-5 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
-    <img src="images/sun.png" alt="Sun Image" class="h-5 w-5 ">
-   </button>
-  </div>
- </div>
-</nav>
-
-<!-- Team Container -->
-<div class="container mx-auto px-4 py-8 flex justify-center gap-8cm">
-    <!-- Team Member 1 -->
-    <div class="team-member">
-        <img src="images/alien.png" alt="Team Member 1"> <!-- Set image width and height -->
-        <div class="content">
-            <p class="name">Omer</p>
-            <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-sed do eiusmod tempor incididunt ut labore et dolore
-magna aliqua. Ut enim ad minim veniam, quis nostrud
-exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat.</p>
-            <div class="read-more">
-                <a href="" target="_blank">LinkedIn</a>
+    <!-- Navbar -->
+    <nav class="text-#333333 text-sm py-3 border-b border-black font-family: system-ui font-semibold">
+        <div class="container mx-10 flex items-center justify-between absolite max-w-screen-xl">
+            <div class="flex space-x-8">
+                <!-- Navigation links -->
+                <a href="index.html" class="hover:underline">Home</a>
+                <a href="help.html" class="hover:underline">Support</a>
+                <a href="upload.html" class="hover:underline">Upload</a>
+                <a href="team.html" class="hover:underline">Our team</a>
+                <a href="about.html" class="hover:underline">About Us</a>
             </div>
-            <div class="read-more">
-                <a href="" target="_blank">Twitter - X</a>
+            <div class="absolute right-0">
+                <!-- Dark Mode Toggle Button -->
+                <button id="darkModeToggle"
+                    class="mr-5 space-x-5 flex px-1 py-1 bg-gray-400 rounded-lg focus:outline-none">
+                    <img src="images/sun.png" alt="Sun Image" class="h-5 w-5 ">
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Team Container -->
+    <div class="container mx-auto px-4 py-8 flex justify-center gap-8cm">
+        <!-- Team Member 1 -->
+        <div class="team-member">
+            <img src="images/mna.jpg" alt="Team Member 1"> <!-- Set image width and height -->
+            <div class="content">
+                <p class="name">Omer</p>
+                <p class="description">Sudan Uni student, ALX SE Africa program participant. Future full-stack dev with
+                    a passion for tech and AI innovation.
+                </p>
+                <div class="read-more">
+                    <a href="https://www.linkedin.com/in/omar-abdulrahim-12a716244?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                        target="_blank">LinkedIn</a>
+                </div>
+                <div class="read-more">
+                    <a href="https://x.com/Omarvx211?s=09" target="_blank">Twitter - X</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-member">
+            <img src="images/sroo" alt="Team Member 2"> <!-- Set image width and height -->
+            <div class="content">
+                <p class="name">Esraa Hatim</p>
+                <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.</p>
+                <div class="read-more">
+                    <a href="https://sd.linkedin.com/in/isra-hatim" target="_blank">LinkedIn</a>
+                </div>
+                <div class="read-more">
+                    <a href="https://twitter.com/Sroo22o" target="_blank">Twitter - X</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-member">
+            <img src="images/hassan1" alt="Team Member 3"> <!-- Set image width and height -->
+            <div class="content">
+                <p class="name">Hassan Abdelwahid</p>
+                <p class="description">
+                    Student at Alneelen University,
+                    majoring in ALX Software Engineering within the Computer Science Department.
+                    Alongside my technical studies,
+                    I'm also skilled in logo design, blending creativity with software expertise.
+                </p>
+                <div class="read-more">
+                    <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fhassan-abdelazim-124730262%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR0wJK-wG30LBfBLS9bymaMYoAe6CizxHGMTlhA1prLK7OojqAQcMoPoUx4_aem_AdCLOrfdSSt_wCLLHfR3OyWk4Qu9WhkmqV0B_LwkVJyFQOfnH3JhzMOoCe6WLNpgCvaz6UAmK17x8GyInuekEXfD&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w"
+                        target="_blank">LinkedIn</a>
+                </div>
+                <div class="read-more">
+                    <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Ftwitter.com%2Fll_HassanD%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR3yTMWOOugB7fyhBCoud8u3EI4qL1K_8mJQj4GIA9Cc0Ha67MyFHv_yq3A_aem_AdBJ9belKWfWLGun0klgbxVWyJc3lgW1diY6eGoDCh-mb3y8LxxZp2o034zVt5P_-pRKegtXLoz9stm47IjDv59p&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w"
+                        target="_blank">Twitter - X</a>
+                </div>
             </div>
         </div>
     </div>
-    
-    <!-- Team Member 2 -->
-    <div class="team-member">
-        <img src="images/alien.png" alt="Team Member 2"> <!-- Set image width and height -->
-        <div class="content">
-            <p class="name">Esraa</p>
-            <p class="description">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-sed do eiusmod tempor incididunt ut labore et dolore
-magna aliqua. Ut enim ad minim veniam, quis nostrud
-exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat.</p>
-            <div class="read-more">
-                <a href="" target="_blank">LinkedIn</a>
-            </div>
-            <div class="read-more">
-                <a href="" target="_blank">Twitter - X</a>
-            </div>
-        </div>
-    </div>
 
-    <!-- Team Member 3 -->
-    <div class="team-member">
-        <img src="images/hassan1" alt="Team Member 3"> <!-- Set image width and height -->
-        <div class="content">
-            <p class="name">Hassan Abdelwahid</p>
-            <p class="description">
-                student at Alneelen University,
-                majoring in ALX Software Engineering within the Computer Science Department.
-                Alongside my technical studies,
-                I'm also skilled in logo design, blending creativity with software expertise.
-            </p>
-            <div class="read-more">
-                <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fhassan-abdelazim-124730262%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR0wJK-wG30LBfBLS9bymaMYoAe6CizxHGMTlhA1prLK7OojqAQcMoPoUx4_aem_AdCLOrfdSSt_wCLLHfR3OyWk4Qu9WhkmqV0B_LwkVJyFQOfnH3JhzMOoCe6WLNpgCvaz6UAmK17x8GyInuekEXfD&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w" target="_blank">LinkedIn</a>
-            </div>
-            <div class="read-more">
-                <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Ftwitter.com%2Fll_HassanD%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR3yTMWOOugB7fyhBCoud8u3EI4qL1K_8mJQj4GIA9Cc0Ha67MyFHv_yq3A_aem_AdBJ9belKWfWLGun0klgbxVWyJc3lgW1diY6eGoDCh-mb3y8LxxZp2o034zVt5P_-pRKegtXLoz9stm47IjDv59p&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w" target="_blank">Twitter - X</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="dark.js"></script>
+    <script src="dark.js"></script>
 
 
 </body>
+
 </html>

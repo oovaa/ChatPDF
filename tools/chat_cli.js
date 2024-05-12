@@ -1,5 +1,6 @@
 import { createInterface } from 'readline';
-import {  chainWithMessageHistory } from './chain.js';
+import { CRchain } from '../exper/commandr.js';
+import { formatConv } from './format.js';
 
 const rl = createInterface({
   input: process.stdin,
@@ -12,17 +13,20 @@ const rl = createInterface({
  * @function chat_loop
  * @returns {Promise<void>} A promise that resolves when the user exits the chat.
  */
+const history = [];
 async function chat_loop() {
   rl.question('You: ', async (msg) => {
     if (msg.toLocaleLowerCase() === 'exit') rl.close();
     else {
-      const response = await chainWithMessageHistory.invoke(
-        {
-          input: msg
-        },
-        { configurable: { sessionId: 'unused' } }
-      );
-      console.log('\x1b[32m%s\x1b[0m', response.content); // Print response in green
+      console.log(history);
+      const response = await CRchain.invoke({
+        question: msg,
+        // @ts-ignore
+        history: formatConv(history)
+      });
+      history.push(msg);
+      history.push(response);
+      console.log('\x1b[32m%s\x1b[0m', response); // Print response in green
       chat_loop();
     }
   });

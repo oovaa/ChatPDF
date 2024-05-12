@@ -1,5 +1,7 @@
-import { chain, chainWithMessageHistory  } from './chain.js';
+import { CRchain } from '../exper/commandr.js';
+import { formatConv } from './format.js';
 
+const history = [];
 /**
  * Asks a question and waits for a response.
  *
@@ -8,28 +10,17 @@ import { chain, chainWithMessageHistory  } from './chain.js';
  */
 async function ask(msg) {
   try {
-
-    const response = await chain.invoke({
-      question: msg
+    const response = await CRchain.invoke({
+      question: msg,
+      // @ts-ignore
+      history: formatConv(history)
     });
-
-    if (response.includes("I don't know"))
-    {
-      const response = await chainWithMessageHistory.invoke(
-        {
-          input: msg
-        },
-        { configurable: { sessionId: 'unused' } }
-      );
-      console.log("Ai make up answer");
-      return response.content;
-    }
-    console.log("From the content");
+    history.push(msg);
+    history.push(response);
     return response;
   } catch (error) {
     console.error('Error occurred while asking question:', error);
     throw error; // re-throw the error so it can be caught and handled by the calling code
   }
 }
-
 export { ask };
