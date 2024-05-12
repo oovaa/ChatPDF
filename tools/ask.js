@@ -1,4 +1,4 @@
-import { CRchain } from '../exper/commandr.js';
+import { CRchain } from '../tools/commandr.js';
 import { formatConv } from './format.js';
 
 const history = [];
