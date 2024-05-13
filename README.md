@@ -45,10 +45,9 @@ Here are some screenshots from the website:
   - HTML
   - Javascript
 
-- Embeddings
-  - Cohere
-  - Command R+
-  - Gemini
+- Models
+  - Cohere embedding 
+  - Command R+ as the main llm
 
 ## Our Site and Blog article
 - Site
