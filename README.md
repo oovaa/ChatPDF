@@ -6,18 +6,19 @@ ChatPDF is a platform that merges the real-time chat communication with PDF docu
 
 ## Table of contents
 - [The Story](#TheStory)
-- [Getting Started](#getting-started)
 - [Screenshots](#screenshots)
 - [Features](#features)
 - [Built with](#built-with)
+- [Site and blog article](#our-site-and-blog-article)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
 
 
 ## The Story
 During the pressures of college exams and our commitment to the ALX scholarship, we were all feeling the strain. It was during these moments of shared stress that the seed of our project was planted. We asked ourselves, "Why not create something that could help us easily understand files and engage with AI  just like we'd converse with another person?" We all found this idea incredibly exciting, realizing it can assist many people. And so, Powered by this shared vision, we started on our journey to bring this project to life.
-
-## Getting Started
 
 ## Screenshots
 Here are some screenshots from the website:
@@ -35,28 +36,46 @@ Here are some screenshots from the website:
 
 ## Features
 
+ChatPDF offers the following key features:
+
+1. **Real-time Chat Interface**: Interact with PDF documents using natural language queries.
+
+2. **PDF Content Understanding**: Utilizes advanced algorithms and AI to understand user queries and retrieve relevant information.
+
+3. **Question Answering**: Provides accurate responses to user questions and requests related to PDF content.
+
+4. **Summarization**: Summarizes the content of PDF documents for easier understanding.
+
+5. **Search Functionality**: Allows users to search for specific information within PDF documents.
+
+6. **Upload and Processing**: Upload PDF files for processing and interaction through the chat interface.
+
+7. **User-Friendly Interface**: Intuitive interface for easy interaction with PDF documents.
+
+
 ## Built with
-- js runtime  
-  - bun
+- Js runtime  
+  - Bun <img src="https://bun.sh/logo.svg" alt="Bun" width="20" height="20"/>
 
 - Backend
-  - Langchain framework
-  - Express JS
+  - Langchain framework 🦜🔗
+  - Express JS <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="Express.js" width="20" height="20"/>
 
 - Frontend
-  - Tailwind CSS 
-  - HTML
-  - Javascript
+  - Tailwind CSS <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="20" height="20"/>
+  - HTML <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML" width="20" height="20"/>
+  - Javascript <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="Js" width="20" height="20"/>
 
 - Models
-  - Cohere embedding 
-  - Command R+ as the main llm
+  - Cohere embedding <img src="https://asset.brandfetch.io/idfDTLvPCK/id3WZ2-eYm.png" alt="JavaScript" width="20" height="20"/>
+  - Command R+ as the main llm <img src="https://pbs.twimg.com/media/GKUl-3NWUAAfC27.jpg:large" alt="JavaScript" width="50" height="20"/>
 
 ## Our Site and Blog article
-- Site
+- Site:
 - Blog post:
 
-## Installation
+## Getting Started
+**Installation**
 
 To run ChatPDF locally, follow these steps:
 
@@ -85,22 +104,6 @@ We welcome contributions from the community. If you'd like to contribute to Chat
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Authors
-- Omar Abdulrahim: [LinkedIn](https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF8i4WWx3e6RwAAAY9u0lgwdJRgMVZ36G5pdspvGqArzMMbc-a2B0-qEzKTRfTgwqFyOHIM4iw_o67R5bN3ghrHb605HOyGND2EVG5nA6D8E1X5z6qTeKixGmwS6dGSMoXT6u0=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fomar-abdulrahim-12a716244%3Futm_source%3Dshare%26utm_campaign%3Dshare_via%26utm_content%3Dprofile%26utm_medium%3Dandroid_app)
-- Isra Hatim: [LinkedIn](https://sd.linkedin.com/in/isra-hatim)
-- Hassan Abdelwahid: [LinkedIn](https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fhassan-abdelazim-124730262%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR0wJK-wG30LBfBLS9bymaMYoAe6CizxHGMTlhA1prLK7OojqAQcMoPoUx4_aem_AdCLOrfdSSt_wCLLHfR3OyWk4Qu9WhkmqV0B_LwkVJyFQOfnH3JhzMOoCe6WLNpgCvaz6UAmK17x8GyInuekEXfD&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w)
-
-<p align="left">
-</p>
-
-<!-- h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/>
-
-</a> <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a>
-
-<a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a>
-
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a>
-
-<a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a>
-
-<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> </p -->
+- Omar Abdulrahim: [LinkedIn](https://www.linkedin.com/authwall?trk=bf&trkInfo=AQF8i4WWx3e6RwAAAY9u0lgwdJRgMVZ36G5pdspvGqArzMMbc-a2B0-qEzKTRfTgwqFyOHIM4iw_o67R5bN3ghrHb605HOyGND2EVG5nA6D8E1X5z6qTeKixGmwS6dGSMoXT6u0=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fomar-abdulrahim-12a716244%3Futm_source%3Dshare%26utm_campaign%3Dshare_via%26utm_content%3Dprofile%26utm_medium%3Dandroid_app) | [Twitter - X](https://twitter.com/Omarvx211) | [Email](omarvx211@gmail.com)
+- Isra Hatim: [LinkedIn](https://sd.linkedin.com/in/isra-hatim) | [Twitter - X](https://twitter.com/Sroo22o) | [Email](isra.hatim2@gmail.com)
+- Hassan Abdelwahid: [LinkedIn](https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fhassan-abdelazim-124730262%2F%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR0wJK-wG30LBfBLS9bymaMYoAe6CizxHGMTlhA1prLK7OojqAQcMoPoUx4_aem_AdCLOrfdSSt_wCLLHfR3OyWk4Qu9WhkmqV0B_LwkVJyFQOfnH3JhzMOoCe6WLNpgCvaz6UAmK17x8GyInuekEXfD&h=AT0lFGaWEYjgDqnRZTu573cjHWppKuyIldggwV-pnfHtSEbHBMkWvwNpCGC9NdXQGO_hRka6u0qVteTQArYkDW9weYGzKD8JJLtdfSQWdYuQTOgbvcK8UJL5mIWu4w) | [Twitter - X](https://twitter.com/ll_HassanD) | [Email](hassanabdelazim.max@gmail.com)
