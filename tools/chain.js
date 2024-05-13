@@ -3,7 +3,7 @@ import {
   RunnablePassthrough
 } from '@langchain/core/runnables';
 import { PromptTemplate } from '@langchain/core/prompts';
-import { CcommandRP, Chat_google } from '../models/Cmodels.js';
+import { CcommandRP } from '../models/Cmodels.js';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { combine, retriever } from './retriver.js';
 import {

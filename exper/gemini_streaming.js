@@ -1,15 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import readline from "readline"
+import { rl } from "../tools/io";
 // Access your API key as an environment variable (see "Set up your API key" above)
 dotenv.config()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-})
 
 let isWaitingRespond = false
 

@@ -5,6 +5,7 @@ import { createInterface } from 'readline';
 import { formatConv } from '../tools/format.js';
 import { CcommandRP } from '../models/Cmodels.js';
 import { retriever, combine } from '../tools/retriver.js';
+import { rl } from './io.js';
 
 const EXIT_COMMAND = 'exit';
 const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
@@ -55,10 +56,6 @@ const answer_chain = RunnableSequence.from([
   // (prevResult) => console.log(prevResult),
 ]);
 
-export const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 // @ts-ignore
 // const retriever_chain = RunnableSequence.from([

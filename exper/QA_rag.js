@@ -1,11 +1,5 @@
-import { createInterface } from 'readline';
 import { Chat_google } from '../models/Cmodels';
-import { HumanMessage, AIMessage } from '@langchain/core/messages';
-
-const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+import { rl } from '../tools/io';
 
 const chatHistory = []; // Array to store chat history
 

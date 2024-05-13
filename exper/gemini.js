@@ -1,18 +1,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 // @ts-ignore
 import detenv from "dotenv";
+import { rl } from "../tools/io";
 // @ts-ignore
-import readline from "readline"
 
 // Access your API key as an environment variable (see "Set up your API key" above)
 detenv.config()
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-})
 
 async function run() {
 
