@@ -59,7 +59,7 @@ ChatPDF offers the following key features:
 
 - Backend
   - Langchain framework 🦜🔗
-  - Express JS <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="Express.js" width="20" height="20"/>
+  - Express JS <img src="https://images.credly.com/images/1c2c86e1-16ce-4e4d-a425-d1ac96bb026d/express.png" alt="Express.js" width="20" height="20"/>
 
 - Frontend
   - Tailwind CSS <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="20" height="20"/>
