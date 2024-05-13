@@ -1,3 +1,14 @@
+/**
+ * Cmodels.js
+ *
+ * This file contains functions that create instances of different chat models.
+ *
+ * @module Cmodels
+ * @requires dotenv
+ * @requires @langchain/google-genai
+ * @requires @langchain/cohere
+ * @requires @google/generative-ai
+ */
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { config } from 'dotenv';
 import { ChatCohere, Cohere } from '@langchain/cohere';
@@ -5,12 +16,25 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 config();
 
+/**
+ * Creates a new instance of ChatGoogleGenerativeAI.
+ *
+ * @param {Object} [parms={}] - Parameters for the ChatGoogleGenerativeAI instance.
+ * @returns {ChatGoogleGenerativeAI} - A new instance of ChatGoogleGenerativeAI.
+ */
 function Cgoogle(parms = {}) {
   return new ChatGoogleGenerativeAI(parms);
 }
 // const model = Cgoogle();
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res.content);
+
+/**
+ * Creates a new instance of ChatCohere.
+ *
+ * @param {Object} [parms={}] - Parameters for the ChatCohere instance.
+ * @returns {ChatCohere} - A new instance of ChatCohere.
+ */
 
 function Ccohere(parms = {}) {
   return new ChatCohere(parms);
@@ -19,11 +43,23 @@ function Ccohere(parms = {}) {
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res.content);
 
+/**
+ * Creates a new instance of ChatCohere with the 'command-r-plus' model.
+ *
+ * @param {Object} [parms={}] - Parameters for the ChatCohere instance.
+ * @returns {ChatCohere} - A new instance of ChatCohere.
+ */
 function CcommandRP(parms = {}) {
   const model = new ChatCohere({ model: 'command-r-plus' });
   return model;
 }
 
+/**
+ * Creates a new instance of Cohere.
+ *
+ * @param {Object} [param={}] - Parameters for the Cohere instance.
+ * @returns {Cohere} - A new instance of Cohere.
+ */
 function Mcohere(param = {}) {
   return new Cohere(param);
 }
@@ -31,11 +67,22 @@ function Mcohere(param = {}) {
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res);
 
+/**
+ * Creates a new instance of GoogleGenerativeAI's generative model.
+ *
+ * @returns {GoogleGenerativeAI} - A new instance of GoogleGenerativeAI's generative model.
+ */
 function Mgoogle() {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  // @ts-ignore
   return genAI.getGenerativeModel({ model: 'gemini-pro' });
 }
 
+/**
+ * Creates a new instance of ChatGoogleGenerativeAI with the 'gemini-pro' model.
+ *
+ * @returns {ChatGoogleGenerativeAI} - A new instance of ChatGoogleGenerativeAI.
+ */
 function Chat_google() {
   const model = new ChatGoogleGenerativeAI({
     model: 'gemini-pro',
@@ -54,6 +101,7 @@ function Chat_google() {
 // let res = await model.invoke('can i use command R in langchain?');
 // console.log(res);
 
+// Export the functions
 export { Cgoogle, Ccohere, Mcohere, Mgoogle, Chat_google, CcommandRP };
 
 // const model = new ChatCohere({

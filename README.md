@@ -36,6 +36,9 @@ Here are some screenshots from the website:
 ## Features
 
 ## Built with
+- js runtime  
+  - bun
+
 - Backend
   - Langchain framework
   - Express JS
@@ -72,9 +75,9 @@ Once the server is running, open your web browser and navigate to `http://localh
 We welcome contributions from the community. If you'd like to contribute to ChatPDF, please follow these guidelines:
 
 - Fork the repository
-- Create a new branch: `git checkout -b feature/new-feature`
+- Create a new branch: `git checkout -b bug-fix/new-feature`
 - Make your changes and commit them: `git commit -m 'Add new feature'`
-- Push to the branch: `git push origin feature/new-feature`
+- Push to the branch: `git push origin bug-fix/new-feature`
 - Submit a pull request
 
 ## License
