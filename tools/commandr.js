@@ -79,6 +79,10 @@ const CRchain = RunnableSequence.from([
   answer_chain
 ]);
 
+/**
+ * Runs the chat application.
+ * @returns {Promise<void>} A promise that resolves when the chat application is finished.
+ */
 async function run() {
   const history = [];
 
