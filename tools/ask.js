@@ -1,4 +1,4 @@
-import { CRchain } from '../exper/commandr.js';
+import { CRchain } from '../tools/commandr.js';
 import { formatConv } from './format.js';
 
 const history = [];
@@ -6,7 +6,7 @@ const history = [];
  * Asks a question and waits for a response.
  *
  * @param {string} msg - The question to ask.
- * @returns {Promise<any>} - A promise that resolves to the response or an error.
+ * @returns {Promise<string>} - A promise that resolves to the response or an error or a string with the llm response.
  */
 async function ask(msg) {
   try {

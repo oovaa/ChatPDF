@@ -2,11 +2,11 @@ import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { promises as fs } from 'fs';
 
-/**
- * Loads a PDF document from the specified path.
- * @param {string} path - The path to the PDF file.
- * @returns {Promise<Object>} - A promise that resolves to the loaded PDF document.
- */
+  /**
+   * Loads a PDF document from the specified path.
+   * @param {string} path - The path to the PDF file.
+   * @returns {Promise<Object[]>} - A promise that resolves to an array of parsed PDF documents.
+   */
   async function load_pdf(path) {
     const loader = new PDFLoader(path, {
       parsedItemSeparator: '',
@@ -28,6 +28,11 @@ async function load_text(path) {
   return Tdocs;
 }
 
+/**
+ * Deletes a file from the file system.
+ * @param {string} filePath - The path of the file to be deleted.
+ * @returns {Promise<void>} - A promise that resolves when the file is successfully deleted.
+ */
 async function deleteFile(filePath) {
   try {
       await fs.unlink(filePath);

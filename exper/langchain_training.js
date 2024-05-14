@@ -3,6 +3,7 @@ import { file_chuncker } from '../tools/chuncker';
 import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib';
 import { createInterface } from 'readline';
+import { rl } from '../tools/io';
 
 const path = './exper/scrimba.txt';
 const directory = 'exper/db';
@@ -38,10 +39,6 @@ const re_vdb = loaded_vdb
 // // const cvdb = await re_vdb.getRelevantDocuments("Javascript")
 // console.log(cvdb); // working
 
-const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 async function run() {
   const model = genAI.getGenerativeModel({ model: 'gemini-pro' });

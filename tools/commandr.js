@@ -5,7 +5,7 @@ import { createInterface } from 'readline';
 import { formatConv } from '../tools/format.js';
 import { CcommandRP } from '../models/Cmodels.js';
 import { retriever, combine } from '../tools/retriver.js';
-import { rl } from '../tools/io.js';
+import { rl } from './io.js';
 
 const EXIT_COMMAND = 'exit';
 const RESPONSE_COLOR = '\x1b[32m%s\x1b[0m'; // Green
@@ -57,7 +57,6 @@ const answer_chain = RunnableSequence.from([
 ]);
 
 
-
 // @ts-ignore
 // const retriever_chain = RunnableSequence.from([
 //   retriever,
@@ -80,6 +79,10 @@ const CRchain = RunnableSequence.from([
   answer_chain
 ]);
 
+/**
+ * Runs the chat application.
+ * @returns {Promise<void>} A promise that resolves when the chat application is finished.
+ */
 async function run() {
   const history = [];
 
