@@ -73,10 +73,12 @@
 }
 
 /*Chat page*/
-.dark .chat-container {
-    color: #ffffff; /* Adjust text color */
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.199);
+.dark .message.sent {
+    background-color: #444444 !important; /* Adjusted background color */
+    text-align: right;
+    color: #ffffff; /* Adjusted text color */
 }
+
 
 .dark .message.sent {
     background-color: #afafaf !important;
@@ -88,9 +90,9 @@
     background:none;
 }
 .dark .message.received {
-    background-color: #EAEAEA;
+    background-color: #666666; /* Adjusted background color */
     text-align: left;
-    color: #1e0135;
+    color: #ffffff; /* Adjusted text color */
 }
 
 .dark .input-container {
