@@ -82,7 +82,8 @@ To run ChatPDF locally, follow these steps:
 1. Clone the repository: `git clone https://github.com/oovaa/ChatPDF.git`
 2. Navigate to the project directory: `cd ChatPDF`
 3. Install dependencies: `bun install`
-4. Start the server: `bun dev run`
+4. add your cohere token in .env file (create it) see example in env.example
+5. Start the server: `bun dev run`
 
 
 ## Usage
