@@ -82,7 +82,7 @@ await vectorStore.addDocuments(documents)
 const filter = (doc) => doc.metadata.source === 'https://example.com'
 
 const similaritySearchResults = await vectorStore.similaritySearch(
-  'biology',
+  'aival',
   2,
   filter
 )
