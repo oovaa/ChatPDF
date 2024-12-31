@@ -1,5 +1,5 @@
 import express, { json } from 'express'
-import logger from './middleware/logger.js'
+import logger from './src/middleware/logger.js'
 
 const app = express()
 const port = 3000

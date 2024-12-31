@@ -18,6 +18,11 @@
     "@langchain/core": "^0.3.26",
     "@langchain/openai": "^0.3.16",
     "express": "^4.21.2",
-    "hnswlib-node": "^3.0.0"
+    "file-type": "^19.6.0",
+    "hnswlib-node": "^3.0.0",
+    "langchain": "^0.3.8",
+    "mime": "^4.0.6",
+    "mime-types": "^2.1.35",
+    "officeparser": "^5.1.1"
   }
 }
