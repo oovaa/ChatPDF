@@ -81,12 +81,24 @@ await vectorStore.addDocuments(documents)
 
 const filter = (doc) => doc.metadata.source === 'https://example.com'
 
-const similaritySearchResults = await vectorStore.similaritySearch(
-  'aival',
-  2,
-  filter
+// const similaritySearchResults = await vectorStore.similaritySearch(
+//   'aival',
+//   2,
+//   filter
+// )
+
+// for (const doc of similaritySearchResults) {
+//   console.log(`* ${doc.pageContent} [${JSON.stringify(doc.metadata, null)}]`)
+// }
+
+const directory = './testdb'
+await vectorStore.save(directory)
+
+// Load the vector store from the same directory
+const loadedVectorStore = await HNSWLib.load(
+  directory,
+  new ECohereEmbeddingsModel()
 )
 
-for (const doc of similaritySearchResults) {
-  console.log(`* ${doc.pageContent} [${JSON.stringify(doc.metadata, null)}]`)
-}
+// vectorStore and loadedVectorStore are identical
+console.log(await loadedVectorStore.similaritySearch('Rain Boy', 1)) 
