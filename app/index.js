@@ -1,52 +1,49 @@
-import express from 'express';
-import multer from 'multer';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import { deleteFile, load_pdf } from '../tools/fileProcessing.js';
-import { doc_chuncker } from '../tools/chuncker.js';
-import { ECohereEmbeddings } from '../models/Emodels.js';
-import { Hvectore, H_load_vectore } from '../tools/storage.js';
-import { retriever, combine } from '../tools/retriver.js';
-import { ask } from '../tools/ask.js';
-import bodyParser from 'body-parser';
-import { appendFileSync } from 'fs';
+import express from 'express'
+import multer from 'multer'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+import { v4 as uuidv4 } from 'uuid'
+import { deleteFile, load_pdf } from '../tools/fileProcessing.js'
+import { doc_chuncker } from '../tools/chuncker.js'
+import { ECohereEmbeddings } from '../models/Emodels.js'
+import { Hvectore, H_load_vectore } from '../tools/storage.js'
+import { retriever, combine } from '../tools/retriver.js'
+import { ask } from '../tools/ask.js'
+import bodyParser from 'body-parser'
+import { appendFileSync } from 'fs'
 
-const port = 3000;
-const app = express();
-
+const port = 3000
+const app = express()
 
 /*
 This route sets up an Express.js server to serve static
 files from a directory named "public" - app/public
 */
-const publicPath = join(dirname(fileURLToPath(import.meta.url)), 'public');
-app.use(express.static(publicPath));
-app.use(bodyParser.json());
-
+const publicPath = join(dirname(fileURLToPath(import.meta.url)), 'public')
+app.use(express.static(publicPath))
+app.use(bodyParser.json())
 
 /**
  * Handles a POST request to '/send-message' endpoint, expecting a message in the request body.
  * Sends the message for processing and responds with the result.
- * 
+ *
  * @param {Object} req - The request object containing the message to be sent.
  * @param {Object} res - The response object to send the result.
  * @returns {Promise<void>} - A promise indicating the completion of the handling process.
  */
 app.post('/send-message', async (req, res) => {
-  const message = req.body.message;
+  const message = req.body.message
   try {
-    const response = await ask(message);
+    const response = await ask(message)
     console.log(await response)
-    res.json({ status: 'success', data: response}); // Send back a JSON response
+    res.json({ status: 'success', data: response }) // Send back a JSON response
   } catch (error) {
-    let currentDate = new Date().toISOString();
-    let error_message = `${currentDate} - an error accured when sending message: ${error}`;
-    appendFileSync('error.log', error_message + '\n');
-    res.status(500);
+    let currentDate = new Date().toISOString()
+    let error_message = `${currentDate} - an error accured when sending message: ${error}`
+    appendFileSync('error.log', error_message + '\n')
+    res.status(500)
   }
-});
-
+})
 
 /**
  * Asynchronously handles a PDF file, processing its contents:
@@ -57,87 +54,77 @@ app.post('/send-message', async (req, res) => {
  * 5. Loads the vector database from the saved directory.
  * 6. Initiates a retrieval process.
  * 7. Combines the processed chunks.
- * 
+ *
  * @param {string} filePath - The path to the PDF file to be handled.
  * @returns {Promise<void>} - A promise indicating the completion of the handling process.
  */
-async function processPDF(filePath){
-    const doc = await load_pdf(filePath);
-    const chuncks = await doc_chuncker(doc);
-    // embedding and save the output into "app/db"
-    const vectorStore = await Hvectore(chuncks, ECohereEmbeddings);
-    const currentDir = dirname(fileURLToPath(import.meta.url));
-    const targetDir = join(
-      dirname(dirname(currentDir)),
-      'ChatPDF',
-      'dbs',
-      'db'
-    );
+async function processPDF(filePath) {
+  const doc = await load_pdf(filePath)
+  const chuncks = await doc_chuncker(doc)
+  // embedding and save the output into "app/db"
+  const vectorStore = await Hvectore(chuncks, ECohereEmbeddings)
+  const currentDir = dirname(fileURLToPath(import.meta.url))
+  const targetDir = join(dirname(dirname(currentDir)), 'ChatPDF', 'dbs', 'db')
 
-    await vectorStore.save(targetDir);
+  await vectorStore.save(targetDir)
 
-    //delete the file
-    await deleteFile(filePath);
+  //delete the file
+  await deleteFile(filePath)
 
-    //Load the DB
-    const load_vectore = await H_load_vectore(targetDir, ECohereEmbeddings);
-    await retriever();
-    combine(chuncks);
+  //Load the DB
+  const load_vectore = await H_load_vectore(targetDir, ECohereEmbeddings)
+  await retriever()
+  combine(chuncks)
 }
 /* Multer disk storage configuration to
 create uniqe file name and save it into './app/PDFfiles */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const destinationPath =
-      dirname(fileURLToPath(import.meta.url)) + '/PDFfiles';
-    cb(null, destinationPath);
+      dirname(fileURLToPath(import.meta.url)) + '/PDFfiles'
+    cb(null, destinationPath)
   },
   filename: (req, file, cb) => {
-    const uniqueFileName = uuidv4(); // Generate a unique file name
-    const fileExtension = file.originalname.split('.').pop(); // Get the file extension
-    const fileName = `${uniqueFileName}.${fileExtension}`; // Combine unique name and extension
-    cb(null, fileName);
-  }
-});
-const upload = multer({ storage: storage });
+    const uniqueFileName = uuidv4() // Generate a unique file name
+    const fileExtension = file.originalname.split('.').pop() // Get the file extension
+    const fileName = `${uniqueFileName}.${fileExtension}` // Combine unique name and extension
+    cb(null, fileName)
+  },
+})
+const upload = multer({ storage: storage })
 
 /**
  * Handles a POST request to '/chat' endpoint, which expects a single file upload.
  * Upon receiving the file, it processes the PDF content asynchronously.
- * 
+ *
  * @param {Object} req - The request object containing file information.
  * @param {Object} res - The response object to send the result.
  * @returns {Promise<void>} - A promise indicating the completion of the handling process.
  */
 app.post('/chat', upload.single('file'), async (req, res) => {
   try {
-    const fileName = req.file.filename;
-    const filePath = `${req.file.destination}/${fileName}`;
+    const fileName = req.file.filename
+    const filePath = `${req.file.destination}/${fileName}`
 
     processPDF(filePath)
-    
 
-    res.send('ok');
+    res.send('ok')
   } catch (error) {
-    const currentDate = new Date().toISOString();
-    const errorMessage = `Error occurred while processing file: ${error}`;
-    const logMessage = `${currentDate} - ${errorMessage}`;
+    const currentDate = new Date().toISOString()
+    const errorMessage = `Error occurred while processing file: ${error}`
+    const logMessage = `${currentDate} - ${errorMessage}`
     // Write the error message to a log file
-    appendFileSync('error.log', logMessage + '\n');
-    res.status(500).send('Internal server error');
+    appendFileSync('error.log', logMessage + '\n')
+    res.status(500).send('Internal server error')
   }
-});
-
+})
 
 /*404 page route */
 app.get('*', (req, res) => {
-  
-  res.sendFile(publicPath + '/404.html');
-});
+  res.sendFile(publicPath + '/404.html')
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}
-access it with the link http://localhost:3000/index.html`);
-});
-
-
+access it with the link http://localhost:3000/index.html`)
+})

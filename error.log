@@ -136,3 +136,6 @@ Body: {
 2024-05-11T08:46:03.986Z - an error accured when sending message: ReferenceError: formatConv is not defined
 2024-05-11T08:50:14.187Z - an error accured when sending message: ReferenceError: history is not defined
 2024-05-11T18:14:48.145Z - an error accured when sending message: TypeError: Cannot read properties of undefined (reading 'map')
+2024-12-30T11:23:35.014Z - an error accured when sending message: Error: ID 9 not found.
+2024-12-30T11:24:17.342Z - an error accured when sending message: Error: ID 8 not found.
+2024-12-30T11:24:45.089Z - an error accured when sending message: Error: ID 9 not found.
