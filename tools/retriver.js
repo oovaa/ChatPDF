@@ -16,7 +16,7 @@ async function VectorStore() {
  */
 async function retriever() {
   const vstore = await VectorStore();
-  const retriever = await vstore.asRetriever();
+  const retriever = vstore.asRetriever();
   return retriever;
 }
 

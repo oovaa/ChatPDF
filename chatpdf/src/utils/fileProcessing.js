@@ -9,7 +9,7 @@ export const parser = async (filePath) => {
   const ext = path.extname(filePath).toLowerCase()
   let loader = ''
   let docs = ''
-  // let allSlidesContent = ''
+  let allSlidesContent = ''
 
   switch (ext) {
     case '.pptx':
@@ -47,7 +47,7 @@ export const parser = async (filePath) => {
       try {
         loader = new TextLoader(filePath)
         docs = await loader.load()
-        // allSlidesContent = docs.map((doc) => doc.pageContent)
+        allSlidesContent = docs.map((doc) => doc.pageContent)
 
         return docs
       } catch (err) {
@@ -64,7 +64,7 @@ export const parser = async (filePath) => {
  * @param {Document[]} doc - The document to be chunked.
  * @returns {Promise<any[]>} - A promise that resolves to an array of chunks.
  */
-async function doc_chuncker(doc) {
+export async function doc_chuncker(doc) {
   try {
     const splitter = new RecursiveCharacterTextSplitter({
       chunkOverlap: 0,
@@ -77,10 +77,3 @@ async function doc_chuncker(doc) {
   }
 }
 
-const re = await parser('./chatpdf/test.txt')
-
-console.log(re)
-
-const ch = await doc_chuncker(re)
-
-console.log(ch)
