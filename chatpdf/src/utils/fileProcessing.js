@@ -15,7 +15,7 @@ export const parser = async (filePath) => {
       try {
         loader = new PPTXLoader(filePath)
         docs = await loader.load()
-        // allSlidesContent = docs.map((doc) => doc.pageContent)
+        allSlidesContent = docs.map((doc) => doc.pageContent)
 
         return docs
       } catch (err) {
@@ -26,7 +26,7 @@ export const parser = async (filePath) => {
       try {
         loader = new PDFLoader(filePath)
         docs = await loader.load()
-        // allSlidesContent = docs.map((doc) => doc.pageContent)
+        allSlidesContent = docs.map((doc) => doc.pageContent)
 
         return docs
       } catch (err) {
@@ -36,7 +36,7 @@ export const parser = async (filePath) => {
       try {
         loader = new DocxLoader(filePath)
         docs = await loader.load()
-        // allSlidesContent = docs.map((doc) => doc.pageContent)
+        allSlidesContent = docs.map((doc) => doc.pageContent)
 
         return docs
       } catch (err) {
