@@ -23,11 +23,9 @@ export function ECohereEmbeddingsModel() {
  * Generates embeddings for a given query string using the ECohereEmbeddingsModel.
  *
  * @param {string} str - The query string to be embedded.
- * @returns {Promise<any>} A promise that resolves to the embeddings of the query string.
+ * @returns {Promise<number[]>} A promise that resolves to the embeddings of the query string.
  */
-async function Cembed_Query(str) {
+export async function Cembed_Query(str) {
   const embeddings = ECohereEmbeddingsModel()
   return await embeddings.embedQuery(str)
 }
-
-// console.log(await Cembed_Query('hi there'))
