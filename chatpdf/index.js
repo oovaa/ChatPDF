@@ -4,12 +4,12 @@ import logger from './src/middleware/logger.js'
 const app = express()
 const port = 3000
 
-app.use(logger)
 app.use(express.json())
+app.use(logger)
 
 app.get('/', (req, res) => res.status(200).send('all good'))
 app.post('/', (req, res) => {
-  res.status(200).send('all good')
+  res.status(200).send('all good ')
 })
 
 app.listen(port, () => {

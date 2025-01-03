@@ -1,20 +1,10 @@
-import {
-  ChatPromptTemplate,
-  MessagesPlaceholder,
-  PromptTemplate,
-} from '@langchain/core/prompts'
+import { PromptTemplate } from '@langchain/core/prompts'
 import { CcommandRP } from '../models/Ccohere.js'
 import {
   RunnablePassthrough,
   RunnableSequence,
-  RunnableWithMessageHistory,
 } from '@langchain/core/runnables'
-import { ChatMessageHistory } from 'langchain/stores/message/in_memory'
 import { StringOutputParser } from '@langchain/core/output_parsers'
-import { Hvectore } from '../db/hnsw.js'
-import { parser } from './fileProcessing.js'
-import { doc_chuncker } from './chunker.js'
-import { ECohereEmbeddingsModel } from '../models/Ecohere.js'
 import { combine, retriever, Retriver } from '../db/retriver.js'
 
 const llm = CcommandRP()
@@ -70,7 +60,7 @@ export const stand_alone_chain = RunnableSequence.from([
  */
 export const retrevire_chain = RunnableSequence.from([
   (prevResult) => prevResult.stand_alone,
-  await retriever,
+   retriever,
   combine,
 ])
 
@@ -85,56 +75,25 @@ export const answer_chain = RunnableSequence.from([
   new StringOutputParser(),
 ])
 
-// /**
-//  * Main runnable sequence that combines the stand-alone question, context retrieval, and answer generation.
-//  * @type {RunnableSequence}
-//  */
-// const chain = RunnableSequence.from([
-//   { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
-//   {
-//     context: retrevire_chain,
-//     question: ({ original_input }) => original_input.question,
-//   },
-//   answer_chain,
-// ])
-
-/* chat history */
-
 /**
- * Runnable with message history prompt for generating prompts based on previous chat messages.
- * This prompt includes a system message introducing the chatbot's purpose and instructions for interaction,
- * a placeholder for historical chat messages, and a placeholder for user input.
+ * Creates a runnable sequence chain with the following steps:
+ * 1. A stand-alone chain with a passthrough origin.
+ * 2. A context retrieval chain that extracts the question and history from the origin.
+ * 3. An answer chain.
+ *
+ * @constant {RunnableSequence} chain - The runnable sequence chain.
  */
+export const chain = RunnableSequence.from([
+  {
+    stand_alone: stand_alone_chain,
+    origin: new RunnablePassthrough(),
+  },
+  {
+    context: retrevire_chain,
+    question: ({ origin }) => origin.question,
+    history: ({ origin }) => origin.history,
+  },
+  // (prevResult) => console.log(prevResult),
 
-// const runnableWithMessageHistoryPrompt = ChatPromptTemplate.fromMessages([
-//   [
-//     'system',
-//     `You are ChatPdf,deisgned by Hassan, Omar and Esraa, a helpful and enthusiastic support bot who can answer questions about documents based on the provided context.
-//       If the answer isn't in the context, please make up an answer that makes sense and mention that its not from the context.
-//        Always speak as if you were chatting with a friend. Feel free to engage in friendly conversation.`,
-//   ],
-//   new MessagesPlaceholder('chat_history'),
-//   ['human', '{input}'],
-// ])
-
-// // Creating a new chain by piping a runnable with message history prompt into a language model runnable.
-// const chain2 = runnableWithMessageHistoryPrompt.pipe(llm)
-
-// // Instantiating a new chat message history object for the chain.
-// const demoEphemeralChatMessageHistoryForChain = new ChatMessageHistory()
-
-// // Creating a new runnable with message history, incorporating the chain with message history prompt and chat message history.
-// const chainWithMessageHistory = new RunnableWithMessageHistory({
-//   runnable: chain2,
-//   getMessageHistory: (_sessionId) => demoEphemeralChatMessageHistoryForChain,
-//   inputMessagesKey: 'input',
-//   historyMessagesKey: 'chat_history',
-// })
-
-// const std = await stand_alone_chain.invoke({
-//   question: 'there was a boy and he had a name i cant remember',
-//   original_input: new RunnablePassthrough(),
-// })
-// console.log(std)
-
-// export { chain, chainWithMessageHistory }
+  answer_chain,
+])

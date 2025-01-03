@@ -38,7 +38,7 @@ export const getSemiliraties = async (question, VectorStore) => {
  * @returns {Promise<any>} - The retriever object.
  */
 export async function retriever() {
-  const vstore = await StoreFileInVDB('./chatpdf/test.txt')
+  const vstore = await StoreFileInVDB('./test.txt')
   const retriever = vstore.asRetriever()
 
   return retriever

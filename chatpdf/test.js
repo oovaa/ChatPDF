@@ -5,27 +5,11 @@ import {
 import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
 import { combine, retriever, Retriver } from './src/db/retriver.js'
 import { ECohereEmbeddingsModel } from './src/models/Ecohere'
-import { answer_chain, retrevire_chain, stand_alone_chain } from './src/utils/chains.js'
+import { answer_chain, chain, retrevire_chain, stand_alone_chain } from './src/utils/chains.js'
 import { doc_chuncker } from './src/utils/chunker.js'
 import { parser } from './src/utils/fileProcessing'
 
-const chain = RunnableSequence.from([
-  {
-    stand_alone: stand_alone_chain,
-    origin: new RunnablePassthrough(),
-  },
-  (prevResult) => prevResult,
-  // (prevResult) => console.log(prevResult),
-  {
-    context: retrevire_chain,   
-    question: ({ origin }) => origin.question,
-    history: ({ origin }) => origin.history,
-  },
-  // (prevResult) => console.log(prevResult),
 
-  answer_chain,
-
-])
 
 const ans = await chain.invoke({
   question: 'what is tne boys age and name',
