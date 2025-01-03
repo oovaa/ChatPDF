@@ -1,14 +1,53 @@
+import {
+  RunnablePassthrough,
+  RunnableSequence,
+} from '@langchain/core/runnables'
 import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
-import { getSemiliraties, Retriver } from './src/db/retriver.js'
-import { ECohereEmbeddingsModel } from './src/embed/Ecohere'
+import { combine, retriever, Retriver } from './src/db/retriver.js'
+import { ECohereEmbeddingsModel } from './src/models/Ecohere'
+import { answer_chain, retrevire_chain, stand_alone_chain } from './src/utils/chains.js'
 import { doc_chuncker } from './src/utils/chunker.js'
 import { parser } from './src/utils/fileProcessing'
+
+const chain = RunnableSequence.from([
+  {
+    stand_alone: stand_alone_chain,
+    origin: new RunnablePassthrough(),
+  },
+  (prevResult) => prevResult,
+  // (prevResult) => console.log(prevResult),
+  {
+    context: retrevire_chain,   
+    question: ({ origin }) => origin.question,
+    history: ({ origin }) => origin.history,
+  },
+  // (prevResult) => console.log(prevResult),
+
+  answer_chain,
+
+])
+
+const ans = await chain.invoke({
+  question: 'what is tne boys age and name',
+  history: 'the boy is 19 y/o',
+})
+
+console.log(ans)
+
+// const chain = RunnableSequence.from([
+//   { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
+//   {
+//     context: retrevire_chain,
+//     question: ({ original_input }) => original_input.question,
+//   },
+//   answer_chain,
+// ])
 
 // const path = './test.txt'
 // const Embeddings = ECohereEmbeddingsModel()
 
 // const load = await parser(path)
-// // console.log(load)
+// console.log(load)
 
 // const chunk = await doc_chuncker(load)
 // console.log(chunk)

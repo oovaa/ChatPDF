@@ -16,5 +16,6 @@ export async function doc_chuncker(doc) {
     return out
   } catch (error) {
     console.log('chuncker problem ', error)
+    throw error
   }
 }

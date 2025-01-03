@@ -1,5 +1,6 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
 import { VectorStore, VectorStoreRetriever } from '@langchain/core/vectorstores'
+import { Hvectore, StoreFileInVDB } from './hnsw'
 
 /**
  * Retrieves documents from the VectorStore.
@@ -9,7 +10,7 @@ import { VectorStore, VectorStoreRetriever } from '@langchain/core/vectorstores'
  * @returns {VectorStoreRetriever<HNSWLib>} A promise that resolves to the retrieved documents.
  */
 export const Retriver = (VectorStore, Kdocs = 5) => {
-  return VectorStore.asRetriever(Kdocs)
+  return retriever(Kdocs)
 }
 
 /**
@@ -30,4 +31,19 @@ export const getSemiliraties = async (question, VectorStore) => {
   const chunks = await retriver.invoke(question)
   const result = chunks.map((x) => x.pageContent)
   return result.join('\n\n')
+}
+
+/**
+ * The retriever object used for retrieving data from the VectorStore.
+ * @returns {Promise<any>} - The retriever object.
+ */
+export async function retriever() {
+  const vstore = await StoreFileInVDB('./chatpdf/test.txt')
+  const retriever = vstore.asRetriever()
+
+  return retriever
+}
+
+export function combine(docs) {
+  return docs.map((doc) => doc.pageContent).join('\n\n')
 }

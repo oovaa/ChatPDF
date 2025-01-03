@@ -1,5 +1,5 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
-import { ECohereEmbeddingsModel } from '../embed/Ecohere'
+import { ECohereEmbeddingsModel } from '../models/Ecohere'
 import { parser } from '../utils/fileProcessing'
 import { doc_chuncker } from '../utils/chunker'
 
