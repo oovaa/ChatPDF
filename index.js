@@ -6,6 +6,9 @@
 import express, { json } from 'express'
 import logger from './src/middleware/logger.js'
 import { router } from './src/Routes/index.js'
+import compression from 'compression'
+import helmet from 'helmet'
+import cors from 'cors'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -18,7 +21,10 @@ app.use(express.json())
 /**
  * Custom logger middleware.
  */
+app.use(compression())
+app.use(cors())
 app.use(logger)
+app.use(helmet())
 
 /**
  * Health check endpoint.
