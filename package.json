@@ -7,7 +7,8 @@
     "nodemon": "^3.1.9"
   },
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "bun index.js"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
