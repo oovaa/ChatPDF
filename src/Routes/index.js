@@ -8,10 +8,6 @@ import { chain } from '../utils/chains.js'
 export const router = Router()
 let history = ''
 
-router.get('/z', (req, res) => {
-  res.status(200).send('all good')
-})
-
 router.post('/send', async (req, res) => {
   const { question } = req.body
 
