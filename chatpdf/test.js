@@ -1,22 +1,35 @@
-import {
-  RunnablePassthrough,
-  RunnableSequence,
-} from '@langchain/core/runnables'
-import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
-import { combine, retriever, Retriver } from './src/db/retriver.js'
-import { ECohereEmbeddingsModel } from './src/models/Ecohere'
-import { answer_chain, chain, retrevire_chain, stand_alone_chain } from './src/utils/chains.js'
-import { doc_chuncker } from './src/utils/chunker.js'
-import { parser } from './src/utils/fileProcessing'
+// import {
+//   RunnablePassthrough,
+//   RunnableSequence,
+// } from '@langchain/core/runnables'
+// import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
+// import { combine, retriever, Retriver } from './src/db/retriver.js'
+// import { ECohereEmbeddingsModel } from './src/models/Ecohere'
+// import {
+//   answer_chain,
+//   chain,
+//   retrevire_chain,
+//   stand_alone_chain,
+// } from './src/utils/chains.js'
+// import { doc_chuncker } from './src/utils/chunker.js'
+// import { parser } from './src/utils/fileProcessing'
 
+import { StoreFileInVDB } from './src/db/hnsw'
+import { setVDB, VDB } from './src/db/retriver'
+import { chain } from './src/utils/chains'
 
+// const db = await StoreFileInVDB('./test.txt')
 
-const ans = await chain.invoke({
-  question: 'what is tne boys age and name',
-  history: 'the boy is 19 y/o',
-})
+// // console.log(db)
 
-console.log(ans)
+// setVDB(db)
+
+// const ans = await chain.invoke({
+//   question: 'what is tne boys age and name',
+//   history: 'the boy is 19 y/o',
+// })
+
+// console.log(ans)
 
 // const chain = RunnableSequence.from([
 //   { stand_alone: stand_alone_chain, original_input: new RunnablePassthrough() },
@@ -56,3 +69,23 @@ console.log(ans)
 // const vdb = await StoreFileInVDB(path)
 // console.log(vdb)
 // console.log(await getSemiliraties('Boy', vdb))
+
+// let x = null
+
+// function setx(val) {
+//   x = val
+// }
+
+// setx(2)
+
+// console.log(x)
+
+// console.log(VDB)
+
+// const db = await StoreFileInVDB('./test.txt')
+
+// // console.log(db)
+
+// setVDB(db)
+
+// console.log(VDB)
