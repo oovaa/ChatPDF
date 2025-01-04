@@ -25,12 +25,17 @@ export async function Hvectore(doc, embedfunction, param = {}) {
  * @returns {romise<HNSWLib>} - A promise that resolves when the file has been successfully stored.
  */
 export const StoreFileInVDB = async (filePath) => {
-  const Embeddings = ECohereEmbeddingsModel()
+  try {
+    const Embeddings = ECohereEmbeddingsModel()
 
-  const load = await parser(filePath)
+    const load = await parser(filePath)
 
-  const chunk = await doc_chuncker(load)
+    const chunk = await doc_chuncker(load)
 
-  const vdb = await Hvectore(chunk, Embeddings)
-  return vdb
+    const vdb = await Hvectore(chunk, Embeddings)
+    return vdb
+  } catch (error) {
+    console.error('Error storing file in VDB:', error)
+    throw error
+  }
 }
