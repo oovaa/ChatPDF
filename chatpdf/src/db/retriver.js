@@ -2,7 +2,19 @@ import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
 import { VectorStore, VectorStoreRetriever } from '@langchain/core/vectorstores'
 import { Hvectore, StoreFileInVDB } from './hnsw'
 
+export let VDB = null
+
 /**
+ * Sets the VDB (hnswlib database) instance.
+ *
+ * @param {HNSWLib} db - The hnswlib database instance to be set.
+ */
+export function setVDB(db) {
+  VDB = db
+}
+
+/**
+ *
  * Retrieves documents from the VectorStore.
  *
  * @param {VectorStore} VectorStore - The vector store instance to retrieve documents from.
@@ -38,12 +50,20 @@ export const getSemiliraties = async (question, VectorStore) => {
  * @returns {Promise<any>} - The retriever object.
  */
 export async function retriever() {
-  const vstore = await StoreFileInVDB('./test.txt')
-  const retriever = vstore.asRetriever()
+  if (!VDB) throw new Error('No vector database')
 
+  const vstore = VDB
+  const retriever = vstore.asRetriever()
   return retriever
 }
 
+/**
+ * Combines the page content of multiple documents into a single string.
+ *
+ * @param {Array} docs - An array of document objects.
+ * @param {Object} docs[].pageContent - The content of a single document page.
+ * @returns {string} A single string containing the combined page content of all documents, separated by double newlines.
+ */
 export function combine(docs) {
   return docs.map((doc) => doc.pageContent).join('\n\n')
 }
