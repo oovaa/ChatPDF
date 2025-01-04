@@ -13,7 +13,10 @@ router.get('/z', (req, res) => {
 })
 
 router.post('/send', async (req, res) => {
-  const question = req.body.question
+  const { question } = req.body
+
+  if (!question)
+    return res.status(400).json({ error: 'Missing question parameter' })
 
   try {
     const answer = await chain.invoke({
@@ -42,13 +45,9 @@ router.post('/upload', upload, async (req, res, next) => {
     console.log('file stored in the vector db')
   } catch (error) {
     console.error(error)
-    return res
-      .status(500)
-      .json({
-        error: `An error occurred while uploading the file: ${
-          (error.message)
-        }`,
-      })
+    return res.status(500).json({
+      error: `An error occurred while uploading the file: ${error.message}`,
+    })
   }
 
   res.status(200).send('file stored in the vector db')
