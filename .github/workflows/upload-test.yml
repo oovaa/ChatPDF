@@ -1,4 +1,4 @@
-name: Test File Upload
+name: Test File Upload for Multiple File Types
 
 on:
   push:
@@ -39,19 +39,48 @@ jobs:
         bun start &
         sleep 10  # Ensure the server has enough time to start
 
-    - name: Run upload test
+    - name: Create test files
       run: |
-        echo "This is a test file." > test.txt
-        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.txt"; then
-          echo "SUCCESS"
+        echo "This is a test PDF file." > test.pdf
+        echo "This is a test DOCX file." > test.docx
+        echo "This is a test PPTX file." > test.pptx
+
+    - name: Test PDF upload
+      run: |
+        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.pdf"; then
+          echo "PDF Upload SUCCESS"
         else
-          echo "FAILURE" > test-output.log
+          echo "PDF Upload FAILURE" > test-output-pdf.log
           exit 1
         fi
 
-    - name: Upload artifact
+    - name: Test DOCX upload
+      run: |
+        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.docx"; then
+          echo "DOCX Upload SUCCESS"
+        else
+          echo "DOCX Upload FAILURE" > test-output-docx.log
+          exit 1
+        fi
+
+    - name: Test PPTX upload
+      run: |
+        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.pptx"; then
+          echo "PPTX Upload SUCCESS"
+        else
+          echo "PPTX Upload FAILURE" > test-output-pptx.log
+          exit 1
+        fi
+
+    - name: Upload artifacts on failure
       if: failure()
       uses: actions/upload-artifact@v3
       with:
-        name: upload-test-output
-        path: test-output.log
+        name: upload-test-outputs
+        path: |
+          test-output-pdf.log
+          test-output-docx.log
+          test-output-pptx.log
+          test.pdf
+          test.docx
+          test.pptx
