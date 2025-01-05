@@ -21,7 +21,7 @@ export function setVDB(db) {
  * @param {number} [Kdocs=5] - The number of documents to retrieve. Defaults to 5.
  * @returns {VectorStoreRetriever<HNSWLib>} A promise that resolves to the retrieved documents.
  */
-export const Retriver = (VectorStore, Kdocs = 5) => {
+export const Retriver = (VectorStore, Kdocs = 10) => {
   return retriever(Kdocs)
 }
 
