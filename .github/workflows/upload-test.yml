@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+
 jobs:
   test-upload:
     runs-on: ubuntu-latest
@@ -36,8 +39,16 @@ jobs:
         bun start &
         sleep 10  # Ensure the server has enough time to start
 
-    - name: Run upload test
-      run: |
-        echo "This is a test file." > test.txt
-        curl -X POST "http://localhost:3000/api/v1/upload" \
-        -F "file=@test.txt" || (echo "Upload test failed" && exit 1)
+    - name: Run upload test using curl-action
+      uses: enflo/curl-action@master
+      with:
+        curl: |
+          -X POST "http://localhost:3000/api/v1/upload" \
+          -F "file=@test.txt"
+
+    - name: Upload artifact
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: upload-test-output
+        path: test-output.log
