@@ -8,7 +8,6 @@ on:
     branches:
       - main
 
-
 jobs:
   test-upload:
     runs-on: ubuntu-latest
@@ -26,7 +25,7 @@ jobs:
     - name: Setup Bun
       uses: oven-sh/setup-bun@v2
       with:
-          bun-version: "latest"
+        bun-version: "latest"
 
     - name: Install dependencies
       run: |
@@ -35,9 +34,10 @@ jobs:
     - name: Start the server
       run: |
         bun start &
-        sleep 5  # Increase sleep to ensure server is fully started
+        sleep 10  # Ensure the server has enough time to start
 
     - name: Run upload test
       run: |
+        echo "This is a test file." > test.txt
         curl -X POST "http://localhost:3000/api/v1/upload" \
-        -F "file=@test.txt"
+        -F "file=@test.txt" || (echo "Upload test failed" && exit 1)
