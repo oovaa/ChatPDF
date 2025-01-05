@@ -1,0 +1,38 @@
+name: Test File Upload
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-upload:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: node:16
+        options: --network=host
+        ports:
+          - 3000:3000
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+
+    - name: Install dependencies
+      run: |
+        bun install
+
+    - name: Start the server
+      run: |
+        bun start &
+        sleep 5  # Increase sleep to ensure server is fully started
+
+    - name: Run upload test
+      run: |
+        curl -X POST "http://localhost:3000/api/v1/upload" \
+        -F "file=@test.txt"
