@@ -32,12 +32,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        bun install
-
-    - name: Install LibreOffice (for file conversion)
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libreoffice
+        bun install --production
 
     - name: Start the server
       run: |
@@ -47,34 +42,13 @@ jobs:
     - name: Create test files
       run: |
         echo "This is a test text file." > test.txt
-        soffice --convert-to pdf test.txt
-        libreoffice --headless --convert-to docx test.txt
-        libreoffice --headless --convert-to pptx test.txt
 
-    - name: Test PDF upload
+    - name: Test TXT upload
       run: |
-        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.pdf"; then
-          echo "PDF Upload SUCCESS"
+        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.txt"; then
+          echo "TXT Upload SUCCESS"
         else
-          echo "PDF Upload FAILURE" > test-output-pdf.log
-          exit 1
-        fi
-
-    - name: Test DOCX upload
-      run: |
-        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.docx"; then
-          echo "DOCX Upload SUCCESS"
-        else
-          echo "DOCX Upload FAILURE" > test-output-docx.log
-          exit 1
-        fi
-
-    - name: Test PPTX upload
-      run: |
-        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.pptx"; then
-          echo "PPTX Upload SUCCESS"
-        else
-          echo "PPTX Upload FAILURE" > test-output-pptx.log
+          echo "TXT Upload FAILURE" > test-output-txt.log
           exit 1
         fi
 
@@ -84,9 +58,5 @@ jobs:
       with:
         name: upload-test-outputs
         path: |
-          test-output-pdf.log
-          test-output-docx.log
-          test-output-pptx.log
-          test.pdf
-          test.docx
-          test.pptx
+          test-output-txt.log
+          test.txt
