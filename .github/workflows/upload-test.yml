@@ -34,6 +34,11 @@ jobs:
       run: |
         bun install
 
+    - name: Install LibreOffice (for file conversion)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libreoffice
+
     - name: Start the server
       run: |
         bun start &
@@ -41,9 +46,10 @@ jobs:
 
     - name: Create test files
       run: |
-        echo "This is a test PDF file." > test.pdf
-        echo "This is a test DOCX file." > test.docx
-        echo "This is a test PPTX file." > test.pptx
+        echo "This is a test text file." > test.txt
+        soffice --convert-to pdf test.txt
+        libreoffice --headless --convert-to docx test.txt
+        libreoffice --headless --convert-to pptx test.txt
 
     - name: Test PDF upload
       run: |
