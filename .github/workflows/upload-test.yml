@@ -39,12 +39,15 @@ jobs:
         bun start &
         sleep 10  # Ensure the server has enough time to start
 
-    - name: Run upload test using curl-action
-      uses: enflo/curl-action@master
-      with:
-        curl: |
-          -X POST "http://localhost:3000/api/v1/upload" \
-          -F "file=@test.txt"
+    - name: Run upload test
+      run: |
+        echo "This is a test file." > test.txt
+        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.txt"; then
+          echo "SUCCESS"
+        else
+          echo "FAILURE" > test-output.log
+          exit 1
+        fi
 
     - name: Upload artifact
       if: failure()
