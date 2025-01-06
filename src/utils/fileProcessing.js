@@ -27,7 +27,7 @@ export const parser = async (filePath) => {
         loader = new PDFLoader(filePath)
         docs = await loader.load()
         allSlidesContent = docs.map((doc) => doc.pageContent)
-        
+
         return docs
       } catch (err) {
         throw new Error(err.message)
@@ -56,5 +56,3 @@ export const parser = async (filePath) => {
       throw new Error(`Unsupported file type: ${ext}`)
   }
 }
-
-

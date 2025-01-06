@@ -23,41 +23,41 @@ jobs:
           - 3000:3000
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v2
-      with:
-        bun-version: "latest"
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 'latest'
 
-    - name: Install dependencies
-      run: |
-        bun install --production
+      - name: Install dependencies
+        run: |
+          bun install --production
 
-    - name: Start the server
-      run: |
-        bun start &
-        sleep 10  # Ensure the server has enough time to start
+      - name: Start the server
+        run: |
+          bun start &
+          sleep 10  # Ensure the server has enough time to start
 
-    - name: Create test files
-      run: |
-        echo "This is a test text file." > test.txt
+      - name: Create test files
+        run: |
+          echo "This is a test text file." > test.txt
 
-    - name: Test TXT upload
-      run: |
-        if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.txt"; then
-          echo "TXT Upload SUCCESS"
-        else
-          echo "TXT Upload FAILURE" > test-output-txt.log
-          exit 1
-        fi
+      - name: Test TXT upload
+        run: |
+          if curl -X POST "http://localhost:3000/api/v1/upload" -F "file=@test.txt"; then
+            echo "TXT Upload SUCCESS"
+          else
+            echo "TXT Upload FAILURE" > test-output-txt.log
+            exit 1
+          fi
 
-    - name: Upload artifacts on failure
-      if: failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: upload-test-outputs
-        path: |
-          test-output-txt.log
-          test.txt
+      - name: Upload artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: upload-test-outputs
+          path: |
+            test-output-txt.log
+            test.txt

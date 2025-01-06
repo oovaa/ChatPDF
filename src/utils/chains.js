@@ -1,20 +1,20 @@
-import { PromptTemplate } from '@langchain/core/prompts';
-import { CcommandRP } from '../models/Ccohere.js';
+import { PromptTemplate } from '@langchain/core/prompts'
+import { CcommandRP } from '../models/Ccohere.js'
 import {
   RunnablePassthrough,
   RunnableSequence,
-} from '@langchain/core/runnables';
-import { StringOutputParser } from '@langchain/core/output_parsers';
-import { combine, retriever, Retriver } from '../db/retriver.js';
+} from '@langchain/core/runnables'
+import { StringOutputParser } from '@langchain/core/output_parsers'
+import { combine, retriever, Retriver } from '../db/retriver.js'
 
-const llm = CcommandRP();
+const llm = CcommandRP()
 
 /**
  * Template for generating a stand-alone question.
  * @type {string}
  */
 const stand_alone_template =
-  'Given a question, generate a stand-alone question. Please ensure it is clear and unambiguous: {question}\nStand-alone question:';
+  'Given a question, generate a stand-alone question. Please ensure it is clear and unambiguous: {question}\nStand-alone question:'
 
 /**
  * Template for generating an answer based on the provided context and question.
@@ -39,19 +39,19 @@ Question:
 {question}
 
 Answer:
-`;
+`
 
 /**
  * Prompt template for generating a stand-alone question.
  * @type {PromptTemplate}
  */
-const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template);
+const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template)
 
 /**
  * Prompt template for generating an answer based on the provided context and question.
  * @type {PromptTemplate}
  */
-const ans_prompt = PromptTemplate.fromTemplate(ans_template);
+const ans_prompt = PromptTemplate.fromTemplate(ans_template)
 
 /**
  * Runnable sequence for generating a stand-alone question.
@@ -61,7 +61,7 @@ export const stand_alone_chain = RunnableSequence.from([
   stand_alone_prompt,
   llm,
   new StringOutputParser(),
-]);
+])
 
 /**
  * Runnable sequence for retrieving the context based on the stand-alone question.
@@ -71,7 +71,7 @@ export const retrevire_chain = RunnableSequence.from([
   (prevResult) => prevResult.stand_alone,
   retriever,
   combine,
-]);
+])
 
 /**
  * Runnable sequence for generating an answer based on the provided context and question.
@@ -81,7 +81,7 @@ export const answer_chain = RunnableSequence.from([
   ans_prompt,
   llm,
   new StringOutputParser(),
-]);
+])
 
 /**
  * Creates a runnable sequence chain with the following steps:
@@ -102,4 +102,4 @@ export const chain = RunnableSequence.from([
     history: ({ origin }) => origin.history,
   },
   answer_chain,
-]);
+])
