@@ -56,5 +56,3 @@ export const parser = async (filePath) => {
       throw new Error(`Unsupported file type: ${ext}`)
   }
 }
-
-
