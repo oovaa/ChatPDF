@@ -32,13 +32,14 @@ router.post('/send', async (req, res) => {
 })
 
 router.post('/upload', upload, async (req, res, next) => {
+  const sucessMsg = `file ${req.file.originalname} stored in the vector db`
   try {
     if (!req.file) throw new Error('no file uploaded')
-
-    const filePath = tempWrite.sync(req.file.buffer, req.file.originalname)
+      const filePath = tempWrite.sync(req.file.buffer, req.file.originalname)
     const vdb = await StoreFileInVDB(filePath)
     setVDB(vdb)
-    console.log('file stored in the vector db')
+
+    console.log(sucessMsg)
   } catch (error) {
     console.error(error)
     return res.status(500).json({
@@ -46,5 +47,5 @@ router.post('/upload', upload, async (req, res, next) => {
     })
   }
 
-  res.status(200).send('file stored in the vector db')
+  res.status(200).send(sucessMsg)
 })
