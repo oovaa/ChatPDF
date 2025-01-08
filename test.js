@@ -14,9 +14,12 @@
 // import { doc_chuncker } from './src/utils/chunker.js'
 // import { parser } from './src/utils/fileProcessing'
 
-import { StoreFileInVDB } from './src/db/hnsw'
+import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
 import { setVDB, VDB } from './src/db/retriver'
+import { ECohereEmbeddingsModel } from './src/models/Ecohere'
 import { chain } from './src/utils/chains'
+import { doc_chuncker } from './src/utils/chunker'
+import { parser } from './src/utils/fileProcessing'
 
 // const db = await StoreFileInVDB('./test.txt')
 
@@ -40,26 +43,26 @@ import { chain } from './src/utils/chains'
 //   answer_chain,
 // ])
 
-// const path = './test.txt'
-// const Embeddings = ECohereEmbeddingsModel()
+const path = './test.txt'
+const Embeddings = ECohereEmbeddingsModel()
 
-// const load = await parser(path)
+const load = await parser(path)
 // console.log(load)
 
-// const chunk = await doc_chuncker(load)
+const chunk = await doc_chuncker(load)
 // console.log(chunk)
 
-// const vdb = await Hvectore(chunk, Embeddings)
+const vdb = await Hvectore(chunk, Embeddings)
 
-// const similaritySearchResults = await vdb.similaritySearch('boy ', 2)
+const similaritySearchResults = await vdb.similaritySearch('boy ', 2)
 
-// const ret = vdb.asRetriever(2, (doc) => doc.metadata.source == './test.txt')
+const ret = vdb.asRetriever(2, (doc) => doc.metadata.source == './test.txt')
 // const ret = Retriver(vdb) // k: 2 number of chunks
 
 // const res1 = ret._getRelevantDocuments()
-// const res2 = await ret.invoke('boy') // new way to retrive
+const res2 = await ret.invoke('boy') // new way to retrive
 
-// console.log(res2.map((x) => x.pageContent)[0])
+console.log(res2.map((x) => x.pageContent)[0])
 
 // for (const doc of similaritySearchResults) {
 //   console.log(`* ${doc.pageContent} [${JSON.stringify(doc.metadata, null)}]`)
