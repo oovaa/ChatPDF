@@ -2,7 +2,6 @@ import tempWrite from 'temp-write'
 import { Router } from 'express'
 import upload from '../middleware/multerMiddleWare'
 import { StoreFileInVDB } from '../db/hnsw.js'
-import { setVDB } from '../db/retriver.js'
 import { chain } from '../utils/chains.js'
 
 export const router = Router()
@@ -35,9 +34,8 @@ router.post('/upload', upload, async (req, res, next) => {
   const sucessMsg = `file ${req.file.originalname} stored in the vector db`
   try {
     if (!req.file) throw new Error('no file uploaded')
-      const filePath = tempWrite.sync(req.file.buffer, req.file.originalname)
-    const vdb = await StoreFileInVDB(filePath)
-    setVDB(vdb)
+    const filePath = tempWrite.sync(req.file.buffer, req.file.originalname)
+    await StoreFileInVDB(filePath)
 
     console.log(sucessMsg)
   } catch (error) {

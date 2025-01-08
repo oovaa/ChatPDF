@@ -1,17 +1,6 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
 import { VectorStore, VectorStoreRetriever } from '@langchain/core/vectorstores'
-import { Hvectore, StoreFileInVDB } from './hnsw'
-
-export let VDB = null
-
-/**
- * Sets the VDB (hnswlib database) instance.
- *
- * @param {HNSWLib} db - The hnswlib database instance to be set.
- */
-export function setVDB(db) {
-  VDB = db
-}
+import { VDB } from './hnsw'
 
 /**
  *
