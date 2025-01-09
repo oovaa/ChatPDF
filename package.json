@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@langchain/cohere": "^0.3.2",
-    "@langchain/community": "^0.3.22",
+    "@langchain/community": "^0.3.23",
     "@langchain/core": "^0.3.27",
     "@langchain/openai": "^0.3.16",
     "compression": "^1.7.5",

@@ -22,9 +22,9 @@ app.use(express.json())
  * Custom logger middleware.
  */
 app.use(compression())
-app.use(cors())
 app.use(logger)
 app.use(helmet())
+app.use(cors())
 
 /**
  * Health check endpoint.
