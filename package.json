@@ -24,7 +24,7 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "hnswlib-node": "^3.0.0",
-    "langchain": "^0.3.9",
+    "langchain": "^0.3.10",
     "mammoth": "^1.9.0",
     "multer": "^1.4.5-lts.1",
     "node-gyp": "^11.0.0",

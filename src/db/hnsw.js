@@ -4,16 +4,13 @@ import { parser } from '../utils/fileProcessing'
 import { doc_chuncker } from '../utils/chunker'
 
 /**
- * Creates a vector store from the given documents using the specified embedding function.
- * @param {Array} doc - The documents to create the vector store from.
- * @param {Function} embedfunction - The embedding function to use for creating the vectors.
- * @param {Object} [param={}] - Additional parameters for the vector store creation.
- * @returns {Promise<HNSWLib>} A promise that resolves to the created vector store.
+ * Initializes a vector database (VDB) using HNSWLib from an empty set of documents
+ * and an instance of ECohereEmbeddingsModel.
+ *
+ * @constant {Promise<HNSWLib>} VDB - The initialized vector database.
  */
-export async function Hvectore(doc, embedfunction, param = {}) {
-  const vectorStore = await HNSWLib.fromDocuments(doc, embedfunction)
-  return vectorStore
-}
+export const VDB = await HNSWLib.fromDocuments([], ECohereEmbeddingsModel())
+
 
 /**
  * Stores a file in the vector database (VDB).
@@ -26,14 +23,13 @@ export async function Hvectore(doc, embedfunction, param = {}) {
  */
 export const StoreFileInVDB = async (filePath) => {
   try {
-    const Embeddings = ECohereEmbeddingsModel()
-
     const load = await parser(filePath)
 
     const chunk = await doc_chuncker(load)
 
-    const vdb = await Hvectore(chunk, Embeddings)
-    return vdb
+    await VDB.addDocuments(chunk)
+
+    return VDB
   } catch (error) {
     console.error('Error storing file in VDB:', error)
     throw error
