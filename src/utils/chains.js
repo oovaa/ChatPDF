@@ -5,7 +5,7 @@ import {
   RunnableSequence,
 } from '@langchain/core/runnables'
 import { StringOutputParser } from '@langchain/core/output_parsers'
-import { combine, retriever, Retriver } from '../db/retriver.js'
+import { combine, retriever } from '../db/retriver.js'
 
 const llm = CcommandRP()
 
@@ -46,6 +46,41 @@ Answer:
 `
 
 /**
+ * Template string for generating responses in ChatPDF.
+ * 
+ * This template is used to create a response for the user based on the assistant's knowledge and history of previous interactions.
+ * 
+ * Instructions for answering:
+ * - If the answer is found in the history, provide it directly.
+ * - Always maintain a friendly tone.
+ * 
+ * Variables:
+ * - {history}: The history of previous interactions.
+ * - {question}: The current question asked by the user.
+ * 
+ * The assistant should never mention that it is a computer program, robot, virtual assistant, or AI Assistant.
+ */
+const no_Doc_template = `
+Your name is ChatPDF Created by Omar Mohayyad and Hassan, you are a helpful AI assistant. Answer the user's question based on the your Knowledge with clear and accurate details.
+# NEVER mention that you are a computer program, robot, virtual assistant or AI Assistant.
+
+Answer user questions kindly using Your knowledge
+
+Instructions for answering:
+- If the answer is found in the history, provide it directly
+- Always maintain a friendly tone
+
+
+History:
+{history}
+
+Question:
+{question}
+
+Answer:
+`
+
+/**
  * Prompt template for generating a stand-alone question.
  * @type {PromptTemplate}
  */
@@ -56,6 +91,14 @@ const stand_alone_prompt = PromptTemplate.fromTemplate(stand_alone_template)
  * @type {PromptTemplate}
  */
 const ans_prompt = PromptTemplate.fromTemplate(ans_template)
+
+/**
+ * A prompt template created from the no_Doc_template.
+ * This template is used for generating prompts when no document is available.
+ * 
+ * @constant {PromptTemplate} no_doc_chain_prompt
+ */
+const no_doc_chain_prompt = PromptTemplate.fromTemplate(no_Doc_template)
 
 /**
  * Runnable sequence for generating a stand-alone question.
@@ -88,6 +131,18 @@ export const answer_chain = RunnableSequence.from([
 ])
 
 /**
+ * A sequence of runnable tasks that includes a prompt, a language model, 
+ * and a string output parser. This sequence is used when no document is provided.
+ * 
+ * @constant {RunnableSequence} no_doc_chain - The sequence of tasks to run.
+ */
+export const no_doc_chain = RunnableSequence.from([
+  no_doc_chain_prompt,
+  llm,
+  new StringOutputParser(),
+])
+
+/**
  * Creates a runnable sequence chain with the following steps:
  * 1. A stand-alone chain with a passthrough origin.
  * 2. A context retrieval chain that extracts the question and history from the origin.
@@ -95,7 +150,7 @@ export const answer_chain = RunnableSequence.from([
  *
  * @constant {RunnableSequence} chain - The runnable sequence chain.
  */
-export const chain = RunnableSequence.from([
+export const main_chain = RunnableSequence.from([
   {
     stand_alone: stand_alone_chain,
     origin: new RunnablePassthrough(),

@@ -14,7 +14,8 @@
 // import { doc_chuncker } from './src/utils/chunker.js'
 // import { parser } from './src/utils/fileProcessing'
 
-import { Hvectore, StoreFileInVDB } from './src/db/hnsw'
+import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
+import {  StoreFileInVDB } from './src/db/hnsw'
 import { setVDB, VDB } from './src/db/retriver'
 import { ECohereEmbeddingsModel } from './src/models/Ecohere'
 import { chain } from './src/utils/chains'
@@ -52,7 +53,10 @@ const load = await parser(path)
 const chunk = await doc_chuncker(load)
 // console.log(chunk)
 
-const vdb = await Hvectore(chunk, Embeddings)
+const vdb = await HNSWLib.fromDocuments([], Embeddings)
+console.log(vdb)
+
+await vdb.addDocuments(chunk)
 
 const similaritySearchResults = await vdb.similaritySearch('boy ', 2)
 

@@ -2,18 +2,21 @@ import tempWrite from 'temp-write'
 import { Router } from 'express'
 import upload from '../middleware/multerMiddleWare'
 import { StoreFileInVDB } from '../db/hnsw.js'
-import { chain } from '../utils/chains.js'
+import { main_chain, no_doc_chain } from '../utils/chains.js'
 
 export const router = Router()
 let history = ''
 
 router.post('/send', async (req, res) => {
   const { question } = req.body
+  const { noDoc } = req.body
+  let chain
 
   if (!question)
     return res.status(400).json({ error: 'Missing question parameter' })
 
   try {
+    chain = noDoc ? no_doc_chain : main_chain
     const answer = await chain.invoke({
       question,
       history,
