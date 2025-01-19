@@ -9,8 +9,7 @@ import { doc_chuncker } from '../utils/chunker'
  *
  * @constant {Promise<HNSWLib>} VDB - The initialized vector database.
  */
-export const VDB = await HNSWLib.fromDocuments([], ECohereEmbeddingsModel())
-
+export let VDB = await HNSWLib.fromDocuments([], ECohereEmbeddingsModel())
 
 /**
  * Stores a file in the vector database (VDB).
@@ -27,7 +26,8 @@ export const StoreFileInVDB = async (filePath) => {
 
     const chunk = await doc_chuncker(load)
 
-    await VDB.addDocuments(chunk)
+    VDB = await HNSWLib.fromDocuments(chunk, ECohereEmbeddingsModel())
+    VDB.addDocuments
 
     return VDB
   } catch (error) {
