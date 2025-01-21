@@ -9,12 +9,17 @@ let history = ''
 
 router.post('/signin', async (req, res) => {
   const { login, password } = req.body
+  if (!login || !password) res.status(400).send('Missing login or password')
+
   console.log(login)
   res.sendStatus(200)
 })
 
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body
+  const { username, password, email } = req.body
+  if (!username || !password || !email)
+    return res.status(400).send('Missing username, email or password')
+
   console.log(username)
   res.sendStatus(200)
 })
