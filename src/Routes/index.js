@@ -7,6 +7,18 @@ import { main_chain, no_doc_chain } from '../utils/chains.js'
 export const router = Router()
 let history = ''
 
+router.post('/signin', async (req, res) => {
+  const { login, password } = req.body
+  console.log(login)
+  res.sendStatus(200)
+})
+
+router.post('/register', async (req, res) => {
+  const { username, email, password } = req.body
+  console.log(username)
+  res.sendStatus(200)
+})
+
 router.post('/send', async (req, res) => {
   const { question } = req.body
   const { noDoc } = req.body
