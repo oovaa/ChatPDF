@@ -3,6 +3,9 @@ import { Router } from 'express'
 import upload from '../middleware/multerMiddleWare'
 import { StoreFileInVDB } from '../db/hnsw.js'
 import { main_chain, no_doc_chain } from '../utils/chains.js'
+import { addUser, getUserByEmail, getUserByUsername } from '../db/sqlite.js'
+import { authenticateToken } from '../middleware/authMiddleware.js'
+import { signJWT } from './auth.js'
 
 export const router = Router()
 let history = ''
@@ -11,22 +14,50 @@ router.post('/signin', async (req, res) => {
   const { login, password } = req.body
   if (!login || !password) res.status(400).send('Missing login or password')
 
-  console.log(login)
-  res.sendStatus(200)
+  const storedUser = getUserByEmail(login) || getUserByUsername(login)
+  if (!storedUser)
+    res.status(403).json({
+      error: 'no user with this data',
+    })
+
+  if (storedUser.password != password)
+    res.status(403).json({
+      error: 'invalid cradentials',
+    })
+
+  const token = signJWT(storedUser)
+
+  delete storedUser.password
+  console.log(storedUser)
+
+  res.status(200).json({ user: storedUser, token })
 })
 
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
   const { username, password, email } = req.body
   if (!username || !password || !email)
     return res.status(400).send('Missing username, email or password')
 
+  const existing = getUserByEmail(email) || getUserByUsername(username)
+  if (existing) return res.status(403).json({ error: 'user already exists' })
+
+  addUser(username, email, password)
+  const user = {
+    username,
+    email,
+  }
+  const token = signJWT(user)
+
   console.log(username)
-  res.sendStatus(200)
+  res.status(200).send({ token })
 })
+
+router.use(authenticateToken)
 
 router.post('/send', async (req, res) => {
   const { question } = req.body
   const { noDoc } = req.body
+
   let chain
 
   if (!question)
