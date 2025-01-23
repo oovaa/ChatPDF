@@ -38,6 +38,11 @@ function getUserByEmail(email) {
   return query.get({ email: email })
 }
 
+function getUserById(id) {
+  const query = db.query(`SELECT * FROM users WHERE id = $id`)
+  return query.get({ id: id })
+}
+
 function deleteUser(id) {
   const query = db.query('DELETE FROM users WHERE id = $id')
   return query.run({ id: id })
@@ -46,4 +51,11 @@ function deleteUser(id) {
 // console.log(getUserByEmail('omar') || getUserByUsername('omar'))
 initDB()
 
-export { initDB, addUser, getUserByEmail, getUserByUsername, deleteUser }
+export {
+  initDB,
+  addUser,
+  getUserByEmail,
+  getUserByUsername,
+  deleteUser,
+  getUserById,
+}
