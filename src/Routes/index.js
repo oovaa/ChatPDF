@@ -89,6 +89,7 @@ router.post('/upload', upload, async (req, res, next) => {
     await StoreFileInVDB(filePath)
 
     console.log(sucessMsg)
+    res.status(200).send({ file: req.file.originalname, sucessMsg })
   } catch (error) {
     console.error(error)
     return res.status(500).json({
