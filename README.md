@@ -38,11 +38,50 @@ npm start
 
 ## About
 
-This project was created using `bun init` with Bun v1.1.42. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+This project was created using `bun init` with Bun v1.2.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+## Endpoints
+
+### Authentication
+
+- **POST /signin**
+    - Description: Sign in a user.
+    - Request Body: `{ "login": "user@example.com", "password": "password123" }`
+    - Response: `{ "user": { "username": "user", "email": "user@example.com" }, "token": "jwt_token" }`
+    - Error Response: `{ "error": "no user with this data" }` or `{ "error": "invalid credentials" }`
+
+- **POST /signup**
+    - Description: Sign up a new user.
+    - Request Body: `{ "username": "user", "email": "user@example.com", "password": "password123" }`
+    - Response: `{ "token": "jwt_token" }`
+    - Error Response: `{ "error": "user already exists" }`
+
+### File Upload
+
+- **POST /upload**
+    - Description: Upload a file to be processed.
+    - Request Body: Form-data with a file field named `file`.
+    - Response: `{ "file": "<filename>", "sucessMsg": "file <filename> stored in the vector db" }`
+    - Error Response: `{ "error": "An error occurred while uploading the file: <error_message>" }`
+
+
+### Chat
+
+- **POST /send**
+    - Description: Send a question to the chat interface.
+    - Request Body: `{ "question": "What is the content of the PDF?", "noDoc": true }`
+    - Response: `{ "answer": "The content of the PDF is..." }`
+
+### Health Check
+
+- **GET /z**
+    - Description: Check if the server is running.
+    - Response: `all good`
 
 ## Contributing
 
