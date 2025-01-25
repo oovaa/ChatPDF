@@ -19,13 +19,15 @@ function initDB() {
 
 function addUser(username, email, password) {
   const query = db.query(
-    'INSERT INTO users (username, email, password) VALUES ($username, $email, $password)'
+    'INSERT INTO users (username, email, password) VALUES ($username, $email, $password) RETURNING *'
   )
-  return query.run({
+  const user = query.get({
     username: username,
     email: email,
     password: password,
   })
+  delete user.password
+  return user
 }
 
 function getUserByUsername(username) {

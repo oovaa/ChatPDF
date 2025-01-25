@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { getUserByEmail, getUserByUsername, addUser } from '../db/sqlite.js'
 import { verifyHash, hashStr } from '../utils/hash.js'
 import { signJWT } from '../utils/auth.js'
+import log from 'node-gyp/lib/log.js'
 
 const userAuthRouter = Router()
 
@@ -20,10 +21,11 @@ userAuthRouter.post('/signin', async (req, res) => {
       error: 'invalid cradentials',
     })
 
-  const token = signJWT(storedUser)
-
   delete storedUser.password
+
   console.log(storedUser)
+
+  const token = signJWT(storedUser)
 
   res.status(200).json({ user: storedUser, token })
 })
@@ -38,11 +40,9 @@ userAuthRouter.post('/signup', async (req, res) => {
 
   const hashedPass = await hashStr(password)
 
-  addUser(username, email, hashedPass)
-  const user = {
-    username,
-    email,
-  }
+  const user = addUser(username, email, hashedPass)
+  console.log(user)
+
   const token = signJWT(user)
 
   res.status(200).send({ token })
