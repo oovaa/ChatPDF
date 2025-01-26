@@ -2,50 +2,75 @@ import { Router } from 'express'
 import { getUserByEmail, getUserByUsername, addUser } from '../db/sqlite.js'
 import { verifyHash, hashStr } from '../utils/hash.js'
 import { signJWT } from '../utils/auth.js'
-import log from 'node-gyp/lib/log.js'
 
 const userAuthRouter = Router()
 
 userAuthRouter.post('/signin', async (req, res) => {
-  const { login, password } = req.body
-  if (!login || !password) res.status(400).send('Missing login or password')
+  try {
+    const { login, password } = req.body
+    if (!login || !password) {
+      return res.status(400).send('Missing login or password')
+    }
 
-  const storedUser = getUserByEmail(login) || getUserByUsername(login)
-  if (!storedUser)
-    res.status(403).json({
-      error: 'no user with this data',
-    })
+    // Check both email and username with await
+    const userByEmail = await getUserByEmail(login)
+    const userByUsername = await getUserByUsername(login)
+    const storedUser = userByEmail || userByUsername
 
-  if (!verifyHash(password, storedUser.password))
-    res.status(403).json({
-      error: 'invalid cradentials',
-    })
+    if (!storedUser) {
+      return res.status(403).json({
+        error: 'No user with this credentials',
+      })
+    }
 
-  delete storedUser.password
+    const passwordValid = await verifyHash(password, storedUser.password)
+    if (!passwordValid) {
+      return res.status(403).json({
+        error: 'Invalid credentials',
+      })
+    }
 
-  console.log(storedUser)
+    // Create a copy without password
+    const userWithoutPassword = { ...storedUser }
+    delete userWithoutPassword.password
 
-  const token = signJWT(storedUser)
+    const token = signJWT(userWithoutPassword)
 
-  res.status(200).json({ user: storedUser, token })
+    return res.status(200).json({ user: userWithoutPassword, token })
+  } catch (error) {
+    console.error('Signin error:', error)
+    return res.status(500).json({ error: 'Internal server error' })
+  }
 })
 
 userAuthRouter.post('/signup', async (req, res) => {
-  const { username, password, email } = req.body
-  if (!username || !password || !email)
-    return res.status(400).send('Missing username, email or password')
+  try {
+    const { username, password, email } = req.body
+    if (!username || !password || !email) {
+      return res.status(400).send('Missing username, email or password')
+    }
 
-  const existing = getUserByEmail(email) || getUserByUsername(username)
-  if (existing) return res.status(403).json({ error: 'user already exists' })
+    // Check existing users with await
+    const existingEmail = await getUserByEmail(email)
+    const existingUsername = await getUserByUsername(username)
+    if (existingEmail || existingUsername) {
+      return res.status(403).json({ error: 'User already exists' })
+    }
 
-  const hashedPass = await hashStr(password)
+    const hashedPass = await hashStr(password)
+    const newUser = await addUser(username, email, hashedPass)
 
-  const user = addUser(username, email, hashedPass)
-  console.log(user)
+    // Remove password before sending response
+    const userWithoutPassword = { ...newUser }
+    delete userWithoutPassword.password
 
-  const token = signJWT(user)
+    const token = signJWT(userWithoutPassword)
 
-  res.status(200).send({ token })
+    return res.status(200).json({ user: userWithoutPassword, token })
+  } catch (error) {
+    console.error('Signup error:', error)
+    return res.status(500).json({ error: 'Internal server error' })
+  }
 })
 
 export { userAuthRouter }
