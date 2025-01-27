@@ -20,8 +20,6 @@ uploadRouter.post('/upload', upload, async (req, res, next) => {
       error: `An error occurred while uploading the file: ${error.message}`,
     })
   }
-
-  res.status(200).send(sucessMsg)
 })
 
 export { uploadRouter }

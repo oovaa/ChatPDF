@@ -26,8 +26,12 @@ export const StoreFileInVDB = async (filePath) => {
 
     const chunk = await doc_chuncker(load)
 
-    VDB = await HNSWLib.fromDocuments(chunk, ECohereEmbeddingsModel())
-    VDB.addDocuments
+    if (!VDB) {
+      VDB = await HNSWLib.fromDocuments(chunk, embeddings)
+    } else {
+      await VDB.addDocuments(chunk)
+    }
+    return VDB
 
     return VDB
   } catch (error) {
