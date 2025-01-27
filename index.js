@@ -50,7 +50,7 @@ app.get('/z', (req, res) => {
  * @param {Object} res - Express response object.
  * @returns {void}
  */
-app.use('/api/v1/', router)
+app.use('/', router)
 
 /**
  * Starts the Express server.
