@@ -14,13 +14,15 @@
 // import { doc_chuncker } from './src/utils/chunker.js'
 // import { parser } from './src/utils/fileProcessing'
 
-import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
-import {  StoreFileInVDB } from './src/db/hnsw'
-import { setVDB, VDB } from './src/db/retriver'
-import { ECohereEmbeddingsModel } from './src/models/Ecohere'
-import { chain } from './src/utils/chains'
-import { doc_chuncker } from './src/utils/chunker'
-import { parser } from './src/utils/fileProcessing'
+import supabase from './src/db/supabase'
+
+// import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
+// import {  StoreFileInVDB } from './src/db/hnsw'
+// import { setVDB, VDB } from './src/db/retriver'
+// import { ECohereEmbeddingsModel } from './src/models/Ecohere'
+// import { chain } from './src/utils/chains'
+// import { doc_chuncker } from './src/utils/chunker'
+// import { parser } from './src/utils/fileProcessing'
 
 // const db = await StoreFileInVDB('./test.txt')
 
@@ -44,29 +46,29 @@ import { parser } from './src/utils/fileProcessing'
 //   answer_chain,
 // ])
 
-const path = './test.txt'
-const Embeddings = ECohereEmbeddingsModel()
+// const path = './test.txt'
+// const Embeddings = ECohereEmbeddingsModel()
 
-const load = await parser(path)
-// console.log(load)
+// const load = await parser(path)
+// // console.log(load)
 
-const chunk = await doc_chuncker(load)
-// console.log(chunk)
+// const chunk = await doc_chuncker(load)
+// // console.log(chunk)
 
-const vdb = await HNSWLib.fromDocuments([], Embeddings)
-console.log(vdb)
+// const vdb = await HNSWLib.fromDocuments([], Embeddings)
+// console.log(vdb)
 
-await vdb.addDocuments(chunk)
+// await vdb.addDocuments(chunk)
 
-const similaritySearchResults = await vdb.similaritySearch('boy ', 2)
+// const similaritySearchResults = await vdb.similaritySearch('boy ', 2)
 
-const ret = vdb.asRetriever(2, (doc) => doc.metadata.source == './test.txt')
-// const ret = Retriver(vdb) // k: 2 number of chunks
+// const ret = vdb.asRetriever(2, (doc) => doc.metadata.source == './test.txt')
+// // const ret = Retriver(vdb) // k: 2 number of chunks
 
-// const res1 = ret._getRelevantDocuments()
-const res2 = await ret.invoke('boy') // new way to retrive
+// // const res1 = ret._getRelevantDocuments()
+// const res2 = await ret.invoke('boy') // new way to retrive
 
-console.log(res2.map((x) => x.pageContent)[0])
+// console.log(res2.map((x) => x.pageContent)[0])
 
 // for (const doc of similaritySearchResults) {
 //   console.log(`* ${doc.pageContent} [${JSON.stringify(doc.metadata, null)}]`)
@@ -96,3 +98,9 @@ console.log(res2.map((x) => x.pageContent)[0])
 // setVDB(db)
 
 // console.log(VDB)
+
+// const data = await supabase.from('users').select()
+
+// console.log(data)
+
+// console.log(await Bun.password.hash('123'))

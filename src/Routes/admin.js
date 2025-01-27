@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { listUsers } from '../db/sqlite.js'
+import { listUsers } from '../db/index.js'
 const adminRouter = new Router()
 
 // Example usage in a route handler

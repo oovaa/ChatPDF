@@ -1,5 +1,5 @@
 import { verify } from 'jsonwebtoken'
-import { getUserById } from '../db/sqlite'
+import { getUserById } from '../db'
 import { error } from 'node-gyp/lib/log'
 
 /**

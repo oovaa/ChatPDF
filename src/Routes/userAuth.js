@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getUserByEmail, getUserByUsername, addUser } from '../db/sqlite.js'
+import { getUserByEmail, getUserByUsername, addUser } from '../db/index.js'
 import { verifyHash, hashStr } from '../utils/hash.js'
 import { signJWT } from '../utils/auth.js'
 
