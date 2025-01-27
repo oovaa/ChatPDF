@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { getUserByEmail, getUserByUsername, addUser } from '../db/index.js'
 import { verifyHash, hashStr } from '../utils/hash.js'
 import { signJWT } from '../utils/auth.js'
+import { validateEmail } from '../utils/validate.js'
 
 const userAuthRouter = Router()
 
@@ -47,7 +48,13 @@ userAuthRouter.post('/signup', async (req, res) => {
   try {
     const { username, password, email } = req.body
     if (!username || !password || !email) {
-      return res.status(400).send('Missing username, email or password')
+      return res
+        .status(400)
+        .send({ error: 'Missing username, email or password' })
+    }
+
+    if (!validateEmail(email)) {
+      res.status(400).send({ error: 'not a valid email' })
     }
 
     // Check existing users with await
