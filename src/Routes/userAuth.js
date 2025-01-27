@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { getUserByEmail, getUserByUsername, addUser } from '../db/sqlite.js'
 import { verifyHash, hashStr } from '../utils/hash.js'
 import { signJWT } from '../utils/auth.js'
+import log from 'node-gyp/lib/log.js'
 
 const userAuthRouter = Router()
 
@@ -41,6 +42,7 @@ userAuthRouter.post('/signin', async (req, res) => {
     console.error('Signin error:', error)
     return res.status(500).json({ error: 'Internal server error' })
   }
+
 })
 
 userAuthRouter.post('/signup', async (req, res) => {
@@ -63,6 +65,7 @@ userAuthRouter.post('/signup', async (req, res) => {
     // Remove password before sending response
     const userWithoutPassword = { ...newUser }
     delete userWithoutPassword.password
+
 
     const token = signJWT(userWithoutPassword)
 
