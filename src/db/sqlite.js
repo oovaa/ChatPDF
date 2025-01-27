@@ -17,17 +17,32 @@ function initDB() {
   )
 }
 
+// Fixed addUser function with proper error handling
 function addUser(username, email, password) {
-  const query = db.query(
-    'INSERT INTO users (username, email, password) VALUES ($username, $email, $password) RETURNING *'
-  )
-  const user = query.get({
-    username: username,
-    email: email,
-    password: password,
-  })
-  delete user.password
-  return user
+  try {
+    // Start transaction
+    db.exec('BEGIN TRANSACTION')
+
+    // Insert user
+    const insert = db.prepare(
+      'INSERT INTO users (username, email, password) VALUES (?, ?, ?)'
+    )
+    insert.run(username, email, password)
+
+    // Get inserted user
+    const select = db.prepare(
+      'SELECT id, username, email FROM users WHERE username = ?'
+    )
+    const user = select.get(username)
+
+    // Commit transaction
+    db.exec('COMMIT')
+    return user
+  } catch (error) {
+    db.exec('ROLLBACK')
+    console.error('Error adding user:', error)
+    throw error
+  }
 }
 
 function getUserByUsername(username) {
@@ -50,6 +65,14 @@ function deleteUser(id) {
   return query.run({ id: id })
 }
 
+// List all users (without sensitive information)
+function listUsers() {
+  const query = db.prepare(
+    'SELECT id, username, email FROM users ORDER BY id DESC'
+  )
+  return query.all()
+}
+
 // console.log(getUserByEmail('omar') || getUserByUsername('omar'))
 initDB()
 
@@ -60,4 +83,5 @@ export {
   getUserByUsername,
   deleteUser,
   getUserById,
+  listUsers,
 }
