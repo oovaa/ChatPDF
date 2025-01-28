@@ -70,8 +70,6 @@ async function listUsers() {
   return data
 }
 
-console.log(await listUsers())
-
 export {
   addUser,
   getUserByEmail,
