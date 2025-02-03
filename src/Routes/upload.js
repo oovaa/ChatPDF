@@ -6,8 +6,8 @@ import { StoreFileInVDB } from '../db/hnsw.js'
 const uploadRouter = Router()
 
 uploadRouter.post('/upload', upload, async (req, res, next) => {
-  const sucessMsg = `file ${req.file.originalname} stored in the vector db`
   try {
+    const sucessMsg = `file ${req.file.originalname} stored in the vector db`
     if (!req.file) throw new Error('no file uploaded')
     const filePath = tempWrite.sync(req.file.buffer, req.file.originalname)
     await StoreFileInVDB(filePath)

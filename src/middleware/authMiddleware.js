@@ -1,6 +1,5 @@
 import { verify } from 'jsonwebtoken'
 import { getUserById } from '../db'
-import { error } from 'node-gyp/lib/log'
 
 /**
  * Middleware function to authenticate a JWT token from the request headers.
@@ -21,7 +20,7 @@ const authenticateToken = (req, res, next) => {
     const payload = verify(token, process.env.JWT_SECRET)
     const user = getUserById(payload.id)
 
-    if (!user) throw new Error('user not found')
+    if (!user) throw new Error('not a valid user')
     req.user = user
 
     next()

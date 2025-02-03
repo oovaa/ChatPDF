@@ -70,6 +70,31 @@ async function listUsers() {
   return data
 }
 
+async function listOAuthUsers() {
+  const { data, error } = await supabase
+    .from('auth.users') // Access the auth.users table
+    .select('id, email, created_at, last_sign_in_at, raw_app_meta_data') // Select relevant fields
+    .eq('raw_app_meta_data->>provider', 'google') // Filter users who signed in with Google
+
+  if (error) throw error
+
+  // Map the data to a more user-friendly format
+  const googleOAuthUsers = data.map((user) => ({
+    id: user.id,
+    email: user.email,
+    provider: user.raw_app_meta_data?.provider || 'unknown', // Extract the OAuth provider
+    created_at: user.created_at,
+    last_sign_in_at: user.last_sign_in_at,
+  }))
+
+  return googleOAuthUsers
+}
+
+// Call the function and log the result
+// listOAuthUsers()
+//   .then((users) => console.log(users))
+//   .catch((err) => console.error(err))
+
 export {
   addUser,
   getUserByEmail,
