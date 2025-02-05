@@ -5,6 +5,7 @@
 
 import express, { json } from 'express'
 import logger from './src/middleware/logger.js'
+import { clerkMiddleware } from '@clerk/express'
 import { router } from './src/Routes/index.js'
 import compression from 'compression'
 import helmet from 'helmet'
@@ -12,6 +13,11 @@ import cors from 'cors'
 
 const app = express()
 const PORT = process.env.PORT || 3000
+
+/**
+ * Clerk authentication middleware.
+ */
+app.use(clerkMiddleware())
 
 /**
  * Middleware to parse JSON bodies.
