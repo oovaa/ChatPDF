@@ -1,48 +1,175 @@
+
 # ChatPDF
 
-ChatPDF is a project that allows you to interact with PDF files using a chat interface.
+ChatPDF is a modern, secure, and scalable platform for interacting with documents (PDF, DOCX, PPTX, TXT) via a conversational chat interface. Built with Bun, Express, LangChain, Cohere, Supabase, and Clerk authentication, it enables users to upload files, extract information, and chat with document content using advanced language models and vector search.
+
+---
+
+## Table of Contents
+
+- [ChatPDF](#chatpdf)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Architecture](#architecture)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [API Reference](#api-reference)
+    - [Authentication](#authentication)
+    - [File Upload](#file-upload)
+    - [Chat](#chat)
+    - [Health Check](#health-check)
+  - [Environment Variables](#environment-variables)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Contact](#contact)
+  - [Acknowledgements](#acknowledgements)
+  - [Endpoints](#endpoints)
+    - [Authentication](#authentication-1)
+    - [File Upload](#file-upload-1)
+    - [Chat](#chat-1)
+    - [Health Check](#health-check-1)
+  - [Contributing](#contributing-1)
+  - [Contact](#contact-1)
+  - [Acknowledgements](#acknowledgements-1)
+
+---
 
 ## Features
 
-- Chat with PDF documents to extract information quickly.
-- Supports multiple PDF files.
-- Easy-to-use interface.
+- **Conversational Document Search:** Chat with your documents using natural language.
+- **Multi-format Support:** Upload and process PDF, DOCX, PPTX, and TXT files.
+- **Vector Database:** Fast semantic search using HNSWLib and Cohere embeddings.
+- **User Authentication:** Secure JWT-based authentication and Clerk integration.
+- **RESTful API:** Well-structured endpoints for authentication, file upload, and chat.
+- **Scalable Backend:** Built with Bun and Express for performance and reliability.
+- **Extensible:** Modular codebase for easy feature addition and maintenance.
+
+---
+
+## Architecture
+
+- **Express Server:** Handles routing, middleware, and API endpoints.
+- **Authentication:** JWT and Clerk for user management and security.
+- **File Upload:** Multer middleware for in-memory file uploads.
+- **Document Processing:** LangChain loaders for parsing and chunking documents.
+- **Vector Search:** HNSWLib and Cohere for semantic search and retrieval.
+- **Database:** Supabase for user data and persistence.
+- **Chat Engine:** LangChain chains for conversational Q&A with context/history.
+
+```
+index.js
+├── src/
+│   ├── db/           # Vector DB, Supabase integration
+│   ├── middleware/   # Auth, logging, file upload
+│   ├── models/       # Cohere LLM and embeddings
+│   ├── Routes/       # API endpoints
+│   └── utils/        # Auth, chunking, file processing, validation
+```
+
+---
 
 ## Installation
 
-To install the dependencies, run the following command:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/oovaa/ChatPDF.git
+   cd ChatPDF
+   ```
 
-```bash
-bun install
-```
+2. **Install dependencies:**
+   ```bash
+   bun install
+   # or
+   npm install
+   ```
 
-Or, if you prefer using Node.js, run:
+3. **Configure environment variables:**
+   Create a `.env.local` file in the root directory and set:
+   ```
+   COHERE_API_KEY=your_cohere_api_key
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_KEY=your_supabase_key
+   JWT_SECRET=your_jwt_secret
+   ```
 
-```bash
-npm install
-```
+---
 
 ## Usage
 
-To run the project, use the following command:
-
+Start the server:
 ```bash
 bun start
-```
-
-Or, if you prefer using Node.js, run:
-
-```bash
+# or
 npm start
 ```
+The API will be available at `http://localhost:3000/api/v1/`.
 
-## About
+---
 
-This project was created using `bun init` with Bun v1.2.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## API Reference
+
+### Authentication
+
+- **POST `/api/v1/signin`**
+  - Sign in with username or email and password.
+  - Request: `{ "login": "user@example.com", "password": "password123" }`
+  - Response: `{ "user": { ... }, "token": "jwt_token" }`
+
+- **POST `/api/v1/signup`**
+  - Register a new user.
+  - Request: `{ "username": "user", "email": "user@example.com", "password": "password123" }`
+  - Response: `{ "user": { ... }, "token": "jwt_token" }`
+
+### File Upload
+
+- **POST `/api/v1/upload`**
+  - Upload a document (PDF, DOCX, PPTX, TXT).
+  - Form-data: `file` field.
+  - Response: `{ "file": "<filename>", "sucessMsg": "file <filename> stored in the vector db" }`
+
+### Chat
+
+- **POST `/api/v1/send`**
+  - Ask questions about uploaded documents.
+  - Request: `{ "question": "What is the content of the PDF?", "noDoc": true }`
+  - Response: `{ "answer": "..." }`
+
+### Health Check
+
+- **GET `/z`**
+  - Response: `all good`
+
+---
+
+## Environment Variables
+
+- `COHERE_API_KEY`: API key for Cohere embeddings and LLM.
+- `SUPABASE_URL`, `SUPABASE_KEY`: Supabase database credentials.
+- `JWT_SECRET`: Secret for JWT authentication.
+
+---
+
+## Contributing
+
+See [Contributing.md](Contributing.md) for guidelines. We welcome bug reports, feature requests, code, and documentation contributions.
+
+---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+MIT License. See [LICENSE](LICENSE).
+
+---
+
+## Contact
+
+For inquiries, contact the maintainers via [email@example.com](mailto:email@example.com).
+
+---
+
+## Acknowledgements
+
+- Bun, LangChain, Cohere, Supabase, Clerk, and all contributors.
 
 
 ## Endpoints
