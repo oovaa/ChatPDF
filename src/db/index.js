@@ -1,4 +1,4 @@
-import supabase from './supabase'
+import supabase from './supabase.js'
 
 async function addUser(username, email, password) {
   const { data, error } = await supabase
