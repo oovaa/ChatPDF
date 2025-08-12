@@ -9,7 +9,15 @@
   "scripts": {
     "dev": "bun --watch index.js",
     "start": "bun index.js",
-    "lint": "prettier --write *.js"
+    "lint": "prettier --write *.js src/**/*.js",
+    "lint:check": "prettier --check *.js src/**/*.js",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "build": "echo 'No build step required for this project'",
+    "docker:build": "docker build -t chatpdf .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env.local chatpdf",
+    "docker:dev": "docker-compose up --build",
+    "validate:env": "node -e \"const required=['COHERE_API_KEY','JWT_SECRET']; required.forEach(v => console.log(v + ':', process.env[v] ? '✓' : '✗'))\""
   },
   "peerDependencies": {
     "typescript": "^5.7.2"

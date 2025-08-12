@@ -1,225 +1,308 @@
+# ChatPDF 🤖📄
 
-# ChatPDF
+<div align="center">
 
-ChatPDF is a modern, secure, and scalable platform for interacting with documents (PDF, DOCX, PPTX, TXT) via a conversational chat interface. Built with Bun, Express, LangChain, Cohere, Supabase, and Clerk authentication, it enables users to upload files, extract information, and chat with document content using advanced language models and vector search.
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-4.21+-blue.svg)](https://expressjs.com/)
+[![LangChain](https://img.shields.io/badge/LangChain-0.3+-purple.svg)](https://langchain.com/)
+[![Cohere](https://img.shields.io/badge/Cohere-AI-orange.svg)](https://cohere.ai/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
+**Intelligent Document Chat Interface**
 
-## Table of Contents
+Transform your documents into interactive conversations using AI-powered semantic search and natural language processing.
 
-- [ChatPDF](#chatpdf)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Architecture](#architecture)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [API Reference](#api-reference)
-    - [Authentication](#authentication)
-    - [File Upload](#file-upload)
-    - [Chat](#chat)
-    - [Health Check](#health-check)
-  - [Environment Variables](#environment-variables)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Contact](#contact)
-  - [Acknowledgements](#acknowledgements)
-  - [Endpoints](#endpoints)
-    - [Authentication](#authentication-1)
-    - [File Upload](#file-upload-1)
-    - [Chat](#chat-1)
-    - [Health Check](#health-check-1)
-  - [Contributing](#contributing-1)
-  - [Contact](#contact-1)
-  - [Acknowledgements](#acknowledgements-1)
+[🚀 Quick Start](#quick-start) • [📖 API Docs](#api-documentation) • [🛠️ Development](#development) • [🤝 Contributing](#contributing)
+
+</div>
 
 ---
 
-## Features
+## ✨ Features
 
-- **Conversational Document Search:** Chat with your documents using natural language.
-- **Multi-format Support:** Upload and process PDF, DOCX, PPTX, and TXT files.
-- **Vector Database:** Fast semantic search using HNSWLib and Cohere embeddings.
-- **User Authentication:** Secure JWT-based authentication and Clerk integration.
-- **RESTful API:** Well-structured endpoints for authentication, file upload, and chat.
-- **Scalable Backend:** Built with Bun and Express for performance and reliability.
-- **Extensible:** Modular codebase for easy feature addition and maintenance.
+🔮 **Conversational AI** - Chat naturally with your documents using advanced language models  
+📁 **Multi-Format Support** - Process PDF, DOCX, PPTX, and TXT files seamlessly  
+🧠 **Semantic Search** - Fast, intelligent search using vector embeddings  
+🔐 **Secure Authentication** - JWT-based security with Clerk integration  
+⚡ **High Performance** - Built with Bun and Express for optimal speed  
+🎯 **RESTful API** - Clean, well-documented endpoints  
+📊 **Real-time Monitoring** - Health checks and performance metrics  
+🚀 **Production Ready** - Comprehensive error handling and logging  
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
-- **Express Server:** Handles routing, middleware, and API endpoints.
-- **Authentication:** JWT and Clerk for user management and security.
-- **File Upload:** Multer middleware for in-memory file uploads.
-- **Document Processing:** LangChain loaders for parsing and chunking documents.
-- **Vector Search:** HNSWLib and Cohere for semantic search and retrieval.
-- **Database:** Supabase for user data and persistence.
-- **Chat Engine:** LangChain chains for conversational Q&A with context/history.
-
-```
-index.js
-├── src/
-│   ├── db/           # Vector DB, Supabase integration
-│   ├── middleware/   # Auth, logging, file upload
-│   ├── models/       # Cohere LLM and embeddings
-│   ├── Routes/       # API endpoints
-│   └── utils/        # Auth, chunking, file processing, validation
+```mermaid
+graph TB
+    A[Client] --> B[Express Server]
+    B --> C[Authentication Layer]
+    C --> D[API Routes]
+    D --> E[File Upload]
+    D --> F[Chat Engine]
+    E --> G[Document Processing]
+    G --> H[Vector Database]
+    F --> H
+    F --> I[LLM Provider]
+    H --> J[Semantic Search]
+    I --> K[Response Generation]
 ```
 
+**Core Components:**
+- **Express Server** - HTTP request handling and routing
+- **Authentication** - JWT + Clerk for secure user management  
+- **Document Processing** - LangChain-powered file parsing and chunking
+- **Vector Database** - HNSWLib for fast semantic search
+- **AI Engine** - Cohere LLM and embeddings for intelligent responses
+
 ---
 
-## Installation
+## 🚀 Quick Start
 
-1. **Clone the repository:**
+### Prerequisites
+- Node.js 18+ or Bun
+- Cohere API key
+- Supabase account (optional)
+
+### Installation
+
+1. **Clone the repository**
    ```bash
    git clone https://github.com/oovaa/ChatPDF.git
    cd ChatPDF
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies**
    ```bash
+   # Using Bun (recommended)
    bun install
-   # or
-   npm install
+   
+   # Or using npm
+   npm install --legacy-peer-deps
    ```
 
-3. **Configure environment variables:**
-   Create a `.env.local` file in the root directory and set:
+3. **Configure environment**
+   ```bash
+   cp .env.example .env.local
    ```
+   
+   Edit `.env.local` with your credentials:
+   ```env
    COHERE_API_KEY=your_cohere_api_key
    SUPABASE_URL=your_supabase_url
    SUPABASE_KEY=your_supabase_key
    JWT_SECRET=your_jwt_secret
    ```
 
+4. **Start the server**
+   ```bash
+   # Development mode
+   bun run dev
+   # or npm run dev
+   
+   # Production mode
+   bun start
+   # or npm start
+   ```
+
+5. **Test the API**
+   ```bash
+   curl http://localhost:3000/z
+   ```
+
 ---
 
-## Usage
+## 📖 API Documentation
 
-Start the server:
-```bash
-bun start
-# or
-npm start
+### Base URL
 ```
-The API will be available at `http://localhost:3000/api/v1/`.
+http://localhost:3000/api/v1
+```
 
----
+### Authentication Endpoints
 
-## API Reference
+#### Sign Up
+```http
+POST /signup
+Content-Type: application/json
 
-### Authentication
+{
+  "username": "johndoe",
+  "email": "john@example.com", 
+  "password": "securepassword123"
+}
+```
 
-- **POST `/api/v1/signin`**
-  - Sign in with username or email and password.
-  - Request: `{ "login": "user@example.com", "password": "password123" }`
-  - Response: `{ "user": { ... }, "token": "jwt_token" }`
+#### Sign In
+```http
+POST /signin
+Content-Type: application/json
 
-- **POST `/api/v1/signup`**
-  - Register a new user.
-  - Request: `{ "username": "user", "email": "user@example.com", "password": "password123" }`
-  - Response: `{ "user": { ... }, "token": "jwt_token" }`
+{
+  "login": "john@example.com",
+  "password": "securepassword123"
+}
+```
 
-### File Upload
+### Document Management
 
-- **POST `/api/v1/upload`**
-  - Upload a document (PDF, DOCX, PPTX, TXT).
-  - Form-data: `file` field.
-  - Response: `{ "file": "<filename>", "sucessMsg": "file <filename> stored in the vector db" }`
+#### Upload Document
+```http
+POST /upload
+Content-Type: multipart/form-data
 
-### Chat
+file: <PDF|DOCX|PPTX|TXT file>
+```
 
-- **POST `/api/v1/send`**
-  - Ask questions about uploaded documents.
-  - Request: `{ "question": "What is the content of the PDF?", "noDoc": true }`
-  - Response: `{ "answer": "..." }`
+**Response:**
+```json
+{
+  "success": true,
+  "file": {
+    "name": "document.pdf",
+    "type": "PDF",
+    "size": "2.5MB"
+  },
+  "message": "File processed successfully",
+  "metadata": {
+    "processingTime": "1250ms",
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}
+```
 
-### Health Check
+### Chat Interface
 
-- **GET `/z`**
-  - Response: `all good`
+#### Send Message
+```http
+POST /send
+Content-Type: application/json
 
----
+{
+  "question": "What is the main topic of this document?",
+  "sessionId": "user123",
+  "noDoc": false
+}
+```
 
-## Environment Variables
-
-- `COHERE_API_KEY`: API key for Cohere embeddings and LLM.
-- `SUPABASE_URL`, `SUPABASE_KEY`: Supabase database credentials.
-- `JWT_SECRET`: Secret for JWT authentication.
-
----
-
-## Contributing
-
-See [Contributing.md](Contributing.md) for guidelines. We welcome bug reports, feature requests, code, and documentation contributions.
-
----
-
-## License
-
-MIT License. See [LICENSE](LICENSE).
-
----
-
-## Contact
-
-For inquiries, contact the maintainers via [email@example.com](mailto:email@example.com).
-
----
-
-## Acknowledgements
-
-- Bun, LangChain, Cohere, Supabase, Clerk, and all contributors.
-
-
-## Endpoints
-
-### Authentication
-
-- **POST /signin**
-    - Description: Sign in a user.
-    - Request Body: `{ "login": "user@example.com", "password": "password123" }`
-    - Response: `{ "user": { "username": "user", "email": "user@example.com" }, "token": "jwt_token" }`
-    - Error Response: `{ "error": "no user with this data" }` or `{ "error": "invalid credentials" }`
-
-- **POST /signup**
-    - Description: Sign up a new user.
-    - Request Body: `{ "username": "user", "email": "user@example.com", "password": "password123" }`
-    - Response: `{ "token": "jwt_token" }`
-    - Error Response: `{ "error": "user already exists" }`
-
-### File Upload
-
-- **POST /upload**
-    - Description: Upload a file to be processed.
-    - Request Body: Form-data with a file field named `file`.
-    - Response: `{ "file": "<filename>", "sucessMsg": "file <filename> stored in the vector db" }`
-    - Error Response: `{ "error": "An error occurred while uploading the file: <error_message>" }`
-
-
-### Chat
-
-- **POST /send**
-    - Description: Send a question to the chat interface.
-    - Request Body: `{ "question": "What is the content of the PDF?", "noDoc": true }`
-    - Response: `{ "answer": "The content of the PDF is..." }`
+**Response:**
+```json
+{
+  "answer": "The document discusses...",
+  "metadata": {
+    "responseTime": "850ms",
+    "chainType": "document_aware",
+    "timestamp": "2024-01-15T10:31:00Z"
+  }
+}
+```
 
 ### Health Check
+```http
+GET /z
+```
 
-- **GET /z**
-    - Description: Check if the server is running.
-    - Response: `all good`
+For detailed API documentation, see [docs/API.md](docs/API.md).
 
-## Contributing
+---
 
-Contributions are welcome! Please open an issue or submit a pull request. Make sure to follow the [contribution guidelines](CONTRIBUTING.md).
+## 🛠️ Development
 
-## Contact
+### Project Structure
+```
+ChatPDF/
+├── index.js                 # Application entry point
+├── src/
+│   ├── Routes/              # API endpoint definitions
+│   ├── middleware/          # Custom middleware functions
+│   ├── models/              # AI model configurations
+│   ├── db/                  # Database and vector store
+│   └── utils/               # Utility functions
+├── docs/                    # Documentation
+└── package.json
+```
 
-For any inquiries, please contact the project maintainer at [email@example.com](mailto:email@example.com).
+### Development Commands
+```bash
+# Start development server with auto-reload
+bun run dev
 
-## Acknowledgements
+# Format code with Prettier
+bun run lint
 
-- Thanks to the [Bun](https://bun.sh) team for their amazing work.
-- Special thanks to all contributors and users.
+# Run tests
+bun test
+```
 
+### Environment Variables
+See [.env.example](.env.example) for all available configuration options.
+
+---
+
+## 🚢 Deployment
+
+### Docker (Recommended)
+```bash
+# Build image
+docker build -t chatpdf .
+
+# Run container
+docker run -p 3000:3000 --env-file .env.local chatpdf
+```
+
+### Traditional Deployment
+1. Set production environment variables
+2. Install dependencies: `npm ci --only=production`
+3. Start server: `npm start`
+
+For detailed deployment instructions, see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](Contributing.md) for details.
+
+### Quick Contribution Steps
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and test them
+4. Run linting: `bun run lint`
+5. Commit your changes: `git commit -m "Add amazing feature"`
+6. Push to your branch: `git push origin feature/amazing-feature`
+7. Open a Pull Request
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **LangChain** - For powerful document processing capabilities
+- **Cohere** - For state-of-the-art language models and embeddings
+- **Supabase** - For reliable database infrastructure
+- **Clerk** - For seamless authentication
+- **Contributors** - Thank you to all our amazing contributors!
+
+---
+
+## 📞 Support
+
+- 📖 [Documentation](docs/)
+- 🐛 [Report Issues](https://github.com/oovaa/ChatPDF/issues)
+- 💬 [Discussions](https://github.com/oovaa/ChatPDF/discussions)
+- 📧 [Email Support](mailto:support@chatpdf.example.com)
+
+---
+
+<div align="center">
+
+**Built with ❤️ by Omar, Husam, Mohayyad & Hassan**
+
+[⭐ Star this project](https://github.com/oovaa/ChatPDF) if you find it helpful!
+
+</div>
