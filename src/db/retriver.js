@@ -1,6 +1,6 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
 import { VectorStore, VectorStoreRetriever } from '@langchain/core/vectorstores'
-import { VDB } from './hnsw'
+import { VDB } from './hnsw.js'
 
 /**
  *
