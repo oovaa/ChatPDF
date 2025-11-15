@@ -12,6 +12,8 @@ export const router = Router()
 
 // router.use(authenticateToken)
 
-router.use('/', requireAuth(), uploadRouter)
-router.use('/', requireAuth(), messageRouter)
+// router.use("/",requireAuth())
+
+router.use('/',  uploadRouter)
+router.use('/',  messageRouter)
 // router.use('/', adminRouter)

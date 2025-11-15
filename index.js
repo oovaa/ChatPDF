@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000
 /**
  * Clerk authentication middleware.
  */
-app.use(clerkMiddleware())
+// app.use(clerkMiddleware())
 
 /**
  * Middleware to parse JSON bodies.
