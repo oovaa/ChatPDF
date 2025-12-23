@@ -1,7 +1,7 @@
 import { HNSWLib } from '@langchain/community/vectorstores/hnswlib'
-import { ECohereEmbeddingsModel } from '../models/Ecohere'
-import { parser } from '../utils/fileProcessing'
-import { doc_chuncker } from '../utils/chunker'
+import { ECohereEmbeddingsModel } from '../models/Ecohere.js'
+import { parser } from '../utils/fileProcessing.js'
+import { doc_chuncker } from '../utils/chunker.js'
 
 /**
  * Initializes a vector database (VDB) using HNSWLib from an empty set of documents
